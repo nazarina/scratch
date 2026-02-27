@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Курс Scratch | Заботливое образование</title>
+    <style>
+        :root {
+            --soft-pink: #fff0f3;
+            --soft-purple: #f3f0ff;
+            --accent-color: #008080; 
+            --deep-accent: #800000;
+            --text-main: #4a4a4a;
+            --white: #ffffff;
+            --button-grad: linear-gradient(to top, #800000 0%, #d63031 100%);
+        }
+
+        body {
+            background: linear-gradient(120deg, var(--soft-pink) 0%, #fdfbfb 100%);
+            color: var(--text-main);
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container { max-width: 1100px; margin: 0 auto; padding: 40px 20px; }
+
+        /* Блок описания курса с инфографикой */
+        .course-intro {
+            background: var(--white);
+            padding: 50px;
+            border-radius: 40px;
+            margin-bottom: 50px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.03);
+            text-align: center;
+        }
+
+        .course-intro h1 { color: var(--accent-color); font-size: 2.5rem; margin-bottom: 20px; }
+        
+        .infographic {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .info-item {
+            padding: 20px;
+            transition: transform 0.3s;
+        }
+
+        .info-item .icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .info-item h4 { color: var(--deep-accent); margin: 10px 0; font-size: 1.1rem; }
+        .info-item p { font-size: 0.95rem; opacity: 0.8; margin: 0; }
+
+        /* Вкладки */
+        .tabs-nav {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 40px;
+        }
+
+        .tab-btn {
+            padding: 14px 28px;
+            border: 2px solid var(--accent-color);
+            background: transparent;
+            color: var(--accent-color);
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .tab-btn.active {
+            background: var(--deep-accent);
+            border-color: var(--deep-accent);
+            color: white;
+            box-shadow: 0 8px 20px rgba(128, 0, 0, 0.2);
+        }
+
+        /* Сетка уроков */
+        .tab-content { display: none; }
+        .tab-content.active {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+            animation: fadeIn 0.6s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .lesson-card {
+            background: var(--white);
+            padding: 30px;
+            border-radius: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.02);
+            border-top: 6px solid var(--accent-color);
+            text-align: left;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .lesson-card:hover { border-top-color: var(--deep-accent); }
+
+        .lesson-header { margin-bottom: 15px; }
+        .lesson-number { 
+            background: var(--soft-pink);
+            color: var(--deep-accent);
+            padding: 4px 12px;
+            border-radius: 10px;
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+
+        .lesson-card h3 { color: var(--text-main); margin: 15px 0 10px 0; font-size: 1.3rem; }
+        .lesson-card p { font-size: 0.95rem; color: #666; flex-grow: 1; }
+
+        .project-badge {
+            margin-top: 15px;
+            padding: 10px;
+            background: var(--soft-purple);
+            border-radius: 12px;
+            font-size: 0.85rem;
+            border-left: 3px solid var(--deep-accent);
+        }
+
+        .go-btn {
+            margin-top: 20px;
+            text-decoration: none;
+            color: var(--accent-color);
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .go-btn:hover { color: var(--deep-accent); }
+.main-footer {
+        background: var(--white);
+        padding: 60px 20px 20px;
+        margin-top: 80px;
+        border-top: 5px solid var(--deep-accent);
+        color: var(--text-main);
+    }
+
+    .footer-container {
+        max-width: 1100px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 2fr 1fr 1.5fr;
+        gap: 40px;
+    }
+
+    .footer-logo {
+        color: var(--deep-accent);
+        font-size: 1.5rem;
+        margin-bottom: 15px;
+    }
+
+    .footer-credo {
+        font-style: italic;
+        line-height: 1.6;
+        opacity: 0.8;
+    }
+
+    .footer-links h4, .footer-social h4 {
+        color: var(--accent-color);
+        margin-bottom: 20px;
+        text-transform: uppercase;
+        font-size: 0.9rem;
+        letter-spacing: 1px;
+    }
+
+    .footer-links a {
+        display: block;
+        text-decoration: none;
+        color: var(--text-main);
+        margin-bottom: 10px;
+        transition: color 0.3s;
+    }
+
+    .footer-links a:hover {
+        color: var(--deep-accent);
+    }
+
+    .social-icons {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 20px;
+    }
+
+    .social-btn {
+        width: 40px;
+        height: 40px;
+        background: var(--button-grad);
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 10px;
+        text-decoration: none;
+        font-weight: bold;
+        font-size: 0.8rem;
+        transition: transform 0.3s;
+    }
+
+    .social-btn:hover {
+        transform: translateY(-3px) rotate(5deg);
+    }
+
+    .footer-bottom {
+        text-align: center;
+        margin-top: 50px;
+        padding-top: 20px;
+        border-top: 1px solid var(--soft-pink);
+        font-size: 0.8rem;
+        opacity: 0.6;
+    }
+
+    @media (max-width: 768px) {
+        .footer-container {
+            grid-template-columns: 1fr;
+            text-align: center;
+        }
+        .social-icons {
+            justify-content: center;
+        }
+    }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    
+    <header class="course-intro">
+        <h1>Твое творчество в Scratch</h1>
+        <p style="max-width: 700px; margin: 0 auto; opacity: 0.8;">Курс, где каждый ребенок становится творцом. Мы учимся программировать через любовь к проектам, создавая игры и анимации без стресса.</p>
+        
+        <div class="infographic">
+            <div class="info-item">
+                <span class="icon">🧩</span>
+                <h4>Логика</h4>
+                <p>Развиваем алгоритмическое мышление через блоки</p>
+            </div>
+            <div class="info-item">
+                <span class="icon">🎨</span>
+                <h4>Дизайн</h4>
+                <p>Работаем с цветом, графикой и эффектами</p>
+            </div>
+            <div class="info-item">
+                <span class="icon">🎮</span>
+                <h4>GameDev</h4>
+                <p>Создаем 36 уникальных проектов и игр</p>
+            </div>
+        </div>
+    </header>
+
+    <div class="tabs-nav">
+        <button class="tab-btn active" onclick="openTab(event, 'm1')">Основы (1-6)</button>
+        <button class="tab-btn" onclick="openTab(event, 'm2')">Движение (7-12)</button>
+        <button class="tab-btn" onclick="openTab(event, 'm3')">События (13-18)</button>
+        <button class="tab-btn" onclick="openTab(event, 'm4')">Переменные (19-24)</button>
+        <button class="tab-btn" onclick="openTab(event, 'm5')">Уровни (25-30)</button>
+        <button class="tab-btn" onclick="openTab(event, 'm6')">Финал (31-36)</button>
+    </div>
+
+    <div id="m1" class="tab-content active">
+        
+        <div class="lesson-card">
+            <div class="lesson-header">
+                <span class="lesson-number">Урок 1</span>
+                <h3>Алгоритмы. Интерфейс Scratch</h3>
+            </div>
+            <p>Знакомимся с линейным алгоритмом, программой и языком Scratch. Изучаем, как давать команды спрайтам.</p>
+            <div class="project-badge"><b>Проект:</b> Подводный мир 🐬</div>
+            <a href="lesson1.html" class="go-btn">Начать урок →</a>
+        </div>
+
+        <div class="lesson-card">
+            <div class="lesson-header">
+                <span class="lesson-number">Урок 2</span>
+                <h3>Циклы и графические эффекты</h3>
+            </div>
+            <p>Учимся повторять действия автоматически и менять внешний вид объектов с помощью кода.</p>
+            <div class="project-badge"><b>Проект:</b> Интерактивная открытка 🌸</div>
+            <a href="lesson2.html" class="go-btn">Начать урок →</a>
+        </div>
+
+        <div class="lesson-card" style="opacity: 0.6;">
+            <div class="lesson-header"><span class="lesson-number">Урок 3</span><h3>В разработке...</h3></div>
+            <p>Скоро здесь появится новый увлекательный проект.</p>
+        </div>
+        </div>
+
+    <div id="m2" class="tab-content"><p style="grid-column: 1/-1;">Уроки 7-12 появятся здесь совсем скоро!</p></div>
+
+</div>
+  <footer class="main-footer">
+    <div class="footer-container">
+        <div class="footer-info">
+            <h3 class="footer-logo">Начните творить сегодня</h3>
+            <p class="footer-credo">Учимся превращать сложные задачи в простые алгоритмы, где каждый скрипт укрепляет веру в свои силы и открывает новые горизонты для творчества.</p>
+        </div>
+        
+        <div class="footer-links">
+            <h4>Навигация</h4>
+            <a href="#">Главная</a>
+            <a href="#">Все уроки</a>
+            <a href="#">Scratch проект</a>
+            <a href="#">Поддержка</a>
+        </div>
+
+        <div class="footer-social">
+            <h4>Присоединяйтесь</h4>
+            <div class="social-icons">
+                <a href="ССЫЛКА_НА_ТГ" class="social-btn">TG</a>
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        &copy; 2026 • Заботливое образование • Твой тихий уголок Scratch
+    </div>
+</footer>
+
+<script>
+    function openTab(evt, tabId) {
+        var i, tabContent, tabBtns;
+        tabContent = document.getElementsByClassName("tab-content");
+        for (i = 0; i < tabContent.length; i++) {
+            tabContent[i].style.display = "none";
+            tabContent[i].classList.remove("active");
+        }
+        tabBtns = document.getElementsByClassName("tab-btn");
+        for (i = 0; i < tabBtns.length; i++) {
+            tabBtns[i].className = tabBtns[i].className.replace(" active", "");
+        }
+        document.getElementById(tabId).style.display = "grid";
+        document.getElementById(tabId).classList.add("active");
+        evt.currentTarget.className += " active";
+    }
+</script>
+
+</body>
+</html>

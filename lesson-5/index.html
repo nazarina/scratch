@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Урок: Сообщения в Scratch</title>
+    <style>
+        :root {
+            --soft-pink: #fff0f3;
+            --soft-purple: #f3f0ff;
+            --accent-color: #008080;
+            --deep-accent: #800000;
+            --text-main: #4a4a4a;
+            --white: #ffffff;
+            --button-grad: linear-gradient(to top, #800000 0%, #d63031 100%);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            background-color: var(--soft-purple);
+            color: var(--text-main);
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        .container { max-width: 900px; margin: 0 auto; padding: 20px; }
+
+        .card {
+            background: var(--white);
+            padding: 30px;
+            border-radius: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.03);
+        }
+
+        h1, h2, h3 { color: var(--deep-accent); margin-top: 0; }
+        h2 { border-bottom: 2px solid var(--soft-pink); padding-bottom: 10px; }
+
+        /* ОБЛОЖКА */
+        .header-cover {
+            background: var(--soft-pink);
+            min-height: 180px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 25px;
+            margin-bottom: 40px;
+        }
+        .header-cover h1 {
+            font-size: clamp(1.8rem, 5vw, 3rem);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin: 0;
+        }
+
+        /* КНОПКИ */
+        .main-button {
+            display: inline-block;
+            padding: 18px 40px;
+            font-weight: bold;
+            color: var(--white) !important;
+            text-decoration: none;
+            text-transform: uppercase;
+            background: var(--button-grad);
+            border-radius: 50px;
+            transition: 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+        .main-button:hover { transform: translateY(-3px); filter: brightness(1.1); }
+
+        /* ВИКТОРИНА (ПОВТОРЕНИЕ) */
+        .quiz-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px; }
+        .quiz-item {
+            background: var(--white);
+            padding: 25px;
+            border-radius: 20px;
+            border: 2px solid var(--soft-pink);
+            cursor: pointer;
+            text-align: center;
+            transition: 0.3s;
+        }
+        .quiz-item:hover { border-color: var(--accent-color); transform: translateY(-3px); }
+        .quiz-action { margin-top: 15px; font-weight: bold; color: var(--accent-color); font-size: 0.8rem; }
+
+        /* МОДАЛЬНОЕ ОКНО */
+        .modal-overlay {
+            display: none; position: fixed; top: 0; left: 0;
+            width: 100%; height: 100%; background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(4px); z-index: 9999; align-items: center; justify-content: center;
+        }
+        .modal-window {
+            background: var(--white); width: 90%; max-width: 500px;
+            border-radius: 30px; padding: 40px; position: relative; text-align: center;
+        }
+        .modal-close { position: absolute; top: 15px; right: 20px; font-size: 30px; cursor: pointer; }
+        .modal-body img { width: 100%; border-radius: 15px; margin-bottom: 20px; }
+
+        /* РАЗМИНКА И ЗАДАНИЯ */
+        .warmup-container { display: flex; flex-direction: column; gap: 20px; }
+        .goal-box { background: var(--soft-purple); padding: 20px; border-radius: 15px; margin: 15px 0; }
+        .logic-hint { border-left: 4px solid var(--accent-color); padding-left: 15px; margin-top: 20px; }
+        
+        iframe { width: 100%; max-width: 485px; height: 402px; border-radius: 15px; border: none; display: block; margin: 20px auto; }
+
+        /* ГАЛЕРЕЯ */
+        .examples-gallery { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-top: 20px; }
+        .frame-placeholder { 
+            background: #f0f0f0; aspect-ratio: 4/3; border-radius: 15px; 
+            display: flex; align-items: center; justify-content: center; overflow: hidden;
+            border: 2px dashed var(--soft-purple);
+        }
+        .example-caption { margin-top: 10px; font-weight: bold; color: var(--accent-color); text-align: center; }
+
+        /* ЛЕГЕНДА */
+        .task-row { display: flex; gap: 25px; align-items: flex-start; }
+        .frame-area { flex: 1; min-height: 300px; background: #eee; border-radius: 20px; display: flex; align-items: center; justify-content: center; color: #aaa; border: 2px solid var(--soft-pink); }
+        .task-text { flex: 1; }
+        .story-box { background: var(--soft-pink); padding: 20px; border-radius: 15px; font-style: italic; border-left: 6px solid var(--accent-color); margin-bottom: 20px; }
+        .blocks-list { list-style: none; padding: 0; }
+        .blocks-list li { background: var(--soft-purple); margin: 8px 0; padding: 10px; border-radius: 10px; border: 1px solid var(--soft-pink); }
+
+        @media (max-width: 768px) {
+            .quiz-grid, .examples-gallery, .task-row { grid-template-columns: 1fr; flex-direction: column; }
+            iframe { width: 100%; height: auto; aspect-ratio: 485/402; }
+        }
+      :root {
+    --soft-pink: #fff0f3;
+    --accent-color: #008080;
+    --deep-accent: #800000;
+    --text-main: #4a4a4a;
+    --white: #ffffff;
+}
+
+.lesson-plan {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 30px;
+    background: var(--white);
+    border-radius: 25px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+}
+
+.plan-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 10px;
+}
+
+.plan-icon {
+    font-size: 2rem;
+}
+
+.plan-header h3 {
+    color: var(--deep-accent);
+    margin: 0;
+   
+    font-size: 1.4rem;
+}
+
+.plan-subtitle {
+    color: var(--text-main);
+    font-size: 1rem;
+    margin-bottom: 25px;
+    opacity: 0.8;
+}
+
+/* Стили текстового поля */
+.textarea-wrapper textarea {
+    width: 100%;
+    min-height: 250px;
+    padding: 20px;
+    border-radius: 20px;
+    border: 2px solid var(--soft-pink);
+    background-color: var(--soft-pink);
+    color: var(--text-main);
+    font-family: inherit;
+    font-size: 1rem;
+    line-height: 1.6;
+    resize: vertical;
+    transition: all 0.3s ease;
+    box-sizing: border-box; /* важный параметр для отступов */
+}
+
+/* Эффект при клике на поле */
+.textarea-wrapper textarea:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    background-color: var(--white);
+    box-shadow: 0 5px 15px rgba(0, 128, 128, 0.05);
+}
+
+/* Кастомизация скроллбара */
+.textarea-wrapper textarea::-webkit-scrollbar {
+    width: 8px;
+}
+
+.textarea-wrapper textarea::-webkit-scrollbar-track {
+    background: var(--soft-pink);
+    border-radius: 10px;
+}
+
+.textarea-wrapper textarea::-webkit-scrollbar-thumb {
+    background: var(--accent-color);
+    border-radius: 10px;
+}
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header class="header-cover">
+        <h1>Сообщения в Scratch</h1>
+    </header>
+
+    <section class="card">
+        <h2>Вспомним важное?</h2>
+      
+    <div class="quiz-grid">
+        <div class="quiz-item" onclick="openModal('https://github.com/nazarina/lesson-5/blob/main/%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA%20%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0%202026-03-20%20020636.png?raw=true', 'Центр сцены — это точка пересечения осей X и Y. Размеры сцены: х: от -240 до 240, y: от -180 до 180')">
+            <p>Какие размеры имеет сцена? Какие координаты центра сцены?</p>
+            <div class="quiz-action">Проверить себя</div>
+        </div>
+
+        <div class="quiz-item" onclick="openModal('https://github.com/nazarina/lesson-5/blob/main/%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA%20%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0%202026-03-20%20005930.png?raw=true', 'В Scratch направление 90 — это вправо, -90 — влево, 0 — вверх, 180 — вниз. Помни: это как компас!')">
+            <p>Какое направление создает поворот в направлении вправо, влево, вверх, вниз?</p>
+            <div class="quiz-action">Проверить себя</div>
+        </div>
+
+        <div class="quiz-item" onclick="openModal('https://github.com/nazarina/lesson-5/blob/main/%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA%20%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0%202026-03-20%20020958.png?raw=true', 'Чтобы герой «ожил», используй цикл: идти 10 шагов, следующий костюм и небольшое ожидание (например, 0.1 сек).')">
+            <p>Как сделать эффект реалистичной ходьбы героя?</p>
+            <div class="quiz-action">Проверить себя</div>
+        </div>
+
+        <div class="quiz-item" onclick="openModal('https://github.com/nazarina/lesson-5/blob/main/%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA%20%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0%202026-03-20%20021037.png?raw=true', 'Плавность дает цикл! Вместо одного блока «установить размер», используй «повторить 10 раз» и «изменить размер на 5».')">
+            <p>Как плавно изменить размер персонажа (эффект приближения)?</p>
+            <div class="quiz-action">Проверить себя</div>
+        </div>
+    </div>
+</section>
+
+<style>
+    /* Стили для сетки вопросов */
+    .quiz-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+        margin-top: 20px;
+    }
+
+    .quiz-item {
+        background: var(--white);
+        padding: 25px;
+        border-radius: 20px;
+        border: 2px solid var(--soft-pink);
+        cursor: pointer;
+        text-align: center;
+        transition: all 0.3s ease;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        min-height: 150px;
+    }
+
+    .quiz-item:hover {
+        transform: translateY(-5px);
+        border-color: var(--accent-color);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+    }
+
+    .quiz-item p {
+        margin: 0;
+        font-weight: 500;
+        color: var(--text-main);
+    }
+
+    .quiz-action {
+        margin-top: 15px;
+        font-weight: bold;
+        color: var(--accent-color);
+        text-transform: uppercase;
+        font-size: 0.8rem;
+        letter-spacing: 1px;
+    }
+
+    @media (max-width: 600px) {
+        .quiz-grid { grid-template-columns: 1fr; }
+    }
+</style>
+
+    </section>
+
+    <section class="card">
+        <h2 style="border: none;">Разминка</h2>
+        <div class="warmup-container">
+            
+            <div class="goal-box">
+                <p> Повтори проект</p>
+            </div>
+            <div style="text-align: center;">
+               
+            </div>
+            <iframe src="https://scratch.mit.edu/projects/1293336477/embed"></iframe>
+            
+          <div style="text-align:center"> <a href="https://scratch.mit.edu/projects/1293338152" target="_blank" class="main-button">Открыть заготовку</a></div>
+          
+        </div>
+    </section>
+
+    <section class="broadcast-lesson">
+    <div class="lesson-content">
+        <div class="explanation-side">
+            <h2 class="lesson-title">Как работают сообщения?</h2>
+            <div class="story-bubble">
+                Представь, что герои — это актеры с <strong>невидимыми рациями</strong>. 
+                когда один заканчивает свою роль, он нажимает кнопку <span>и отправляет сигнал («передать сообщение»)</span>. 
+                все, у кого рация настроена на ту же волну, слышат сигнал и начинают действовать!
+            </div>
+            
+            <div class="mission-box">
+                <p><strong>Твоя задача:</strong> посмотри пример и создай такой же проект используя сообщения. Кто передает сообщение? Кто принимает и что делает?</p>
+              <iframe src="https://scratch.mit.edu/projects/1293360364/embed" allowtransparency="true" width="485" height="402" frameborder="0" scrolling="no" allowfullscreen></iframe>
+                <div style="text-align:center"><a href="https://scratch.mit.edu/projects/1293365357" target="_blank" class="magic-button">
+                    открыть заготовку
+                </a> </div>
+            </div>
+        </div>
+
+       
+    </div>
+</section>
+
+<style>
+    :root {
+        --soft-pink: #fff0f3;
+        --soft-purple: #f3f0ff;
+        --accent-color: #008080;
+        --deep-accent: #800000;
+        --text-main: #4a4a4a;
+        --white: #ffffff;
+        --button-grad: linear-gradient(to top, #800000 0%, #d63031 100%);
+    }
+
+    .broadcast-lesson {
+        max-width: 1000px;
+        margin: 30px auto;
+        padding: 40px;
+        background: var(--white);
+        border-radius: 30px;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.05);
+        font-family: 'Segoe UI', Tahoma, sans-serif;
+    }
+
+    .lesson-content {
+        display: flex;
+        gap: 40px;
+        align-items: center;
+    }
+
+    .explanation-side {
+        flex: 1;
+    }
+
+    .lesson-title {
+        color: var(--deep-accent);
+   
+        margin-top: 0;
+        font-size: 1.8rem;
+        border-bottom: 2px solid var(--soft-pink);
+        padding-bottom: 10px;
+    }
+
+    .story-bubble {
+        background: var(--soft-purple);
+        padding: 20px;
+        border-radius: 20px;
+        line-height: 1.6;
+        color: var(--text-main);
+        position: relative;
+        margin: 20px 0;
+    }
+
+    .story-bubble span {
+        color: var(--accent-color);
+        font-weight: bold;
+    }
+
+    .mission-box {
+        margin-top: 25px;
+    }
+
+    .magic-button {
+        display: inline-block;
+        margin-top: 15px;
+        padding: 15px 35px;
+        background: var(--button-grad);
+        color: white !important;
+        text-decoration: none;
+        border-radius: 50px;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        transition: 0.3s;
+        box-shadow: 0 8px 20px rgba(128, 0, 0, 0.2);
+    }
+
+    .magic-button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 12px 25px rgba(128, 0, 0, 0.3);
+    }
+
+    /* Фрейм */
+    .frame-side {
+        flex: 0 0 485px;
+    }
+
+    .iframe-container {
+        border: 8px solid var(--soft-pink);
+        border-radius: 25px;
+        overflow: hidden;
+        line-height: 0;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+
+    /* Адаптивность для планшетов и телефонов */
+    @media (max-width: 950px) {
+        .lesson-content {
+            flex-direction: column;
+            text-align: center;
+        }
+        .frame-side {
+            flex: none;
+            width: 100%;
+            max-width: 485px;
+        }
+        .iframe-container iframe {
+            width: 100%;
+            height: auto;
+            aspect-ratio: 485 / 402;
+        }
+    }
+</style>
+<!--
+    <section class="card">
+        <h2>Вдохновение</h2>
+        <div class="examples-gallery">
+            <div class="example-item">
+                <div class="frame-placeholder"><iframe src="https://scratch.mit.edu/projects/303692640/embed"></iframe></div>
+            
+            </div>
+            <div class="example-item">
+                <div class="frame-placeholder"><iframe src="https://scratch.mit.edu/projects/1293344149/embed" allowtransparency="true" width="485" height="402" frameborder="0" scrolling="no" allowfullscreen></iframe></div>
+                
+            </div>
+            
+        </div>
+    </section>
+-->
+    <section class="card">
+       <h2>Планирование проекта</h2>
+        <div class="task-row">
+            <div class="frame-area"><iframe src="https://scratch.mit.edu/projects/210965369/embed"></iframe></div>
+            <div class="task-text">
+               
+                <div class="story-box">
+                  <p> Посмотри проект и спланируй работу над ним. Подумай:</p>
+                    <ul>
+                         <li>Какие тут действующие персонажи?</li>
+                        <li>Что происходит, когда флажок нажат? Кто виден а кто спрятялся?</li>
+                          <li>Кто говорит реплики первым?</li>
+                          <li>Какие сообщения передают?</li>
+                          <li>Кто принимает сообщения и как реагирует?</li>
+                         
+                        
+                    </ul>
+            </div>
+        </div>
+ 
+
+           
+    </section>
+      <div style="text-align:center"> <a href="https://scratch.mit.edu/projects/1293455265" target="_blank" class="main-button">Открыть заготовку</a></div>
+
+   <section class="plan-container">
+    <div class="plan-header">
+        <span class="plan-icon">✨</span>
+        <h3 class="plan-title">Твой план проекта</h3>
+    </div>
+    <p class="plan-info">Записывай здесь шаги из которых будет состоять твой будущий проект</p>
+    
+    <div class="field-group">
+        <textarea 
+            id="autosave-plan" 
+            placeholder="с чего начнем? например:&#10;1. создам фон «лес»&#10;2. добавлю медведя..."
+        ></textarea>
+        <div id="status-msg" class="status">изменения сохранены</div>
+    </div>
+</section>
+
+<style>
+    :root {
+        --soft-pink: #fff0f3;
+        --soft-purple: #f3f0ff;
+        --accent-color: #008080;
+        --deep-accent: #800000;
+        --text-main: #4a4a4a;
+        --white: #ffffff;
+    }
+
+    .plan-container {
+        max-width: 800px;
+        margin: 40px auto;
+        padding: 35px;
+        background: var(--white);
+        border-radius: 30px;
+        box-shadow: 0 15px 40px rgba(0,0,0,0.06);
+        font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    .plan-header {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 8px;
+    }
+
+    .plan-title {
+        color: var(--deep-accent);
+        margin: 0;
+        font-size: 1.6rem;
+        font-weight: 600;
+      
+    }
+
+    .plan-info {
+        color: var(--text-main);
+        font-size: 1rem;
+        margin-bottom: 25px;
+        opacity: 0.7;
+    }
+
+    .field-group {
+        position: relative;
+    }
+
+    #autosave-plan {
+        width: 100%;
+        min-height: 300px;
+        padding: 25px;
+        border-radius: 20px;
+        border: 2px solid transparent;
+        background-color: var(--soft-purple);
+        color: var(--text-main);
+        font-family: inherit;
+        font-size: 1.1rem;
+        line-height: 1.6;
+        resize: vertical;
+        transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        box-sizing: border-box;
+    }
+
+    #autosave-plan:focus {
+        outline: none;
+        background-color: var(--white);
+        border-color: var(--accent-color);
+        box-shadow: 0 10px 25px rgba(0, 128, 128, 0.08);
+    }
+
+    /* Маленький индикатор сохранения */
+    .status {
+        position: absolute;
+        bottom: -25px;
+        right: 10px;
+        font-size: 0.8rem;
+        color: var(--accent-color);
+        opacity: 0;
+        transition: opacity 0.5s ease;
+    }
+
+    .status.visible {
+        opacity: 0.6;
+    }
+
+    /* Красивый скроллбар */
+    #autosave-plan::-webkit-scrollbar {
+        width: 10px;
+    }
+
+    #autosave-plan::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    #autosave-plan::-webkit-scrollbar-thumb {
+        background: #dcd6f7;
+        border-radius: 10px;
+        border: 3px solid var(--soft-purple);
+    }
+</style>
+
+<script>
+    const textarea = document.getElementById('autosave-plan');
+    const statusMsg = document.getElementById('status-msg');
+
+    // 1. При загрузке страницы достаем текст из памяти
+    window.addEventListener('DOMContentLoaded', () => {
+        const savedText = localStorage.getItem('scratchProjectPlan');
+        if (savedText) {
+            textarea.value = savedText;
+        }
+    });
+
+    // 2. При каждом вводе символа сохраняем текст
+    textarea.addEventListener('input', () => {
+        localStorage.setItem('scratchProjectPlan', textarea.value);
+        
+        // Показываем надпись "сохранено" на секунду
+        statusMsg.classList.add('visible');
+        clearTimeout(window.saveTimeout);
+        window.saveTimeout = setTimeout(() => {
+            statusMsg.classList.remove('visible');
+        }, 1500);
+    });
+</script>
+
+<div id="quizModal" class="modal-overlay" onclick="closeModal()">
+    <div class="modal-window" onclick="event.stopPropagation()">
+        <span class="modal-close" onclick="closeModal()">&times;</span>
+        <div class="modal-body">
+            <img id="modalImg" src="" alt="Ответ">
+            <p id="modalText"></p>
+            <button class="main-button" style="padding: 10px 30px;" onclick="closeModal()">Понятно!</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    function openModal(imgSrc, text) {
+        document.getElementById('modalImg').src = imgSrc;
+        document.getElementById('modalText').innerText = text;
+        document.getElementById('quizModal').style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+    }
+    function closeModal() {
+        document.getElementById('quizModal').style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
+    window.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+</script>
+
+</body>
+</html>

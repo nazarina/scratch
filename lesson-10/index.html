@@ -225,6 +225,76 @@
             border-left: 5px solid var(--accent-color);
         }
         .feedback-toast.show { transform: translateX(-50%) translateY(0); }
+        /* Интерактивная таблица кода */
+        .code-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 15px;
+        }
+        .code-table tr {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+        }
+        .code-table td {
+            padding: 25px;
+            vertical-align: top;
+        }
+        .code-table td:first-child {
+            border-radius: 20px 0 0 20px;
+            width: 40%;
+        }
+        .code-table td:last-child {
+            border-radius: 0 20px 20px 0;
+        }
+
+        .blur-box {
+            position: relative;
+            cursor: pointer;
+            overflow: hidden;
+            border-radius: 15px;
+            background: #f9f9f9;
+            border: 1px solid #eee;
+            height: 180px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .blur-box img {
+            transition: filter 0.5s ease, transform 0.5s ease;
+            filter: blur(12px);
+            max-width: 100%;
+            max-height: 100%;
+        }
+        .blur-box.unblur img {
+            filter: blur(0);
+            transform: scale(1.02);
+        }
+        .click-hint {
+            position: absolute;
+            background: var(--deep-accent);
+            color: white;
+            font-size: 0.7rem;
+            padding: 5px 12px;
+            border-radius: 10px;
+            pointer-events: none;
+            transition: opacity 0.3s;
+        }
+        .unblur .click-hint { opacity: 0; }
+
+        .plan-content h4 {
+            color: var(--deep-accent);
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+        .plan-content p { font-size: 0.95rem; line-height: 1.5; margin-bottom: 12px; }
+        .questions-list {
+            font-size: 0.85rem;
+            color: var(--accent-color);
+            background: var(--soft-purple);
+            padding: 12px;
+            border-radius: 12px;
+        }
     </style>
 </head>
 <body>
@@ -296,14 +366,94 @@
         </section>
     </div>
 
-    <!-- FEEDBACK TOAST -->
-    <div id="toast" class="feedback-toast">
-        <span id="toast-text"></span>
-    </div>
+ <!-- REPEAT SECTION -->
+    <div class="repeat-block">
+        <section class="section-container pt-0 pb-10">
+            <header class="mb-12 text-center">
+                <h2 class="text-5xl mb-4 lowercase-header">Игра Лабиринт</h2>
+                <p class="text-lg opacity-70" style="color: var(--accent-color);">Посмотри на проект. Все ли блоки в нем на месте?</p>
+            </header>
 
-    <footer class="py-16 text-center opacity-30 text-xs tracking-widest uppercase">
-        <p>заботливое образование &bull; 2024</p>
-    </footer>
+            <div class="project-frame-container">
+                <iframe src="https://scratch.mit.edu/projects/embed/1012345678/?autostart=false" 
+                        allowtransparency="true" 
+                        width="485" 
+                        height="402" 
+                        frameborder="0" 
+                        scrolling="no" 
+                        allowfullscreen
+                        style="max-width: 100%; border-radius: 25px;">
+                </iframe>
+            </div>
+
+            <div class="text-center mb-20">
+                <button class="action-button" onclick="window.open('https://scratch.mit.edu', '_blank')">
+                    Открыть заготовку
+                </button>
+            </div>
+
+            <!-- Таблица с заблюренным кодом и планом -->
+            <div class="mt-16">
+                <h3 class="text-3xl font-bold mb-8 text-center lowercase-header">План Разработки</h3>
+                <table class="code-table">
+                    <!-- Строка 1 -->
+                    <tr>
+                        <td>
+                            <div class="blur-box" onclick="this.classList.toggle('unblur')">
+                                <img src="https://api.placeholder.com/400/200?text=КОД+ДВИЖЕНИЯ" alt="Код движения">
+                                <div class="click-hint">Посмотреть код</div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="plan-content">
+                                <h4>1. Движение героя</h4>
+                                <p>Настрой управление клавишами «Стрелка вверх/вниз/влево/вправо» через изменение координат x и y.</p>
+                                <div class="questions-list">
+                                    <strong>Вопросы:</strong> Как сделать движение быстрее? В какую сторону идет герой, если X уменьшается?
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <!-- Строка 2 -->
+                    <tr>
+                        <td>
+                            <div class="blur-box" onclick="this.classList.toggle('unblur')">
+                                <img src="https://api.placeholder.com/400/200?text=КОД+СТЕН" alt="Код касания стен">
+                                <div class="click-hint">Посмотреть код</div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="plan-content">
+                                <h4>2. Стены лабиринта</h4>
+                                <p>Добавь проверку: если персонаж касается цвета стен, он должен отскочить назад.</p>
+                                <div class="questions-list">
+                                    <strong>Вопросы:</strong> Почему важно менять координату на противоположное число? Что будет без этого блока?
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <!-- Строка 3 -->
+                    <tr>
+                        <td>
+                            <div class="blur-box" onclick="this.classList.toggle('unblur')">
+                                <img src="https://api.placeholder.com/400/200?text=КОД+ПОБЕДЫ" alt="Код финиша">
+                                <div class="click-hint">Посмотреть код</div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="plan-content">
+                                <h4>3. Победа и финиш</h4>
+                                <p>При касании портала игра должна переходить на следующий уровень или останавливаться с поздравлением.</p>
+                                <div class="questions-list">
+                                    <strong>Вопросы:</strong> Какой блок лучше использовать для финиша: касание цвета или касание спрайта?
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </section>
+    </div>
 
  <script>
         const questions = [

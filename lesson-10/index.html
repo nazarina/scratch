@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Урок №11. Игра лабиринт</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            --soft-pink: #fff0f3;
+            --soft-purple: #f3f0ff;
+            --accent-color: #008080;
+            --deep-accent: #800000;
+            --text-main: #4a4a4a;
+            --white: #ffffff;
+            --button-grad: linear-gradient(to top, #800000 0%, #d63031 100%);
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #fffafa;
+            color: var(--text-main);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* Hero section */
+        .hero-section {
+            min-height: 500px;
+            background: linear-gradient(135deg, var(--soft-purple) 0%, #ffffff 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            padding: 40px 20px;
+        }
+
+        .decor {
+            position: absolute;
+            background: var(--accent-color);
+            opacity: 0.07;
+            border-radius: 8px;
+            animation: float 8s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(5deg); }
+        }
+
+        .corner {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            border: 2px solid var(--accent-color);
+            opacity: 0.03;
+        }
+        .top-left { top: -100px; left: -100px; border-radius: 50%; }
+        .bottom-right { bottom: -100px; right: -100px; border-radius: 40px; transform: rotate(45deg); }
+
+        .logo-img {
+            width: 110px;
+            height: 110px;
+            background: var(--white);
+            border-radius: 30px;
+            padding: 15px;
+            box-shadow: 0 10px 25px rgba(128, 0, 0, 0.05);
+            border: 1px solid rgba(128, 0, 0, 0.1);
+            margin: 0 auto 20px;
+        }
+
+        .lesson-badge {
+            background: var(--deep-accent);
+            color: var(--white);
+            padding: 4px 18px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            text-transform: lowercase;
+            letter-spacing: 0.5px;
+            display: inline-block;
+            margin-bottom: 12px;
+        }
+
+        h1 {
+            font-family: 'Verdana', sans-serif;
+            color: var(--deep-accent);
+            font-size: clamp(2.2rem, 7vw, 3.5rem);
+            margin: 0;
+            text-transform: lowercase;
+            font-weight: 900;
+            line-height: 1.1;
+        }
+
+        .subtitle {
+            color: var(--accent-color);
+            font-size: 1.1rem;
+            margin-top: 8px;
+            opacity: 0.8;
+            font-weight: 300;
+        }
+
+        .section-container {
+            padding: 80px 20px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .lowercase-header {
+            text-transform: lowercase;
+            font-weight: 900;
+            color: var(--deep-accent);
+            letter-spacing: -0.5px;
+        }
+
+        /* Quiz */
+        .perspective-1000 { perspective: 1000px; }
+        .card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-style: preserve-3d;
+            cursor: pointer;
+        }
+        .card-inner.is-flipped { transform: rotateY(180deg); }
+        .card-front, .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 2.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2.5rem;
+            text-align: center;
+            box-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.03);
+            border: 1px solid rgba(0, 0, 0, 0.03);
+        }
+        .card-front { background-color: var(--white); }
+        .card-back { background-color: var(--soft-purple); transform: rotateY(180deg); }
+
+        .grid-line { stroke: var(--accent-color); stroke-width: 1; stroke-dasharray: 2; opacity: 0.3; }
+        .axis-arrow { fill: none; stroke: var(--accent-color); stroke-width: 1.5; opacity: 0.6; }
+        .direction-arrow { fill: none; stroke: var(--deep-accent); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+
+        /* Project Block */
+        .repeat-block {
+            background: linear-gradient(180deg, transparent 0%, var(--soft-pink) 100%);
+            border-radius: 4rem;
+            padding: 80px 20px;
+            margin: 20px 0;
+        }
+
+        .project-frame-container {
+            background: white;
+            border-radius: 40px;
+            padding: 15px;
+            box-shadow: 0 30px 60px rgba(128, 0, 0, 0.04);
+            margin-bottom: 30px;
+            overflow: hidden;
+            aspect-ratio: 4/3;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 8px solid var(--white);
+        }
+
+        .quiz-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        .btn-check {
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: 700;
+            text-transform: lowercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .btn-yes { background: var(--soft-purple); color: var(--accent-color); border-color: var(--accent-color); }
+        .btn-no { background: var(--soft-pink); color: var(--deep-accent); border-color: var(--deep-accent); }
+        
+        .btn-check:hover { transform: translateY(-3px); opacity: 0.8; }
+
+        .action-button {
+            background: var(--button-grad);
+            color: white;
+            padding: 18px 50px;
+            border-radius: 100px;
+            font-weight: 700;
+            text-transform: lowercase;
+            letter-spacing: 0.5px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 12px 25px rgba(128, 0, 0, 0.15);
+            display: inline-block;
+            border: none;
+            cursor: pointer;
+        }
+
+        .action-button:hover {
+            transform: scale(1.05) translateY(-5px);
+            box-shadow: 0 20px 40px rgba(128, 0, 0, 0.25);
+        }
+
+        .feedback-toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: var(--white);
+            padding: 15px 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 100;
+            border-left: 5px solid var(--accent-color);
+        }
+        .feedback-toast.show { transform: translateX(-50%) translateY(0); }
+    </style>
+</head>
+<body>
+
+    <!-- HERO SECTION -->
+    <section class="hero-section">
+        <div class="decor" style="width: 60px; height: 60px; top: 10%; left: 5%;"></div>
+        <div class="decor" style="width: 35px; height: 35px; top: 70%; left: 10%; background: var(--deep-accent); border-radius: 50%;"></div>
+        <div class="decor" style="width: 45px; height: 45px; top: 15%; right: 15%; border-radius: 20px;"></div>
+
+        <div class="corner top-left"></div>
+        <div class="corner bottom-right"></div>
+
+        <div class="text-center z-10 px-4">
+            <div class="logo-container">
+                <img src="https://api.placeholder.com/120/120" alt="логотип" class="logo-img">
+            </div>
+            <div class="lesson-badge">урок №11</div>
+            <h1>игра лабиринт</h1>
+            <div class="subtitle">приключение антивируса в цифровом мире</div>
+        </div>
+    </section>
+
+   <!-- CONTENT SECTION -->
+    <main class="quiz-section">
+        <header class="mb-16 text-center">
+            <h2 class="text-4xl mb-4 lowercase-header">штурман лабиринта</h2>
+            <p class="text-lg" style="color: var(--accent-color);">проверь свои знания: нажми на карточку, чтобы узнать ответ</p>
+        </header>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8" id="quiz-grid">
+            <!-- Карточки вставляются скриптом -->
+        </div>
+
+       
+    </main>
+
+ 
+
+    
+
+    <!-- REPEAT SECTION -->
+    <div class="repeat-block">
+        <section class="section-container pt-0 pb-10">
+            <header class="mb-12 text-center">
+                <h2 class="text-4xl mb-4 lowercase-header">Повторение</h2>
+                <p class="text-lg opacity-70" style="color: var(--accent-color);">посмотри на проект. все ли блоки в нем на месте?</p>
+            </header>
+
+            <div class="project-frame-container">
+                <iframe src="https://scratch.mit.edu/projects/embed/1012345678/?autostart=false" 
+                        allowtransparency="true" 
+                        width="485" 
+                        height="402" 
+                        frameborder="0" 
+                        scrolling="no" 
+                        allowfullscreen
+                        style="max-width: 100%; border-radius: 25px;">
+                </iframe>
+            </div>
+
+  
+
+            <div class="text-center">
+                <button class="action-button" onclick="window.open('https://scratch.mit.edu', '_blank')">
+                    открыть заготовку
+                </button>
+            </div>
+        </section>
+    </div>
+
+    <!-- FEEDBACK TOAST -->
+    <div id="toast" class="feedback-toast">
+        <span id="toast-text"></span>
+    </div>
+
+    <footer class="py-16 text-center opacity-30 text-xs tracking-widest uppercase">
+        <p>заботливое образование &bull; 2024</p>
+    </footer>
+
+ <script>
+        const questions = [
+            {
+                id: 1,
+                text: "Если изменить x на 5, то персонаж подвинется влево?",
+                isCorrect: false,
+                explanation: "Нет! Прибавление к x (положительное число) двигает героя вправо. Чтобы идти влево, нужно уменьшать x.",
+                arrow: 'right'
+            },
+            {
+                id: 2,
+                text: "Если изменить y на 10, то персонаж поднимется вверх?",
+                isCorrect: true,
+                explanation: "Верно! Ось y отвечает за высоту. Плюс — это всегда движение в облака!",
+                arrow: 'up'
+            },
+            {
+                id: 3,
+                text: "Если изменить x на -5, персонаж окажется левее?",
+                isCorrect: true,
+                explanation: "Да! Отрицательное изменение x уводит героя в левую сторону экрана.",
+                arrow: 'left'
+            },
+            {
+                id: 4,
+                text: "Если изменить y на -10, персонаж упадет вниз?",
+                isCorrect: true,
+                explanation: "Точно! Минус по оси y — это спуск в нижнюю часть лабиринта.",
+                arrow: 'down'
+            }
+        ];
+
+        function createSVG(arrowType) {
+            let path = '';
+            if (arrowType === 'right') path = 'M 55 50 L 80 50 M 75 45 L 80 50 L 75 55';
+            if (arrowType === 'left') path = 'M 45 50 L 20 50 M 25 45 L 20 50 L 25 55';
+            if (arrowType === 'up') path = 'M 50 45 L 50 20 M 45 25 L 50 20 L 55 25';
+            if (arrowType === 'down') path = 'M 50 55 L 50 80 M 45 75 L 50 80 L 55 75';
+
+            return `
+                <svg viewBox="0 0 100 100" class="w-24 h-24 mx-auto my-4">
+                    <line x1="10" y1="50" x2="90" y2="50" class="grid-line" />
+                    <line x1="50" y1="10" x2="50" y2="90" class="grid-line" />
+                    <text x="90" y="45" font-size="8" fill="var(--accent-color)">x</text>
+                    <text x="55" y="15" font-size="8" fill="var(--accent-color)">y</text>
+                    <circle cx="50" cy="50" r="4" fill="var(--deep-accent)" />
+                    <path d="${path}" class="direction-arrow" />
+                </svg>
+            `;
+        }
+
+        const grid = document.getElementById('quiz-grid');
+
+        questions.forEach(q => {
+            const card = document.createElement('div');
+            card.className = 'relative h-72 perspective-1000 group';
+            
+            card.innerHTML = `
+                <div class="card-inner" onclick="this.classList.toggle('is-flipped')">
+                    <div class="card-front">
+                        <span style="color: var(--accent-color);" class="font-bold mb-4 uppercase text-xs tracking-widest">загадка ${q.id}</span>
+                        <p class="text-xl font-medium leading-snug text-[#4a4a4a] px-2">
+                            ${q.text}
+                        </p>
+                        <div class="mt-8 flex gap-3">
+                            <div class="px-6 py-2 rounded-full text-sm font-bold" style="background: var(--soft-pink); color: var(--deep-accent)">да</div>
+                            <div class="px-6 py-2 rounded-full text-sm font-bold" style="background: var(--soft-pink); color: var(--deep-accent)">нет</div>
+                        </div>
+                    </div>
+                    <div class="card-back">
+                        <div class="flex items-center gap-2 mb-1">
+                            <span class="text-lg font-black uppercase" style="color: ${q.isCorrect ? 'var(--accent-color)' : 'var(--deep-accent)'}">
+                                ${q.isCorrect ? 'верно!' : 'не совсем!'}
+                            </span>
+                        </div>
+                        ${createSVG(q.arrow)}
+                        <p class="text-sm leading-relaxed text-[#4a4a4a] px-4">
+                            ${q.explanation}
+                        </p>
+                    </div>
+                </div>
+            `;
+            grid.appendChild(card);
+        });
+    </script>
+</body>
+</html>

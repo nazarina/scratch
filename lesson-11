@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Урок: Перо, градусы и условия</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            --soft-pink: #fff0f3;
+            --soft-purple: #f3f0ff;
+            --accent-color: #008080;
+            --deep-accent: #800000;
+            --text-main: #4a4a4a;
+            --white: #ffffff;
+            --button-grad: linear-gradient(to top, #800000 0%, #d63031 100%);
+        }
+
+        body {
+            background-color: var(--white);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        .hero-banner {
+            background: linear-gradient(135deg, var(--soft-pink) 0%, var(--soft-purple) 100%);
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        .hero-banner h1 {
+            font-size: 2.5rem;
+            color: var(--deep-accent);
+            font-weight: 800;
+            margin: 0;
+           
+        }
+
+        .section-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .block-header {
+            font-weight: 800;
+            color: var(--deep-accent);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+          
+        }
+
+        .quiz-item {
+            background: #f9f9f9;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+            border: 1px solid #eee;
+        }
+
+        .option-btn {
+            display: block;
+            width: 100%;
+            text-align: left;
+            padding: 10px 15px;
+            margin-top: 8px;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            transition: 0.2s;
+            cursor: pointer;
+        }
+
+        .option-btn:hover { background: var(--soft-purple); }
+        .correct { background: #d1fae5 !important; border-color: #10b981 !important; }
+        .wrong { background: #fee2e2 !important; border-color: #ef4444 !important; }
+
+        .clock-container {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            border: 8px solid var(--deep-accent);
+            border-radius: 50%;
+            margin: 20px auto;
+            background: white;
+        }
+
+        .clock-hand {
+            position: absolute;
+            bottom: 50%;
+            left: 50%;
+            width: 4px;
+            height: 80px;
+            background: var(--accent-color);
+            transform-origin: bottom center;
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 2px;
+        }
+
+        .clock-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 12px;
+            height: 12px;
+            background: var(--deep-accent);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .project-card {
+            background: white;
+            border: 1px solid #eee;
+            border-radius: 20px;
+            padding: 30px;
+            margin: 40px 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+        }
+
+        .btn-link {
+            background: var(--button-grad);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 8px;
+            text-decoration: none;
+            display: inline-block;
+            font-weight: 600;
+            margin-top: 15px;
+        }
+
+        .code-block {
+            background: #2d3436;
+            color: #fab1a0;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 0.9rem;
+            margin: 10px 0;
+        }
+
+        .pen-tool-image {
+            width: 100%;
+            max-width: 400px;
+            border-radius: 12px;
+            border: 2px solid #eee;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="hero-banner">
+  
+        <h1>Управление, перо и углы</h1>
+    </header>
+
+    <main class="section-container">
+        
+        <!-- Повторение знаний -->
+        <section class="mb-12">
+            <h2 class="block-header">Повторение</h2>
+            <div id="quiz">
+                <div class="quiz-item">
+                    <p>1. Как заставить спрайт стать в два раза больше от его текущего состояния?</p>
+                    <button class="option-btn" onclick="check(this, false)">Установить размер 50%</button>
+                    <button class="option-btn" onclick="check(this, true)">Изменить размер на 100</button>
+                    <button class="option-btn" onclick="check(this, false)">Установить размер 200%</button>
+                </div>
+                <div class="quiz-item">
+                    <p>2. Что делает блок «если <...> то»?</p>
+                    <button class="option-btn" onclick="check(this, false)">Повторяет действие всегда</button>
+                    <button class="option-btn" onclick="check(this, true)">Выполняет код, только если условие верно</button>
+                    <button class="option-btn" onclick="check(this, false)">Останавливает проект</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Логика управления спрайтом -->
+        <section class="mb-12 bg-[#f3f0ff] p-8 rounded-2xl">
+            <h2 class="block-header">Размер и условия</h2>
+            <p class="mb-4">Для создания интерактивности мы используем два типа блоков:</p>
+            <ul class="list-disc ml-5 space-y-4">
+                <li><strong>Установка размера:</strong> Блок <code>установить размер 100%</code> делает спрайт обычным. 200% — увеличивает вдвое, 50% — уменьшает вдвое.</li>
+                <li><strong>Изменение размера:</strong> Блок <code>изменить размер на 10</code> прибавляет 10 к текущему значению.</li>
+                <li><strong>Условный оператор:</strong> Блок <code>если <клавиша нажата?> то</code> позволяет спрайту реагировать на твои действия. Это «мозг» программы.</li>
+            </ul>
+        </section>
+
+        <!-- Градусы и Фрейм с часами -->
+        <section class="mb-12">
+            <h2 class="block-header">Что такое градусы?</h2>
+            <div class="bg-[#fff0f3] p-8 rounded-2xl text-center">
+                <p class="mb-6 text-left">Представь стрелку часов. Поворот — это изменение направления этой стрелки. Полный круг — это 360 градусов.</p>
+                
+                <div class="clock-container">
+                    <div id="hand" class="clock-hand"></div>
+                    <div class="clock-center"></div>
+                </div>
+
+                <div class="flex flex-wrap justify-center gap-4 mt-6">
+                    <button onclick="rotateHand(90)" class="px-4 py-2 bg-white border border-pink-200 rounded-full hover:bg-pink-50 transition">Повернуть на 90°</button>
+                    <button onclick="rotateHand(45)" class="px-4 py-2 bg-white border border-pink-200 rounded-full hover:bg-pink-50 transition">Повернуть на 45°</button>
+                    <button onclick="resetHand()" class="px-4 py-2 bg-pink-100 rounded-full hover:bg-pink-200 transition">Сброс (0°)</button>
+                </div>
+
+                <div class="mt-8 text-left grid md:grid-cols-2 gap-6">
+                    <div class="bg-white p-4 rounded-xl">
+                        <h4 class="font-bold text-teal-800">Повернуться на 90°</h4>
+                        <p class="text-sm">Это команда <strong>относительно</strong> текущего положения. Если спрайт смотрел вправо, он станет смотреть вниз.</p>
+                    </div>
+                    <div class="bg-white p-4 rounded-xl">
+                        <h4 class="font-bold text-teal-800">Повернуться в направлении 90°</h4>
+                        <p class="text-sm">Это <strong>абсолютная</strong> команда. Спрайт всегда повернется лицом вправо, где бы он ни находился до этого.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Инструмент Перо -->
+        <section class="mb-12">
+            <h2 class="block-header">Инструмент перо</h2>
+            <p>Чтобы спрайт оставлял след при движении, мы используем расширение <strong>Перо</strong>. Его нужно добавить через кнопку в левом нижнем углу экрана.</p>
+            <div class="text-center">
+                <!-- Скриншот из базы -->
+                <img src="https://raw.githubusercontent.com/LLM-Assets/scratch-assets/main/pen_extension.png" alt="Инструмент перо в Scratch" class="pen-tool-image mx-auto" onerror="this.src='https://placehold.co/400x250?text=Блоки+Пера'">
+            </div>
+            <p class="mt-4">Основные блоки: <code>стереть всё</code> (очистка), <code>опустить перо</code> (начать рисовать) и <code>поднять перо</code> (закончить).</p>
+        </section>
+
+        <!-- Проект 1: Солнечная система -->
+        <section class="project-card">
+            <h2 class="block-header">проект №1: орбиты планет</h2>
+            <p class="mb-6">В этом проекте Солнце стоит в центре, а Земля вращается вокруг него. Мы используем градусы для движения по кругу и перо, чтобы увидеть траекторию (орбиту).</p>
+            <div class="flex flex-col items-center">
+                <iframe src="https://scratch.mit.edu/projects/1317424578/embed" allowtransparency="true" width="485" height="402" frameborder="0" scrolling="no" allowfullscreen></iframe>
+                <a href="https://scratch.mit.edu/projects/1317424578/editor" target="_blank" class="btn-link">Открыть заготовку</a>
+            </div>
+            <div class="mt-6 space-y-2 text-sm bg-gray-50 p-4 rounded-lg">
+                <p><strong>Алгоритм для Земли:</strong></p>
+                <ol class="list-decimal ml-5">
+                    <li>В начале: <code>стереть всё</code> и <code>опустить перо</code>.</li>
+                    <li>В цикле <code>всегда</code>: <code>идти 10 шагов</code> и <code>повернуть на 5 градусов</code>.</li>
+                </ol>
+            </div>
+        </section>
+
+        <!-- Проект 2: Жучок-рисовальщик -->
+        <section class="project-card">
+            <h2 class="block-header">Проект №2</h2>
+           
+            <div class="flex flex-col items-center">
+                <iframe src="https://scratch.mit.edu/projects/1317426182/embed" allowtransparency="true" width="485" height="402" frameborder="0" scrolling="no" allowfullscreen></iframe>
+                <a href="https://scratch.mit.edu/projects/1317426182/editor" target="_blank" class="btn-link">Открыть заготовку</a>
+            </div>
+            <div class="mt-6 space-y-2 text-sm bg-gray-50 p-4 rounded-lg">
+                <p><strong>Как собрать управление:</strong></p>
+                <div class="code-block">
+                    всегда:<br>
+                    &nbsp;&nbsp;если клавиша [стрелка вверх] нажата?<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;идти 5 шагов<br>
+                    &nbsp;&nbsp;если клавиша [стрелка влево] нажата?<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;повернуть на 15 градусов влево
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="py-10 text-center opacity-40 text-xs">
+       
+    </footer>
+
+    <script>
+        let currentRotation = 0;
+        const hand = document.getElementById('hand');
+
+        function rotateHand(degrees) {
+            currentRotation += degrees;
+            hand.style.transform = `rotate(${currentRotation}deg)`;
+        }
+
+        function resetHand() {
+            currentRotation = 0;
+            hand.style.transform = `rotate(0deg)`;
+        }
+
+        function check(btn, isCorrect) {
+            const parent = btn.parentElement;
+            const buttons = parent.querySelectorAll('.option-btn');
+            buttons.forEach(b => b.disabled = true);
+            
+            if (isCorrect) {
+                btn.classList.add('correct');
+            } else {
+                btn.classList.add('wrong');
+                buttons.forEach(b => {
+                    if (b.innerText.includes('Изменить размер на 100') || b.innerText.includes('только если условие верно')) {
+                        b.classList.add('correct');
+                    }
+                });
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Урок: Финальный проект Игра</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Montserrat:wght@800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --soft-pink: #fff0f3;
+            --soft-purple: #f3f0ff;
+            --accent-teal: #008080;
+            --deep-accent: #800000;
+            --text-main: #2d3436;
+            --white: #ffffff;
+            --button-grad: linear-gradient(135deg, #800000 0%, #d63031 100%);
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--soft-pink);
+            font-family: 'Inter', sans-serif;
+            color: var(--text-main);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* 1. Блок: БАННЕР */
+        .hero-banner {
+            width: 100%;
+            height: 450px;
+            background: linear-gradient(135deg, var(--soft-purple) 0%, var(--white) 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 10px solid var(--white);
+        }
+
+        .lesson-tag {
+            background: var(--deep-accent);
+            color: white;
+            padding: 8px 24px;
+            border-radius: 50px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 14px;
+            margin-bottom: 20px;
+            z-index: 1;
+        }
+
+        h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 64px;
+            color: var(--deep-accent);
+            margin: 0;
+            line-height: 1.1;
+           
+            z-index: 1;
+        }
+
+        .hero-subtitle {
+            font-size: 22px;
+            color: var(--accent-teal);
+            margin-top: 15px;
+            font-weight: 400;
+            z-index: 1;
+        }
+
+        /* 2. Блок: ЗАДАНИЕ */
+        .section-container {
+            width: 100%;
+            max-width: 1100px;
+            padding: 60px 20px;
+        }
+
+        .assignment-card {
+            background: var(--white);
+            border-radius: 40px;
+            padding: 50px;
+            box-shadow: 0 20px 40px rgba(128, 0, 0, 0.05);
+            border-left: 15px solid var(--accent-teal);
+            position: relative;
+        }
+
+        .assignment-card h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 42px;
+            color: var(--deep-accent);
+            margin-bottom: 25px;
+          
+        }
+
+        .assignment-text {
+            font-size: 22px;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .requirement-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+        }
+
+        .req-item {
+            background: var(--soft-purple);
+            padding: 20px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 700;
+            color: var(--accent-teal);
+            font-size: 18px;
+        }
+
+        /* 3. Блок: ФРЕЙМЫ (2 в ряд) */
+        .examples-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .example-box {
+            background: var(--white);
+            border-radius: 30px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            text-align: center;
+        }
+
+        .example-box h3 {
+            font-size: 20px;
+            color: var(--deep-accent);
+            margin-bottom: 15px;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .iframe-wrapper {
+            border-radius: 15px;
+            overflow: hidden;
+            border: 4px solid var(--soft-pink);
+            aspect-ratio: 4 / 3;
+        }
+
+        iframe { width: 100%; height: 100%; border: none; }
+
+        /* 4. Блок: ВОПРОСЫ */
+        .questions-section {
+            background: var(--accent-teal);
+            color: white;
+            border-radius: 40px;
+            padding: 50px;
+            margin-top: 60px;
+        }
+
+        .questions-section h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 38px;
+            margin-bottom: 30px;
+            text-align: center;
+           
+        }
+
+        .questions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .q-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 25px;
+            border-radius: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .q-card i { font-size: 32px; margin-bottom: 15px; color: var(--soft-pink); display: block; }
+        .q-card h4 { font-size: 20px; margin-bottom: 8px; color: var(--white); }
+        .q-card p { font-size: 14px; opacity: 0.8; margin: 0; }
+
+        /* 5. Блок: ПЛАН (TEXTAREA) */
+        .planning-section {
+            margin-top: 60px;
+            text-align: center;
+        }
+
+        .planning-section h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 38px;
+            color: var(--deep-accent);
+            margin-bottom: 25px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 350px;
+            border-radius: 30px;
+            border: 5px solid var(--white);
+            padding: 35px;
+            font-family: 'Inter', sans-serif;
+            font-size: 20px;
+            background: var(--white);
+            box-shadow: 0 15px 40px rgba(128, 0, 0, 0.05);
+            resize: none;
+            outline: none;
+        }
+
+        textarea:focus { border-color: var(--accent-teal); }
+
+        .footer { padding: 50px; opacity: 0.4; font-size: 12px; text-transform: uppercase; letter-spacing: 2px; }
+
+        @media (max-width: 800px) {
+            .examples-grid { grid-template-columns: 1fr; }
+            h1 { font-size: 42px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="hero-banner">
+        
+        <h1>Проект «игра»</h1>
+        <p class="hero-subtitle">Создай мир, где всё работает по-твоему.</p>
+    </header>
+
+    <main class="section-container">
+        <section class="assignment-card">
+            <h2>Твоё задание</h2>
+            <p class="assignment-text">
+                Стань архитектором собственной игры! Твоя задача — объединить движение, градусы и условия в один проект. 
+            </p>
+            <div class="requirement-list">
+                <div class="req-item"><i class="fa-solid fa-arrows-up-down-left-right"></i> управление</div>
+                <div class="req-item"><i class="fa-solid fa-rotate"></i> углы и градусы</div>
+                <div class="req-item"><i class="fa-solid fa-paintbrush"></i> эффект пера</div>
+                <div class="req-item"><i class="fa-solid fa-lightbulb"></i> условия «если»</div>
+            </div>
+        </section>
+
+       
+        <section style="box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); background:white; border-radius:40px; padding:50px; margin-top:100px" >
+            <h2 style="text-align: center; font-family: 'Montserrat', sans-serif; font-size: 38px; color: var(--deep-accent); margin: 60px 0 30px;">Пример для вдохновения</h2>
+          
+          <iframe src="https://scratch.mit.edu/projects/452586667/embed" allowtransparency="true" width="100%" height="auto" frameborder="0" scrolling="no" allowfullscreen></iframe>
+          <p style="font-size:14px">*Автор игры: StSofi</p>
+        </section>
+
+        <section class="questions-section">
+            <h2>вопросы для архитектора игры</h2>
+            <div class="questions-grid">
+                <div class="q-card">
+                    <i class="fa-solid fa-cat"></i>
+                    <h4>персонажи</h4>
+                    <p>Кто герой? Какие костюмы ему нужны?</p>
+                </div>
+                <div class="q-card">
+                    <i class="fa-solid fa-map"></i>
+                    <h4>сцены</h4>
+                    <p>Где всё происходит? Какой будет фон?</p>
+                </div>
+                <div class="q-card">
+                    <i class="fa-solid fa-shield-halved"></i>
+                    <h4>препятствия</h4>
+                    <p>Что мешает игроку дойти до финиша?</p>
+                </div>
+                <div class="q-card">
+                    <i class="fa-solid fa-flag-checkered"></i>
+                    <h4>финиш</h4>
+                    <p>Как понять, что игрок победил?</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="planning-section">
+            <h2>составь план разработки</h2>
+            <textarea id="gamePlan" placeholder="Напиши здесь свой план...&#10;1. Выберу спрайт...&#10;2. Настрою управление на стрелки...&#10;3. Добавлю условие победы..."></textarea>
+            <p style="margin-top: 15px; font-size: 14px; color: var(--accent-teal); font-weight: bold;">
+                <i class="fa-solid fa-cloud-arrow-up"></i> информация сохраняется автоматически
+            </p>
+        </section>
+    </main>
+
+    <footer class="footer">
+        заботливое образование • 2024 • scratch проект
+    </footer>
+
+    <script>
+        const planArea = document.getElementById('gamePlan');
+        const STORAGE_KEY = 'scratch_final_project_plan';
+
+        // Загрузка данных при старте
+        window.onload = () => {
+            const savedData = localStorage.getItem(STORAGE_KEY);
+            if (savedData) {
+                planArea.value = savedData;
+            }
+        };
+
+        // Сохранение при вводе текста
+        planArea.addEventListener('input', () => {
+            localStorage.setItem(STORAGE_KEY, planArea.value);
+        });
+    </script>
+
+</body>
+</html>

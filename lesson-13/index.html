@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Урок 13: Что такое интерфейс?</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Montserrat:wght@700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --soft-pink: #fff0f3;
+            --soft-purple: #f3f0ff;
+            --accent-color: #008080; /* Бирюзовый */
+            --deep-accent: #800000;  /* Бордовый */
+            --text-main: #4a4a4a;
+            --white: #ffffff;
+            --button-grad: linear-gradient(to top, #800000 0%, #d63031 100%);
+            
+            --bright-pink: #ff477e;
+            --bright-teal: #00d2d3;
+            --light-teal: #e6f7f7;
+            --card-shadow: 0 20px 40px rgba(255, 71, 126, 0.08);
+        }
+
+        * { box-sizing: border-box; transition: all 0.2s ease; }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--white);
+            font-family: 'Inter', sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+        }
+
+        /* 1. Блок: БАННЕР */
+        .hero-banner {
+            width: 100%;
+            padding: 90px 20px;
+            background: 
+                radial-gradient(circle at 10% 20%, rgba(0, 210, 211, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(255, 71, 126, 0.08) 0%, transparent 40%);
+            text-align: center;
+            position: relative;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .lesson-tag {
+            display: inline-block;
+            background: var(--soft-pink);
+            color: var(--bright-pink);
+            padding: 8px 22px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 14px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 71, 126, 0.15);
+        }
+
+        h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: clamp(32px, 6vw, 56px);
+            color: var(--deep-accent);
+            margin: 0;
+            font-weight: 900;
+            line-height: 1.15;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(18px, 2.5vw, 22px);
+            color: var(--text-main);
+            margin: 20px auto 0;
+            max-width: 600px;
+            font-weight: 500;
+            opacity: 0.9;
+        }
+
+        .section-container {
+            width: 100%;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* 2. Блок: ПОВТОРЕНИЕ */
+        .section-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 32px;
+            color: var(--deep-accent);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .quiz-container {
+            background: var(--white);
+            border-radius: 40px;
+            padding: 40px;
+            box-shadow: var(--card-shadow);
+            border: 2px solid var(--soft-pink);
+            margin-bottom: 60px;
+        }
+
+        .quiz-item {
+            margin-bottom: 30px;
+            padding-bottom: 25px;
+            border-bottom: 1px dashed #f0f0f0;
+        }
+
+        .quiz-item:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .quiz-question {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--deep-accent);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .quiz-question i {
+            color: var(--bright-pink);
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 12px;
+        }
+
+        .option-btn {
+            background: var(--white);
+            border: 2px solid #f0f0f0;
+            padding: 14px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            text-align: left;
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            outline: none;
+        }
+
+        .option-btn:hover:not(:disabled) {
+            border-color: var(--accent-color);
+            background: var(--soft-pink);
+        }
+
+        .option-btn.correct {
+            background: #e6faf0 !important;
+            border-color: #2ed573 !important;
+            color: #1e7043 !important;
+        }
+
+        .option-btn.wrong {
+            background: #ffebe9 !important;
+            border-color: #ff4d4d !important;
+            color: #a11b1b !important;
+        }
+
+        /* 3. Блок: ОБЪЯСНЕНИЕ ТЕМЫ */
+        .info-card {
+            background: var(--white);
+            border-radius: 40px;
+            padding: 50px;
+            box-shadow: var(--card-shadow);
+            border: 2px solid var(--soft-pink);
+            margin-bottom: 60px;
+        }
+
+        .info-card h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 30px;
+            color: var(--deep-accent);
+            margin-top: 0;
+            margin-bottom: 25px;
+        }
+
+        .info-text {
+            font-size: 18px;
+            line-height: 1.7;
+            color: var(--text-main);
+            margin-bottom: 40px;
+        }
+
+        /* Интерактивный демонстратор интерфейса */
+        .cupcake-showcase {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            background: var(--soft-purple);
+            padding: 40px;
+            border-radius: 35px;
+            border: 1px solid rgba(0, 128, 128, 0.15);
+            align-items: center;
+        }
+
+        .cupcake-display {
+            background: white;
+            padding: 30px;
+            border-radius: 25px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.03);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 320px;
+        }
+
+        /* Интерактивные кнопки интерфейса */
+        .interface-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .interface-group {
+            background: white;
+            padding: 15px 20px;
+            border-radius: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.02);
+        }
+
+        .interface-group-title {
+            font-size: 14px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--accent-color);
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+
+        .btn-row {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .ui-toggle-btn {
+            border: 2px solid #e0e0e0;
+            background: white;
+            padding: 8px 16px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            color: var(--text-main);
+        }
+
+        .ui-toggle-btn.active {
+            border-color: var(--accent-color);
+            background: var(--light-teal);
+            color: var(--accent-color);
+        }
+
+        /* 4. Блок: СРАВНЕНИЕ ИГР */
+        .comparison-section {
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.08), 0 10px 10px -5px rgba(0, 0, 0, 0.04); 
+            background: white; 
+            border-radius: 40px; 
+            padding: 50px; 
+            margin-top: 60px;
+            border: 1px solid rgba(0,0,0,0.02);
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 40px;
+            margin-top: 30px;
+        }
+
+        .game-frame-box {
+            text-align: center;
+        }
+
+        .game-frame-box h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 20px;
+            color: var(--deep-accent);
+            margin-bottom: 15px;
+        }
+
+        .iframe-wrapper {
+            border-radius: 25px;
+            overflow: hidden;
+            background: #fafafa;
+            aspect-ratio: 4 / 3;
+            border: 1px solid #eee;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.02);
+        }
+
+        iframe { width: 100%; height: 100%; border: none; }
+
+        .author-tag {
+            font-size: 14px; 
+            color: var(--accent-color); 
+            font-family: 'Montserrat', sans-serif;
+            margin-top: 15px;
+            font-style: italic;
+            text-align: right;
+            display: block;
+        }
+
+        /* Кнопка "Открыть заготовку" */
+        .action-button-container {
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .action-btn {
+            background: var(--button-grad);
+            color: white;
+            padding: 20px 60px;
+            border-radius: 100px;
+            display: inline-block;
+            font-weight: 800;
+            text-transform: lowercase;
+            font-size: 18px;
+            box-shadow: 0 15px 30px rgba(128, 0, 0, 0.25);
+            cursor: pointer;
+            text-decoration: none;
+            border: none;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 40px rgba(128, 0, 0, 0.35);
+        }
+
+        .action-btn:active {
+            transform: scale(0.97);
+        }
+
+        .footer { 
+            padding: 80px 20px; 
+            text-align: center; 
+            font-weight: 700; 
+            color: #ddd; 
+            letter-spacing: 3px; 
+            font-size: 11px;
+            text-transform: uppercase;
+        }
+
+        @media (max-width: 900px) {
+            .cupcake-showcase {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .comparison-grid { grid-template-columns: 1fr; }
+            .section-container { padding: 20px; }
+            .info-card, .quiz-container, .comparison-section { padding: 30px 20px; }
+            h1 { font-size: 34px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 1. Блок: БАННЕР -->
+    <header class="hero-banner">
+        <div class="lesson-tag">урок 13</div>
+        <h1>Интерфейс проекта</h1>
+        <p class="hero-subtitle">Придумай правила, выбери цвета и начни играть.</p>
+    </header>
+
+    <main class="section-container">
+
+        <!-- 2. Блок: ПОВТОРЕНИЕ -->
+        <section class="quiz-container">
+            <h2 class="section-title">Вспомним прошлое занятие</h2>
+            <div id="quiz">
+                
+                <!-- Вопрос 1 -->
+                <div class="quiz-item">
+                    <p class="quiz-question"><i class="fa-solid fa-envelope"></i> 1. Какой блок отправляет тайное сообщение другим спрайтам?</p>
+                    <div class="options-grid">
+                        <button class="option-btn" onclick="checkAnswer(this, false)">«ждать до...»</button>
+                        <button class="option-btn" onclick="checkAnswer(this, true)">«передать сообщение»</button>
+                        <button class="option-btn" onclick="checkAnswer(this, false)">«когда я получу...»</button>
+                    </div>
+                </div>
+
+                <!-- Вопрос 2 -->
+                <div class="quiz-item">
+                    <p class="quiz-question"><i class="fa-solid fa-pointer"></i> 2. Что произойдет, если использовать блок «когда спрайт нажат»?</p>
+                    <div class="options-grid">
+                        <button class="option-btn" onclick="checkAnswer(this, true)">код сработает при клике мышкой на этого героя</button>
+                        <button class="option-btn" onclick="checkAnswer(this, false)">спрайт просто переместится в случайную точку</button>
+                        <button class="option-btn" onclick="checkAnswer(this, false)">всей игре мгновенно наступит стоп</button>
+                    </div>
+                </div>
+
+                <!-- Вопрос 3 -->
+                <div class="quiz-item">
+                    <p class="quiz-question"><i class="fa-solid fa-location-crosshairs"></i> 3. В чем отличие блока «перейти в x, y» от блока «плыть в x, y»?</p>
+                    <div class="options-grid">
+                        <button class="option-btn" onclick="checkAnswer(this, false)">первый плывет медленно, второй телепортирует</button>
+                        <button class="option-btn" onclick="checkAnswer(this, true)">первый перемещает мгновенно, второй двигается плавно</button>
+                        <button class="option-btn" onclick="checkAnswer(this, false)">между ними нет никакой разницы</button>
+                    </div>
+                </div>
+
+                <!-- Вопрос 4 -->
+                <div class="quiz-item">
+                    <p class="quiz-question"><i class="fa-solid fa-palette"></i> 4. Какой эффект меняет окраску нашего персонажа?</p>
+                    <div class="options-grid">
+                        <button class="option-btn" onclick="checkAnswer(this, false)">эффект «призрак»</button>
+                        <button class="option-btn" onclick="checkAnswer(this, false)">эффект «рыбий глаз»</button>
+                        <button class="option-btn" onclick="checkAnswer(this, true)">эффект «цвет»</button>
+                    </div>
+                </div>
+
+                <!-- Вопрос 5 -->
+                <div class="quiz-item">
+                    <p class="quiz-question"><i class="fa-solid fa-eye-slash"></i> 5. Как временно спрятать героя с экрана, чтобы он не мешал?</p>
+                    <div class="options-grid">
+                        <button class="option-btn" onclick="checkAnswer(this, true)">использовать фиолетовый блок «спрятаться»</button>
+                        <button class="option-btn" onclick="checkAnswer(this, false)">изменить его размер до 100%</button>
+                        <button class="option-btn" onclick="checkAnswer(this, false)">переместить его в точку x: 0, y: 0</button>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- 3. Блок: ОБЪЯСНЕНИЕ ТЕМЫ И ИНТЕРАКТИВНЫЙ ШОУКЕЙС -->
+        <section class="info-card">
+            <h2>Что такое интерфейс?</h2>
+            <p class="info-text">
+                Представь, что ты готовишь праздничный капкейк. Перед тобой лежат посыпки, кремы разного цвета и красивые формочки. Но как сказать игре, какую деталь ты хочешь применить прямо сейчас? 
+                <br><br>
+                Для этого нужны <strong>кнопки управления</strong>! Всё, что помогает человеку общаться с программой (кнопки, индикаторы очков, меню выбора цвета), программисты называют красивым словом — <strong>интерфейс</strong>.
+            </p>
+            
+            <div class="cupcake-showcase">
+                <!-- Реалистичный SVG-капкейк -->
+                <div class="cupcake-display">
+                    <svg viewBox="0 0 240 260" width="100%" height="220px">
+                        <!-- Фон с сердечками (как на картинке) -->
+                        <rect x="10" y="10" width="220" height="240" rx="20" fill="#fffdec" stroke="#fffae0" stroke-width="2"/>
+                        
+                        <!-- Задний узор: Полосы и Сердечки -->
+                        <g opacity="0.65">
+                            <line x1="55" y1="10" x2="55" y2="250" stroke="#fff9d6" stroke-width="20" />
+                            <line x1="120" y1="10" x2="120" y2="250" stroke="#fff9d6" stroke-width="20" />
+                            <line x1="185" y1="10" x2="185" y2="250" stroke="#fff9d6" stroke-width="20" />
+                            
+                            <!-- Маленькие сердечки декора -->
+                            <path d="M 55 45 C 50 35, 40 35, 40 45 C 40 55, 55 65, 55 65 C 55 65, 70 55, 70 45 C 70 35, 60 35, 55 45" fill="#ffffff" />
+                            <path d="M 120 45 C 115 35, 105 35, 105 45 C 105 55, 120 65, 120 65 C 120 65, 135 55, 135 45 C 135 35, 125 35, 120 45" fill="#ffffff" />
+                            <path d="M 185 45 C 180 35, 170 35, 170 45 C 170 55, 185 65, 185 65 C 185 65, 200 55, 200 45 C 200 35, 190 35, 185 45" fill="#ffffff" />
+                            
+                            <path d="M 55 125 C 50 115, 40 115, 40 125 C 40 135, 55 145, 55 145 C 55 145, 70 135, 70 125 C 70 115, 60 115, 55 125" fill="#ffffff" />
+                            <path d="M 185 125 C 180 115, 170 115, 170 125 C 170 135, 185 145, 185 145 C 185 145, 200 135, 200 125 C 200 115, 190 115, 185 125" fill="#ffffff" />
+                        </g>
+
+                        <!-- Тень под капкейком -->
+                        <ellipse cx="120" cy="225" rx="55" ry="12" fill="#f0ecd1" />
+
+                        <!-- ШОКОЛАДНЫЙ БИСКВИТ -->
+                        <path d="M 60 155 Q 120 145 180 155 Q 190 162 175 170 Q 120 178 65 170 Q 50 162 60 155" fill="#582f2f" />
+
+                        <!-- ФОРМОЧКА КАПКЕЙКА (Гофрированная основа) -->
+                        <!-- Мы можем динамически менять fill через JS -->
+                        <path id="cupcake-cup" d="M 64 165 L 75 220 Q 77 225 82 225 L 158 225 Q 163 225 165 220 L 176 165 Z" fill="#d1b3ff" />
+                        
+                        <!-- Складки формочки (для объема) -->
+                        <g stroke="#ffffff" stroke-width="1.5" opacity="0.45">
+                            <line x1="78" y1="165" x2="86" y2="225" />
+                            <line x1="92" y1="165" x2="98" y2="225" />
+                            <line x1="106" y1="165" x2="110" y2="225" />
+                            <line x1="120" y1="165" x2="120" y2="225" />
+                            <line x1="134" y1="165" x2="130" y2="225" />
+                            <line x1="148" y1="165" x2="142" y2="225" />
+                            <line x1="162" y1="165" x2="154" y2="225" />
+                        </g>
+                        <!-- Затемняющие тени складок (для реалистичности) -->
+                        <g stroke="#000000" stroke-width="1.2" opacity="0.08">
+                            <line x1="72" y1="165" x2="80" y2="225" />
+                            <line x1="86" y1="165" x2="92" y2="225" />
+                            <line x1="100" y1="165" x2="104" y2="225" />
+                            <line x1="114" y1="165" x2="114" y2="225" />
+                            <line x1="128" y1="165" x2="124" y2="225" />
+                            <line x1="142" y1="165" x2="136" y2="225" />
+                            <line x1="156" y1="165" x2="148" y2="225" />
+                        </g>
+
+                        <!-- КРЕМ (Округлая закрученная глазурь) -->
+                        <g id="cupcake-frosting">
+                            <!-- Нижний слой крема -->
+                            <path d="M 52 152 Q 120 135 188 152 C 196 150, 192 135, 178 135 Q 120 122 62 135 C 48 135, 44 150, 52 152 Z" fill="#c3a38a" />
+                            <!-- Средний слой крема -->
+                            <path d="M 62 135 Q 120 115 178 135 C 184 133, 180 118, 166 116 Q 120 102 74 116 C 60 118, 56 133, 62 135 Z" fill="#b19178" />
+                            <!-- Верхний завиток -->
+                            <path d="M 74 116 Q 120 95 166 116 C 172 110, 160 92, 142 88 Q 120 75 126 62 Q 122 55 116 64 Q 106 80, 98 88 C 80 92, 68 110, 74 116 Z" fill="#9e7e65" />
+                        </g>
+
+                        <!-- ПОСЫПКА (Конфетти) -->
+                        <g id="cupcake-sprinkles" opacity="1">
+                            <!-- Розовые палочки -->
+                            <rect x="85" y="132" width="8" height="3" rx="1.5" transform="rotate(25, 85, 132)" fill="#ff9eb5" />
+                            <rect x="135" y="110" width="8" height="3" rx="1.5" transform="rotate(-35, 135, 110)" fill="#ff9eb5" />
+                            <rect x="110" y="140" width="8" height="3" rx="1.5" transform="rotate(15, 110, 140)" fill="#ff9eb5" />
+                            <rect x="155" y="128" width="8" height="3" rx="1.5" transform="rotate(45, 155, 128)" fill="#ff9eb5" />
+                            <rect x="118" y="90" width="8" height="3" rx="1.5" transform="rotate(-15, 118, 90)" fill="#ff9eb5" />
+                            <!-- Голубые палочки -->
+                            <rect x="105" y="120" width="8" height="3" rx="1.5" transform="rotate(-10, 105, 120)" fill="#a0e0ff" />
+                            <rect x="148" y="142" width="8" height="3" rx="1.5" transform="rotate(40, 148, 142)" fill="#a0e0ff" />
+                            <rect x="78" y="125" width="8" height="3" rx="1.5" transform="rotate(60, 78, 125)" fill="#a0e0ff" />
+                            <rect x="125" y="128" width="8" height="3" rx="1.5" transform="rotate(-45, 125, 128)" fill="#a0e0ff" />
+                        </g>
+
+                        <!-- ЧЕРНИКА (Топпинг из ягодок, как во вложении) -->
+                        <g id="cupcake-blueberry" opacity="1">
+                            <!-- Ягода 1 -->
+                            <circle cx="95" cy="85" r="16" fill="#5c6bc0" />
+                            <circle cx="95" cy="85" r="13" fill="#6f7dc6" />
+                            <!-- Корона ягоды (темное углубление черники) -->
+                            <path d="M 88 77 Q 92 72 96 78 C 94 81, 91 82, 88 77 Z" fill="#3f4f9f" />
+                            <circle cx="92" cy="78" r="2.5" fill="#35428c" />
+                            <!-- Блик -->
+                            <ellipse cx="102" cy="90" rx="4" ry="2" transform="rotate(-20, 102, 90)" fill="#9fa8da" opacity="0.6" />
+
+                            <!-- Ягода 2 -->
+                            <circle cx="120" cy="95" r="17" fill="#49599a" />
+                            <circle cx="120" cy="95" r="14" fill="#5869aa" />
+                            <path d="M 112 87 Q 116 82 120 88 C 118 91, 115 92, 112 87 Z" fill="#303f7e" />
+                            <circle cx="116" cy="88" r="2.5" fill="#243164" />
+                            <ellipse cx="126" cy="100" rx="4" ry="2" transform="rotate(-20, 126, 100)" fill="#8c9eff" opacity="0.6" />
+                        </g>
+                    </svg>
+                    <div style="font-weight: 700; color: var(--text-main); margin-top: 5px;">Твой симулятор капкейка</div>
+                </div>
+
+                <!-- Настоящий интерфейс управления -->
+                <div class="interface-panel">
+                    <div class="interface-group">
+                        <div class="interface-group-title"><i class="fa-solid fa-cookie"></i> 1. Цвет крема</div>
+                        <div class="btn-row">
+                            <button class="ui-toggle-btn active" onclick="changeFrosting('chocolate')">Шоколадный</button>
+                            <button class="ui-toggle-btn" onclick="changeFrosting('strawberry')">Клубничный</button>
+                            <button class="ui-toggle-btn" onclick="changeFrosting('mint')">Мятный</button>
+                        </div>
+                    </div>
+
+                    <div class="interface-group">
+                        <div class="interface-group-title"><i class="fa-solid fa-palette"></i> 2. Цвет формочки</div>
+                        <div class="btn-row">
+                            <button class="ui-toggle-btn active" onclick="changeCup('#d1b3ff', this)">Сиреневый</button>
+                            <button class="ui-toggle-btn" onclick="changeCup('#85e3b2', this)">Мятный</button>
+                            <button class="ui-toggle-btn" onclick="changeCup('#ffeb9c', this)">Желтый</button>
+                        </div>
+                    </div>
+
+                    <div class="interface-group">
+                        <div class="interface-group-title"><i class="fa-solid fa-ice-cream"></i> 3. Добавки</div>
+                        <div class="btn-row">
+                            <button class="ui-toggle-btn active" onclick="toggleElement('cupcake-blueberry', this)">Черника</button>
+                            <button class="ui-toggle-btn active" onclick="toggleElement('cupcake-sprinkles', this)">Посыпка</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. Блок: СРАВНЕНИЕ ИГР -->
+        <section class="comparison-section">
+            <h2 class="section-title">Интерфейс в действии</h2>
+            <p style="text-align: center; font-size: 18px; max-width: 800px; margin: 0 auto 40px; line-height: 1.6;">
+                Попробуй запустить две версии проекта. В первой версии мы добавили удобные кнопки выбора ингредиентов. Во второй версии кнопок нет — догадайся, как поменять дизайн десерта!
+            </p>
+
+            <div class="comparison-grid">
+                <!-- Игра 1: С интерфейсом -->
+                <div class="game-frame-box">
+                    <h3>Игра с интерфейсом</h3>
+                    <div class="iframe-wrapper">
+                        <iframe src="https://scratch.mit.edu/projects/452586667/embed" allowtransparency="true" allowfullscreen></iframe>
+                    </div>
+                </div>
+
+                <!-- Игра 2: Без интерфейса -->
+                <div class="game-frame-box">
+                    <h3>Игра без интерфейса</h3>
+                    <div class="iframe-wrapper">
+                        <iframe src="https://scratch.mit.edu/projects/1317363908/embed" allowtransparency="true" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+
+            <span class="author-tag">*Автор игры: StSofi</span>
+
+            <!-- Кнопка "Открыть заготовку" -->
+            <div class="action-button-container">
+                <a href="https://scratch.mit.edu/projects/452586667/editor" target="_blank" class="action-btn">открыть заготовку</a>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        заботливое образование • 2026
+    </footer>
+
+    <script>
+        // ЛОГИКА ТЕСТА
+        function checkAnswer(btn, isCorrect) {
+            const parent = btn.parentElement;
+            const buttons = parent.querySelectorAll('.option-btn');
+            
+            // Выключаем только те кнопки, по которым еще не кликали
+            buttons.forEach(b => {
+                b.disabled = true;
+                b.style.opacity = "0.6";
+            });
+            
+            btn.style.opacity = "1";
+            
+            if (isCorrect) {
+                btn.classList.add('correct');
+            } else {
+                btn.classList.add('wrong');
+                // Даем ребенку шанс подумать еще раз при следующей попытке — просто не подсвечиваем за него правильный!
+            }
+        }
+
+        // ИНТЕРФЕЙС СИМУЛЯТОРА КАПКЕЙКА
+        function changeCup(color, btn) {
+            document.getElementById('cupcake-cup').setAttribute('fill', color);
+            
+            // Управление активными классами на кнопках формочки
+            const row = btn.parentElement;
+            row.querySelectorAll('.ui-toggle-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+        }
+
+        function changeFrosting(flavor) {
+            const layers = document.getElementById('cupcake-frosting').children;
+            
+            // Цвета слоев глазури для каждого вкуса
+            const colors = {
+                chocolate: ['#c3a38a', '#b19178', '#9e7e65'],
+                strawberry: ['#ffa5b8', '#ff8da5', '#ff6b8b'],
+                mint: ['#bffff2', '#99eedb', '#73dec4']
+            };
+            
+            const selectedColors = colors[flavor];
+            for (let i = 0; i < layers.length; i++) {
+                layers[i].setAttribute('fill', selectedColors[i]);
+            }
+
+            // Управление активными классами кнопок крема
+            const btnRow = event.target.parentElement;
+            btnRow.querySelectorAll('.ui-toggle-btn').forEach(b => b.classList.remove('active'));
+            event.target.classList.add('active');
+        }
+
+        function toggleElement(id, btn) {
+            const element = document.getElementById(id);
+            if (element.getAttribute('opacity') === '1' || !element.getAttribute('opacity')) {
+                element.setAttribute('opacity', '0');
+                btn.classList.remove('active');
+            } else {
+                element.setAttribute('opacity', '1');
+                btn.classList.add('active');
+            }
+        }
+    </script>
+</body>
+</html>

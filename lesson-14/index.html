@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Урок Scratch: Случайности и циклы</title>
+    <style>
+        :root {
+            --soft-pink: #fff0f3;
+            --soft-purple: #f3f0ff;
+            --accent-color: #008080;
+            --deep-accent: #800000;
+            --text-main: #4a4a4a;
+            --white: #ffffff;
+            --button-grad: linear-gradient(to top, #800000 0%, #d63031 100%);
+            --scratch-orange: #ffab19;
+            --scratch-blue: #4c97ff;
+            --scratch-green: #59c059;
+            --scratch-yellow: #ffbf00;
+        }
+
+        body {
+            font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            color: var(--text-main);
+            background-color: #fcfaf6;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--soft-purple) 0%, var(--soft-pink) 100%);
+            border-bottom: 4px solid var(--accent-color);
+            padding: 40px 20px;
+            text-align: center;
+            border-radius: 0 0 30px 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+        }
+
+        .header h1 {
+            color: var(--deep-accent);
+            font-size: 28px;
+            margin: 0 0 10px 0;
+            font-weight: 800;
+        }
+
+        .header p {
+            font-size: 16px;
+            color: var(--accent-color);
+            margin: 0;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .container {
+            max-width: 850px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .card {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 35px;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.02);
+            transition: transform 0.2s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+        }
+
+        h2 {
+            color: var(--accent-color);
+            font-size: 22px;
+            margin-top: 0;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 2px solid var(--soft-pink);
+            padding-bottom: 10px;
+        }
+
+        h2::before {
+            content: "✦";
+            color: var(--deep-accent);
+            font-size: 24px;
+        }
+
+        h3 {
+            color: var(--deep-accent);
+            font-size: 18px;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+
+        /* Квиз */
+        .quiz-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .quiz-box {
+            background: var(--soft-purple);
+            border-radius: 12px;
+            padding: 20px;
+            border-left: 5px solid var(--accent-color);
+        }
+
+        .quiz-question {
+            font-weight: 700;
+            font-size: 15px;
+            margin-bottom: 12px;
+            color: var(--deep-accent);
+        }
+
+        .quiz-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        @media (max-width: 600px) {
+            .quiz-options {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .quiz-btn {
+            background: var(--white);
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 10px 15px;
+            font-size: 13.5px;
+            cursor: pointer;
+            text-align: left;
+            transition: all 0.2s ease;
+            font-family: inherit;
+            color: var(--text-main);
+        }
+
+        .quiz-btn:hover {
+            border-color: var(--accent-color);
+            background: var(--soft-pink);
+        }
+
+        .quiz-btn.correct {
+            background: #d4edda !important;
+            border-color: #c3e6cb !important;
+            color: #155724 !important;
+            font-weight: bold;
+        }
+
+        .quiz-btn.wrong {
+            background: #f8d7da !important;
+            border-color: #f5c6cb !important;
+            color: #721c24 !important;
+        }
+
+        /* Имитация фрейма Scratch */
+        .frame-container {
+            position: relative;
+            width: 100%;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+            margin: 20px 0;
+            aspect-ratio: 480/360;
+            background: #2d3748;
+        }
+
+        .frame-mock {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: #a0aec0;
+            font-size: 16px;
+            font-weight: 500;
+            text-align: center;
+            border: 3px solid #e2e8f0;
+            position: relative;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .frame-overlay-play {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            background: rgba(0,128,128,0.9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            transition: transform 0.2s;
+        }
+
+        .frame-overlay-play:hover {
+            transform: scale(1.1);
+        }
+
+        /* Кнопка шаблона */
+        .action-button-wrapper {
+            text-align: center;
+            margin: -10px 0 25px 0;
+        }
+
+        .btn-template {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--button-grad);
+            color: var(--white);
+            padding: 14px 35px;
+            border-radius: 30px;
+            font-weight: 700;
+            text-decoration: none;
+            box-shadow: 0 6px 20px rgba(128, 0, 0, 0.25);
+            transition: all 0.2s ease;
+            font-size: 15px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-template:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(128, 0, 0, 0.35);
+        }
+
+        /* Стилизация кода в виде блоков Scratch */
+        .scratch-block {
+            font-family: 'Lucida Grande', 'Lucida Sans Unicode', sans-serif;
+            font-size: 13px;
+            color: #ffffff;
+            padding: 6px 10px;
+            border-radius: 4px;
+            margin: 3px 0;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+            font-weight: bold;
+        }
+
+        .block-control { background-color: #ffab19; color: #4d3d24; }
+        .block-motion { background-color: #4c97ff; }
+        .block-operators { background-color: #59c059; color: #ffffff; }
+        .block-sensing { background-color: #5cb3ff; }
+        
+        .block-input-num {
+            background-color: #ffffff;
+            color: #000000;
+            border-radius: 10px;
+            padding: 1px 6px;
+            font-size: 11px;
+            font-weight: normal;
+        }
+
+        .block-input-dropdown {
+            background-color: rgba(0,0,0,0.1);
+            color: #ffffff;
+            border-radius: 4px;
+            padding: 1px 5px;
+            font-size: 11px;
+        }
+
+        /* Таблица урока */
+        .lesson-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin: 25px 0;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid #e2e8f0;
+        }
+
+        .lesson-table th {
+            background-color: var(--soft-purple);
+            color: var(--deep-accent);
+            padding: 15px;
+            font-weight: 700;
+            text-align: left;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        .lesson-table td {
+            padding: 18px 15px;
+            background: var(--white);
+            border-bottom: 1px solid #e2e8f0;
+            vertical-align: top;
+        }
+
+        .lesson-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Доработки */
+        .upgrade-box {
+            background: var(--soft-pink);
+            border-radius: 12px;
+            padding: 20px;
+            border-left: 5px solid var(--deep-accent);
+            margin-top: 20px;
+        }
+
+        .upgrade-box h4 {
+            margin: 0 0 10px 0;
+            color: var(--deep-accent);
+            font-size: 15px;
+            font-weight: 700;
+        }
+
+        .upgrade-box ul {
+            margin: 0;
+            padding-left: 20px;
+            font-size: 13.5px;
+        }
+
+        .upgrade-box li {
+            margin-bottom: 6px;
+        }
+
+        /* Специфический SVG для Координат */
+        .svg-coords-container {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+            background: #edf2f7;
+            padding: 20px;
+            border-radius: 12px;
+        }
+
+        .svg-coords {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>Случайные числа, циклы с условием и логика</h1>
+        <p>Интерактивная рабочая страница • Курс на 2 занятия</p>
+    </div>
+
+    <div class="container">
+
+        <!-- РАЗДЕЛ 1: РАЗМИНКА -->
+        <div class="card">
+            <h2>Экспресс-разминка</h2>
+          
+            
+            <div class="quiz-wrapper">
+                <!-- Вопрос 1 -->
+                <div class="quiz-box">
+                    <div class="quiz-question">1. Какова максимальная ширина сцены в Scratch (от левого края до правого)?</div>
+                    <div class="quiz-options">
+                        <button class="quiz-btn" onclick="checkAnswer(this, false)">360 шагов</button>
+                        <button class="quiz-btn" onclick="checkAnswer(this, true)">480 шагов </button>
+                    </div>
+                </div>
+
+                <!-- Вопрос 2 -->
+                <div class="quiz-box">
+                    <div class="quiz-question">2. Какая максимальная координата У вверху сцены?</div>
+                    <div class="quiz-options">
+                        <button class="quiz-btn" onclick="checkAnswer(this, true)">Y = 180</button>
+                        <button class="quiz-btn" onclick="checkAnswer(this, false)">У = 240</button>
+                    </div>
+                </div>
+
+                <!-- Вопрос 3 -->
+                <div class="quiz-box">
+                    <div class="quiz-question">3. Куда телепортируется спрайт при команде "перейти в x: 0 y: 0"?</div>
+                    <div class="quiz-options">
+                        <button class="quiz-btn" onclick="checkAnswer(this, false)">В левый верхний угол</button>
+                        <button class="quiz-btn" onclick="checkAnswer(this, true)">Ровно в центр сцены</button>
+                    </div>
+                </div>
+
+                <!-- Вопрос 4 -->
+                <div class="quiz-box">
+                    <div class="quiz-question">4. В каком случае сработает блок внутри конструкции "если ... то"?</div>
+                    <div class="quiz-options">
+                        <button class="quiz-btn" onclick="checkAnswer(this, true)">Если условие верно</button>
+                        <button class="quiz-btn" onclick="checkAnswer(this, false)">В любом случае выполнится</button>
+                    </div>
+                </div>
+
+                <!-- Вопрос 5 -->
+                <div class="quiz-box">
+                    <div class="quiz-question">5. В какую сторону пойдет герой при команде "изменить Y на -10"?</div>
+                    <div class="quiz-options">
+                        <button class="quiz-btn" onclick="checkAnswer(this, true)">Вниз</button>
+                        <button class="quiz-btn" onclick="checkAnswer(this, false)">Вправо</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- РАЗДЕЛ 2: Летний дождь -->
+        <div class="card">
+            <h2>Проект 1: Летний дождь</h2>
+          
+            
+            <div class="frame-container">
+                <!-- Имитация сцены дождя с помощью стилизованного блока -->
+                <div class="frame-mock" style="background-color: #e3fafc;">
+                   <iframe src="https://scratch.mit.edu/projects/1331041306/embed" allowtransparency="true" width="485" height="402" frameborder="0" scrolling="no" allowfullscreen></iframe>
+                </div>
+            </div>
+
+            <div class="action-button-wrapper">
+                <a href="https://scratch.mit.edu/projects/1331043169" target="_blank" class="btn-template">Открыть заготовку дождя</a>
+            </div>
+
+            <!-- SVG Сетка Координат (как просил пользователь: чисто, минимум чисел) -->
+            <div class="svg-coords-container">
+                <svg width="400" height="250" viewBox="0 0 400 250" class="svg-coords">
+                    <!-- Небо и Земля -->
+                    <rect x="10" y="10" width="380" height="180" fill="#e0f7fa" rx="8" />
+                    <rect x="10" y="190" width="380" height="40" fill="#8d6e63" rx="4" />
+                    
+                    <!-- Оси координат -->
+                    <line x1="200" y1="10" x2="200" y2="190" stroke="#4a4a4a" stroke-dasharray="4" stroke-width="1.5"/>
+                    <line x1="10" y1="100" x2="390" y2="100" stroke="#4a4a4a" stroke-dasharray="4" stroke-width="1.5"/>
+                    
+                    <!-- Точка старта капли сверху -->
+                    <circle cx="120" cy="18" r="6" fill="var(--accent-color)" />
+                    <path d="M120 18 L120 160" stroke="var(--accent-color)" stroke-width="1.5" stroke-dasharray="2" />
+                    <!-- Рисунок капли в движении -->
+                    <path d="M120 70 C117 75, 117 78, 120 81 C123 78, 123 75, 120 70 Z" fill="#0288d1" />
+
+                    <!-- Числа по краям (только нужные!) -->
+                    <text x="210" y="25" font-family="sans-serif" font-size="14" font-weight="bold" fill="#4a4a4a">180</text>
+                    <text x="15" y="95" font-family="sans-serif" font-size="14" font-weight="bold" fill="#4a4a4a">-240</text>
+                    <text x="350" y="95" font-family="sans-serif" font-size="14" font-weight="bold" fill="#4a4a4a">240</text>
+                    
+                    <text x="20" y="215" font-family="sans-serif" font-size="12" fill="white" font-weight="bold">ЗЕМЛЯ (Коричневый цвет)</text>
+                </svg>
+            </div>
+
+            <h3>Как заставить каплю падать до земли?</h3>
+            <p>Рассмотрим структуру кода в таблице ниже:</p>
+
+            <table class="lesson-table">
+                <thead>
+                    <tr>
+                        <th style="width: 50%;">Шаг и объяснение</th>
+                        <th style="width: 50%;">Блоки Scratch</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <strong>1. Случайное появление:</strong><br>
+                            Капля должна телепортироваться на самый верх ($Y = 180$), но координата $X$ выбирается случайно, чтобы дождь шел по всему экрану.
+                        </td>
+                        <td>
+                            <div class="scratch-block block-motion">
+                                перейти в x: 
+                                <span class="scratch-block block-operators" style="margin: 0 2px; padding: 2px 6px;">
+                                    выдать случайное от <span class="block-input-num">-240</span> до <span class="block-input-num">240</span>
+                                </span> 
+                                y: <span class="block-input-num">180</span>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>2. Умное падение:</strong><br>
+                            Используем цикл с условием. Капля падает вниз на 5 шагов до тех пор, пока не встретит коричневую землю.
+                        </td>
+                        <td>
+                            <div class="scratch-block block-control" style="display: block; width: 100%;">
+                                повторять пока не <span class="scratch-block block-sensing" style="padding: 2px 6px;">касается цвета <span style="display:inline-block; width:12px; height:12px; background:#8d6e63; border-radius:50%; vertical-align:middle; margin-left:3px;"></span> ?</span>
+                                <div style="padding-left: 20px; margin-top: 5px;">
+                                    <div class="scratch-block block-motion">изменить y на <span class="block-input-num">-5</span></div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="upgrade-box">
+                <h4>✦ Идеи для улучшения проекта:</h4>
+                <ul>
+                    <li>Сделай случайный размер капли от 30% до 80%, чтобы симулировать глубину кадра.</li>
+                    <li>Добавь звук капель воды при касании земли.</li>
+                </ul>
+            </div>
+        </div>
+
+
+        <!-- РАЗДЕЛ 3: ПОДЗЕМЕЛЬЕ ПИКО -->
+        <div class="card">
+            <h2>Проект 2: Подземелье Пико</h2>
+            <p>Помоги Пико выжить в опасной пещере! Сверху летят тяжелые камни разного вида, а также редкие розовые кристаллы, которые нужно ловить.</p>
+
+            <div class="frame-container">
+                <div class="frame-mock" style="background-image: url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22480%22 height=%22360%22 viewBox=%220 0 480 360%22><rect width=%22100%25%22 height=%22100%25%22 fill=%22%232d3748%22/><text x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 fill=%22%23a0aec0%22 font-family=%22sans-serif%22 font-size=%2218%22>Подземелье Пико (480 x 360)</text></svg>');">
+                    <div class="frame-overlay-play">▶</div>
+                </div>
+            </div>
+
+            <div class="action-button-wrapper">
+                <button class="btn-template">Открыть заготовку: Подземелье</button>
+            </div>
+
+            <h3>Где и зачем мы используем случайные числа?</h3>
+            <p>В этом проекте генератор случайностей создает непредсказуемый геймплей:</p>
+
+            <table class="lesson-table">
+                <thead>
+                    <tr>
+                        <th style="width: 35%;">Что случайно?</th>
+                        <th style="width: 65%;">Зачем это нужно в игре?</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Выбор костюма (1 - 3)</strong></td>
+                        <td>Если выпадает костюм 1 или 2 — падает опасный булыжник. Если костюм 3 — падает драгоценный кристалл!</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Размер предмета</strong></td>
+                        <td>Устанавливаем размер от 40% до 60%. Мелкие камни летят быстрее, уворачиваться сложнее!</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Координата появления X</strong></td>
+                        <td>Камень может упасть в любой точке потолка, заставляя игрока постоянно бегать.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="upgrade-box">
+                <h4>✦ Идеи для улучшения проекта:</h4>
+                <ul>
+                    <li>Добавь переменную <strong>«Счет»</strong>: +10 очков за кристалл, -1 жизнь за падение камня на голову.</li>
+                    <li>Добавь анимацию взрыва при столкновении камня с землей.</li>
+                </ul>
+            </div>
+        </div>
+
+
+        <!-- РАЗДЕЛ 4: МАРАФОН -->
+        <div class="card">
+            <h2>Проект 3: Марафон Кота и Собаки</h2>
+            <p>Спортивное состязание двух персонажей. Никто не знает победителя заранее, потому что скорость меняется каждый миг!</p>
+
+            <div class="frame-container" style="aspect-ratio: 480/200;">
+                <div class="frame-mock" style="background-color: #f3f0ff;">
+                    <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="var(--deep-accent)" stroke-width="1.5" style="margin-bottom: 5px;">
+                        <path d="M13 10V3L4 14h7v7l9-11h-7z" fill="var(--soft-pink)"/>
+                    </svg>
+                    <span style="color: var(--deep-accent); font-weight: bold;">Марафон животных</span>
+                    <div class="frame-overlay-play">▶</div>
+                </div>
+            </div>
+
+            <div class="action-button-wrapper">
+                <button class="btn-template">Открыть заготовку марафона</button>
+            </div>
+
+            <h3>Логика движения</h3>
+            <p>Оба спрайта бегут в цикле: <code>повторять пока не касается края</code>. Внутри цикла каждый делает шаг на <code>выдать случайное от 1 до 10</code>. Это симулирует настоящий рывок и усталость спортсменов на дистанции!</p>
+
+            <div class="upgrade-box">
+                <h4>✦ Идеи для улучшения проекта:</h4>
+                <ul>
+                    <li>Используй логический оператор <strong>ИЛИ</strong> в условии завершения игры, чтобы фиксировать победу первого коснувшегося края.</li>
+                    <li>Добавь судью на финише, который торжественно объявляет имя победителя в облачке "сказать ...".</li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        function checkAnswer(button, isCorrect) {
+            // Находим все кнопки в этом конкретном вопросе
+            const options = button.parentElement.querySelectorAll('.quiz-btn');
+            options.forEach(opt => {
+                opt.disabled = true; // блокируем повторные нажатия
+            });
+
+            if (isCorrect) {
+                button.classList.add('correct');
+            } else {
+                button.classList.add('wrong');
+                // подсвечиваем правильный
+                options.forEach(opt => {
+                    if (opt.textContent.includes('480') || opt.textContent.includes('Y = 180') || opt.textContent.includes('центр') || opt.textContent.includes('один раз') || opt.textContent.includes('Вниз')) {
+                        opt.classList.add('correct');
+                    }
+                });
+            }
+        }
+    </script>
+</body>
+</html>

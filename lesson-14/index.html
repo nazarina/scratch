@@ -430,9 +430,76 @@
             <table class="lesson-table">
                 <thead>
                     <tr>
-                        <th></th>
+                      
                         <th style="width: 50%;">Шаг </th>
                         <th style="width: 50%;">Блоки Scratch</th>
+                    </tr>
+                </thead>
+                 <tbody>
+                    <tr>
+                        <td>
+                            <strong>1. Случайное появление:</strong><br>
+                            Капля должна телепортироваться на самый верх ($Y = 180$), но координата $X$ выбирается случайно, чтобы дождь шел по всему экрану.
+                        </td>
+                        <td>
+                            <div class="scratch-block block-motion">
+                                перейти в x: 
+                                <span class="scratch-block block-operators" style="margin: 0 2px; padding: 2px 6px;">
+                                    выдать случайное от <span class="block-input-num">-240</span> до <span class="block-input-num">240</span>
+                                </span> 
+                                y: <span class="block-input-num">180</span>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>2. Умное падение:</strong><br>
+                            Используем цикл с условием. Капля падает вниз на 5 шагов до тех пор, пока не встретит коричневую землю.
+                        </td>
+                        <td>
+                            <div class="scratch-block block-control" style="display: block; width: 100%;">
+                                повторять пока не <span class="scratch-block block-sensing" style="padding: 2px 6px;">касается цвета <span style="display:inline-block; width:12px; height:12px; background:#8d6e63; border-radius:50%; vertical-align:middle; margin-left:3px;"></span> ?</span>
+                                <div style="padding-left: 20px; margin-top: 5px;">
+                                    <div class="scratch-block block-motion">изменить y на <span class="block-input-num">-5</span></div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="upgrade-box">
+                <h4>✦ Идеи для улучшения проекта:</h4>
+                <ul>
+                    <li>Сделай случайный размер капли от 30% до 80%, чтобы симулировать глубину кадра.</li>
+                    <li>Добавь звук капель воды при касании земли.</li>
+                    <li><strong>* Попробуй сделать анимацию, как капелька превращается в лужицу, когда касается земли</strong></li>
+                </ul>
+            </div>
+        </div>
+
+
+        <!-- РАЗДЕЛ 3: ПОДЗЕМЕЛЬЕ ПИКО -->
+        <div class="card">
+            <h2>Проект 2: Подземелье Пико</h2>
+            <p>Помоги Пико выжить в опасной пещере! Сверху летят тяжелые камни разного вида, а также редкие розовые кристаллы, которые нужно ловить.</p>
+
+            <div class="frame-container">
+                <iframe src="https://scratch.mit.edu/projects/1331043334/embed" allowtransparency="true" width="485" height="402" frameborder="0" scrolling="no" allowfullscreen></iframe>
+            </div>
+
+            <div class="action-button-wrapper">
+                <a href="https://scratch.mit.edu/projects/1331054448" class="btn-template">Открыть заготовку</a>
+            </div>
+
+            <h3>Где и зачем мы используем случайные числа?</h3>
+
+            <table class="lesson-table">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th style="width: 35%;">Что случайно?</th>
+                        <th style="width: 65%;">Зачем это нужно в игре?</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -473,55 +540,6 @@
             <td class="task-desc">Предмет должен появиться в случайной точке по горизонтали (от -220 до 220).</td>
         </tr>
     </tbody>
-            </table>
-
-            <div class="upgrade-box">
-                <h4>✦ Идеи для улучшения проекта:</h4>
-                <ul>
-                    <li>Сделай случайный размер капли от 30% до 80%, чтобы симулировать глубину кадра.</li>
-                    <li>Добавь звук капель воды при касании земли.</li>
-                    <li><strong>* Попробуй сделать анимацию, как капелька превращается в лужицу, когда касается земли</strong></li>
-                </ul>
-            </div>
-        </div>
-
-
-        <!-- РАЗДЕЛ 3: ПОДЗЕМЕЛЬЕ ПИКО -->
-        <div class="card">
-            <h2>Проект 2: Подземелье Пико</h2>
-            <p>Помоги Пико выжить в опасной пещере! Сверху летят тяжелые камни разного вида, а также редкие розовые кристаллы, которые нужно ловить.</p>
-
-            <div class="frame-container">
-                <iframe src="https://scratch.mit.edu/projects/1331043334/embed" allowtransparency="true" width="485" height="402" frameborder="0" scrolling="no" allowfullscreen></iframe>
-            </div>
-
-            <div class="action-button-wrapper">
-                <a href="https://scratch.mit.edu/projects/1331054448" class="btn-template">Открыть заготовку</a>
-            </div>
-
-            <h3>Где и зачем мы используем случайные числа?</h3>
-
-            <table class="lesson-table">
-                <thead>
-                    <tr>
-                        <th style="width: 35%;">Что случайно?</th>
-                        <th style="width: 65%;">Зачем это нужно в игре?</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><strong>Выбор костюма (1 - 3)</strong></td>
-                        <td>Если выпадает костюм 1 или 2 — падает опасный булыжник. Если костюм 3 — падает драгоценный кристалл!</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Размер предмета и скорость падения</strong></td>
-                        <td>Устанавливаем размер от 40% до 60%. Мелкие камни летят быстрее, уворачиваться сложнее!</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Координата появления X</strong></td>
-                        <td>Камень может появиться в любой точке потолка.</td>
-                    </tr>
-                </tbody>
             </table>
 
             <div class="upgrade-box">

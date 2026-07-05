@@ -85,15 +85,15 @@
   border-left: 5px solid var(--accent-color); /* Выделение левой границы бирюзовым */
   border-radius: 8px;
   padding: 10px;
-  margin: 20px 0;
+  margin: 20px auto;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
   max-width: 800px;
 }
 
 .rule-card__image-container {
   flex-shrink: 0;
-  width: 100px;
-  height: 100px;
+  width: 200px;
+  height: 200px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -277,8 +277,16 @@
             <div class="algo-life">
              <img src="1_1.png" width="100%">
             </div>
-         
-          <p><strong>Программа</strong> — это алгоритм, написанный на языке, который понимает компьютер. В нашем случае — на языке цветных блоков Scratch.</p>
+         <div class="rule-card">
+  <div class="rule-card__image-container">
+    <!-- Сюда вставляется картинка (например, свиток с правилом, компас или сундук) -->
+    <img src="1.png" alt="Алгоритм" class="rule-card__image">
+  </div>
+  <div class="rule-card__content">
+    <span class="rule-card__badge">Программа — это алгоритм, написанный на языке, который понимает компьютер. В нашем случае — на языке цветных блоков Scratch.</span>
+  </div>
+</div>
+    
         </section>
       
 <!--      <section class="section" style="text-align: center;">

@@ -77,6 +77,80 @@
         /* Полоска слева теперь бордовая — это выглядит очень стильно */
       
     }
+        .rule-card {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  background-color: var(--white);
+  border-left: 5px solid var(--accent-color); /* Выделение левой границы бирюзовым */
+  border-radius: 8px;
+  padding: 24px;
+  margin: 20px 0;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  max-width: 800px;
+}
+
+.rule-card__image-container {
+  flex-shrink: 0;
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--soft-pink); /* Легкий нежный фон для иконки */
+  border-radius: 50%;
+}
+
+.rule-card__image {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+}
+
+.rule-card__content {
+  flex-grow: 1;
+}
+
+.rule-card__badge {
+  display: inline-block;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--deep-accent); /* Темно-бордовый акцент для заголовка */
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.rule-card__text {
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--text-main);
+  margin: 0;
+}
+
+.rule-card__text strong {
+  color: var(--accent-color); /* Выделение самого слова "Алгоритм" */
+  font-size: 18px;
+}
+
+/* Адаптив под мобильные устройства: картинка переносится наверх */
+@media (max-width: 560px) {
+  .rule-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  
+  .rule-card__image-container {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .rule-card__image {
+    width: 36px;
+    height: 36px;
+  }
+}
 
     /* Алгоритм в жизни */
     .algo-life {

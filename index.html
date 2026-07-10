@@ -3,392 +3,445 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Курс Scratch | Заботливое образование</title>
+    <title>Радужная Карта — Мастерская «Кот и Код»</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;700&family=Montserrat:wght@900&display=swap" rel="stylesheet">
+    
     <style>
         :root {
-            --soft-pink: #fff0f3;
-            --soft-purple: #f3f0ff;
-            --accent-color: #008080; 
-            --deep-accent: #800000;
-            --text-main: #4a4a4a;
-            --white: #ffffff;
-            --button-grad: linear-gradient(to top, #800000 0%, #d63031 100%);
+            --font-main: 'Fredoka', sans-serif;
+            --rainbow-1: #FF4B91; /* Розовый леденец */
+            --rainbow-2: #FF7636; /* Сочный апельсин */
+            --rainbow-3: #FFCD38; /* Солнечный банан */
+            --rainbow-4: #00D26A; /* Лаймовый взрыв */
+            --rainbow-5: #00D3E6; /* Неоновая бирюза */
+            --rainbow-6: #793FDF; /* Волшебная черника */
         }
 
         body {
-            background: linear-gradient(120deg, #fcf5f6 0%, #fdfbfb 100%);
-            color: var(--text-main);
-            font-family: 'Segoe UI', sans-serif;
-            margin: 0;
-            padding: 0;
+            font-family: var(--font-main);
+            background: linear-gradient(135deg, #FF9A9E 0%, #FECFEF 30%, #A1C4FD 70%, #C2E9FB 100%);
+            background-size: 400% 400%;
+            animation: gradientBG 20s ease infinite;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
         }
 
-        .container { max-width: 1100px; margin: 0 auto; padding: 40px 20px; }
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
 
-        /* Блок описания курса с инфографикой */
-        .course-intro {
-            background: var(--white);
-            padding: 50px;
+        .bubble {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.4);
+            border: 2px solid rgba(255, 255, 255, 0.6);
+            box-shadow: inset -5px -5px 15px rgba(0,0,0,0.05), inset 5px 5px 15px rgba(255,255,255,0.8);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: floatUp 12s linear infinite;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(110vh) scale(0.5); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
+        }
+
+        .candy-card {
+            transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border-style: solid;
+        }
+
+        .candy-card:hover {
+            transform: scale(1.03) translateY(-8px);
+        }
+
+        /* 3D-тени для карт в радужном стиле */
+        .card-pink {
+            border-color: #FF4B91;
+            box-shadow: 0 16px 0px #C71585;
+        }
+        .card-pink:hover {
+            box-shadow: 0 24px 0px #C71585;
+        }
+
+        .card-orange {
+            border-color: #FF7636;
+            box-shadow: 0 16px 0px #D35400;
+        }
+        .card-orange:hover {
+            box-shadow: 0 24px 0px #D35400;
+        }
+
+        .card-yellow {
+            border-color: #FFCD38;
+            box-shadow: 0 16px 0px #D4AC0D;
+        }
+        .card-yellow:hover {
+            box-shadow: 0 24px 0px #D4AC0D;
+        }
+
+        .card-green {
+            border-color: #00D26A;
+            box-shadow: 0 16px 0px #196F3D;
+        }
+        .card-green:hover {
+            box-shadow: 0 24px 0px #196F3D;
+        }
+
+        .card-teal {
+            border-color: #00D3E6;
+            box-shadow: 0 16px 0px #0E6251;
+        }
+        .card-teal:hover {
+            box-shadow: 0 24px 0px #0E6251;
+        }
+
+        .card-purple {
+            border-color: #793FDF;
+            box-shadow: 0 16px 0px #4A235A;
+        }
+        .card-purple:hover {
+            box-shadow: 0 24px 0px #4A235A;
+        }
+
+        .swing-anim {
+            animation: swing 3s ease-in-out infinite alternate;
+            transform-origin: bottom center;
+        }
+
+        @keyframes swing {
+            0% { transform: rotate(-5deg); }
+            100% { transform: rotate(5deg); }
+        }
+
+        .pulse-anim {
+            animation: pulse 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.96); }
+            100% { transform: scale(1.04); }
+        }
+
+        .float-anim {
+            animation: float 4s ease-in-out infinite alternate;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            100% { transform: translateY(-12px); }
+        }
+
+        /* Радужная рамка для главной картинки карты */
+        .rainbow-glow-frame {
+            background: linear-gradient(60deg, #f79533, #f37055, #ef4e7b, #a166ab, #5073b8, #1098ad, #07b39b, #6fba82);
+            background-size: 300% 300%;
+            animation: rainbowBorder 4s linear infinite;
+            padding: 12px;
             border-radius: 40px;
-            margin-bottom: 50px;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
-            text-align: center;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
         }
 
-        .course-intro h1 { color: var(--accent-color); font-size: 2.5rem; margin-bottom: 20px; }
-        
-        .infographic {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 30px;
-            margin-top: 40px;
+        @keyframes rainbowBorder {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
-
-        .info-item {
-            padding: 20px;
-            transition: transform 0.3s;
-        }
-
-        .info-item .icon {
-            font-size: 2.5rem;
-            margin-bottom: 15px;
-            display: block;
-        }
-
-        .info-item h4 { color: var(--deep-accent); margin: 10px 0; font-size: 1.1rem; }
-        .info-item p { font-size: 0.95rem; opacity: 0.8; margin: 0; }
-
-        /* Вкладки */
-        .tabs-nav {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 12px;
-            margin-bottom: 40px;
-        }
-
-        .tab-btn {
-            padding: 14px 28px;
-            border: 2px solid var(--accent-color);
-            background: transparent;
-            color: var(--accent-color);
-            border-radius: 50px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-
-        .tab-btn.active {
-            background: var(--deep-accent);
-            border-color: var(--deep-accent);
-            color: white;
-            box-shadow: 0 8px 20px rgba(128, 0, 0, 0.2);
-        }
-
-        /* Сетка уроков */
-        .tab-content { display: none; }
-        .tab-content.active {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 25px;
-            animation: fadeIn 0.6s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(15px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .lesson-card {
-            background: var(--white);
-            padding: 30px;
-            border-radius: 25px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            border-top: 6px solid var(--accent-color);
-            text-align: left;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        .lesson-card:hover { border-top-color: var(--deep-accent); }
-
-        .lesson-header { margin-bottom: 15px; }
-        .lesson-number { 
-            background: var(--soft-pink);
-            color: var(--deep-accent);
-            padding: 4px 12px;
-            border-radius: 10px;
-            font-size: 0.8rem;
-            font-weight: 700;
-        }
-
-        .lesson-card h3 { color: var(--text-main); margin: 15px 0 10px 0; font-size: 1.3rem; }
-        .lesson-card p { font-size: 0.95rem; color: #666; flex-grow: 1; }
-
-        .project-badge {
-            margin-top: 15px;
-            padding: 10px;
-            background: var(--soft-purple);
-            border-radius: 12px;
-            font-size: 0.85rem;
-            border-left: 3px solid var(--deep-accent);
-        }
-
-        .go-btn {
-            margin-top: 20px;
-            text-decoration: none;
-            color: var(--accent-color);
-            font-weight: 700;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .go-btn:hover { color: var(--deep-accent); }
-.main-footer {
-        background: var(--white);
-        padding: 60px 20px 20px;
-        margin-top: 80px;
-        border-top: 5px solid var(--deep-accent);
-        color: var(--text-main);
-    }
-
-    .footer-container {
-        max-width: 1100px;
-        margin: 0 auto;
-        display: grid;
-        grid-template-columns: 2fr 1fr 1.5fr;
-        gap: 40px;
-    }
-
-    .footer-logo {
-        color: var(--deep-accent);
-        font-size: 1.5rem;
-        margin-bottom: 15px;
-    }
-
-    .footer-credo {
-        font-style: italic;
-        line-height: 1.6;
-        opacity: 0.8;
-    }
-
-    .footer-links h4, .footer-social h4 {
-        color: var(--accent-color);
-        margin-bottom: 20px;
-        text-transform: uppercase;
-        font-size: 0.9rem;
-        letter-spacing: 1px;
-    }
-
-    .footer-links a {
-        display: block;
-        text-decoration: none;
-        color: var(--text-main);
-        margin-bottom: 10px;
-        transition: color 0.3s;
-    }
-
-    .footer-links a:hover {
-        color: var(--deep-accent);
-    }
-
-    .social-icons {
-        display: flex;
-        gap: 10px;
-        margin-bottom: 20px;
-    }
-
-    .social-btn {
-        width: 40px;
-        height: 40px;
-        background: var(--button-grad);
-        color: white;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 10px;
-        text-decoration: none;
-        font-weight: bold;
-        font-size: 0.8rem;
-        transition: transform 0.3s;
-    }
-
-    .social-btn:hover {
-        transform: translateY(-3px) rotate(5deg);
-    }
-
-    .footer-bottom {
-        text-align: center;
-        margin-top: 50px;
-        padding-top: 20px;
-        border-top: 1px solid var(--soft-pink);
-        font-size: 0.8rem;
-        opacity: 0.6;
-    }
-
-    @media (max-width: 768px) {
-        .footer-container {
-            grid-template-columns: 1fr;
-            text-align: center;
-        }
-        .social-icons {
-            justify-content: center;
-        }
-    }
     </style>
 </head>
-<body>
+<body class="py-12 px-4 md:px-8">
 
-<div class="container">
-    
-    <header class="course-intro">
-        <h1>Твое творчество в Scratch</h1>
-        <p style="max-width: 700px; margin: 0 auto; opacity: 0.8;">Курс, где каждый ребенок становится творцом. Мы учимся программировать через любовь к проектам, создавая игры и анимации без стресса.</p>
-        
-        <div class="infographic">
-            <div class="info-item">
-                <span class="icon">🧩</span>
-                <h4>Логика</h4>
-                <p>Развиваем алгоритмическое мышление через блоки</p>
-            </div>
-            <div class="info-item">
-                <span class="icon">🎨</span>
-                <h4>Дизайн</h4>
-                <p>Работаем с цветом, графикой и эффектами</p>
-            </div>
-            <div class="info-item">
-                <span class="icon">🎮</span>
-                <h4>GameDev</h4>
-                <p>Создаем интересные проекты — от первой анимации до собственных игр</p>
+    <div class="bubble" style="left: 5%; width: 60px; height: 60px; animation-delay: 0s; animation-duration: 8s;"></div>
+    <div class="bubble" style="left: 85%; width: 100px; height: 100px; animation-delay: 2s; animation-duration: 12s;"></div>
+    <div class="bubble" style="left: 45%; width: 40px; height: 40px; animation-delay: 5s; animation-duration: 10s;"></div>
+    <div class="bubble" style="left: 20%; width: 80px; height: 80px; animation-delay: 1s; animation-duration: 15s;"></div>
+    <div class="bubble" style="left: 70%; width: 50px; height: 50px; animation-delay: 3s; animation-duration: 9s;"></div>
+
+    <div class="max-w-7xl mx-auto relative z-10">
+
+        <div class="text-center mb-16">
+            <span class="inline-block bg-white text-[#FF4B91] border-4 border-[#FF4B91] text-lg md:text-xl font-bold px-8 py-3 rounded-full shadow-[0_6px_0_#FF4B91] transform -rotate-2 mb-6 animate-bounce">
+                🚀 НАШЕ БОЛЬШОЕ ПУТЕШЕСТВИЕ! 🌟
+            </span>
+            <h1 class="text-5xl md:text-7xl font-black text-white tracking-wide uppercase drop-shadow-[0_6px_0_#793FDF]" style="font-family: 'Montserrat', sans-serif;">
+                Карта приключений
+            </h1>
+            <p class="text-2xl md:text-3xl font-bold text-indigo-900 mt-4 max-w-3xl mx-auto leading-normal">
+                Кликай на яркие острова и управляй кодом! 💻🎈
+            </p>
+        </div>
+
+        <div class="flex justify-center mb-24 px-4">
+            <div class="rainbow-glow-frame max-w-6xl w-full">
+                <div class="bg-white rounded-[28px] overflow-hidden p-3 border-4 border-white">
+                    <img src="ChatGPT Image 10 июл. 2026 г., 19_16_38_2.png" 
+                         alt="Карта первого модуля" 
+                         class="w-full h-auto object-cover rounded-[20px]"
+                         onerror="this.src='https://placehold.co/1200x800/FFF0F3/800000?text=Карта+Первого+Модуля'">
+                </div>
             </div>
         </div>
-    </header>
 
-    <div class="tabs-nav">
-        <button class="tab-btn active" onclick="openTab(event, 'm1')">Основы (1-6)</button>
-     <!--   <button class="tab-btn" onclick="openTab(event, 'm2')">Движение (7-12)</button>
-        <button class="tab-btn" onclick="openTab(event, 'm3')">События (13-18)</button>
-        <button class="tab-btn" onclick="openTab(event, 'm4')">Переменные (19-24)</button>
-        <button class="tab-btn" onclick="openTab(event, 'm5')">Уровни (25-30)</button>
-        <button class="tab-btn" onclick="openTab(event, 'm6')">Финал (31-36)</button>-->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-16 px-4">
+            
+            <!-- Урок 1: Остров Пальмы -->
+            <a href="lesson1.html" class="block" onclick="playBubbleSound()">
+                <div class="candy-card bg-white border-[10px] card-green rounded-[48px] p-6 sm:p-8 lg:p-10 min-h-[580px] lg:min-h-[660px] h-auto flex flex-col justify-between cursor-pointer">
+                    <div class="flex flex-col items-center text-center">
+                        <span class="bg-[#00D26A] text-white text-3xl sm:text-4xl lg:text-5xl font-black px-6 sm:px-8 py-2 sm:py-3 rounded-full border-4 border-[#196F3D] shadow-[0_6px_0_#196F3D] mb-6 lg:mb-8">1</span>
+                        
+                        <!-- Классическая детализированная иллюстрация Острова -->
+                        <div class="w-32 h-32 sm:w-44 sm:h-44 lg:w-56 lg:h-56 flex items-center justify-center mb-6 lg:mb-8 swing-anim">
+                            <svg class="w-full h-full" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="50" cy="50" r="48" fill="#E0F7FA"/>
+                                <path d="M15 75C30 75 40 70 50 72C60 74 70 78 85 75C85 85 15 85 15 75Z" fill="#F0F4C3"/>
+                                <path d="M30 75C38 75 42 72 50 73C58 74 65 77 75 75C75 80 30 80 30 75Z" fill="#FFF59D"/>
+                                <!-- Ствол пальмы -->
+                                <path d="M47 73C48 60 44 48 35 38" stroke="#8D6E63" stroke-width="6" stroke-linecap="round"/>
+                                <path d="M52 73C53 62 49 51 40 40" stroke="#704F44" stroke-width="5" stroke-linecap="round"/>
+                                <!-- Листья пальмы -->
+                                <path d="M35 38C22 35 15 45 10 50C25 45 32 40 35 38Z" fill="#4CAF50" stroke="#2E7D32" stroke-width="1.5"/>
+                                <path d="M35 38C42 22 30 15 25 10C32 20 35 30 35 38Z" fill="#4CAF50" stroke="#2E7D32" stroke-width="1.5"/>
+                                <path d="M35 38C50 32 55 20 60 15C55 28 45 35 35 38Z" fill="#81C784" stroke="#2E7D32" stroke-width="1.5"/>
+                                <path d="M35 38C45 48 55 50 62 52C50 48 40 42 35 38Z" fill="#388E3C" stroke="#1B5E20" stroke-width="1.5"/>
+                                <!-- Кокосы -->
+                                <circle cx="33" cy="42" r="5" fill="#5D4037"/>
+                                <circle cx="41" cy="40" r="4.5" fill="#4E342E"/>
+                            </svg>
+                        </div>
+                        
+                        <h2 class="text-2xl sm:text-3xl lg:text-4xl font-black text-gray-800 mb-2 lg:mb-4">Остров Пальмы</h2>
+                        <span class="bg-[#E8F8F5] text-[#00D26A] font-bold text-sm sm:text-base px-6 sm:px-8 py-2 rounded-full border-2 border-[#00D26A] uppercase tracking-wider mb-4">🍃 Изучаем</span>
+                    </div>
+                    <p class="text-base sm:text-lg lg:text-2xl text-center font-bold text-gray-600 leading-relaxed px-2 sm:px-4 mb-6 lg:mb-8">Научим наш исследовательский корабль послушно плавать по экрану вслед за курсором!</p>
+                    <div class="bg-[#00D26A] text-white text-center text-lg sm:text-xl lg:text-2xl font-black py-3 sm:py-4 lg:py-5 rounded-3xl border-4 border-[#196F3D] shadow-[0_4px_0_#196F3D]">
+                        ПОПЛЫЛИ! 👉
+                    </div>
+                </div>
+            </a>
+
+            <!-- Урок 2: Коралловая лагуна -->
+            <a href="lesson2.html" class="block" onclick="playBubbleSound()">
+                <div class="candy-card bg-white border-[10px] card-teal rounded-[48px] p-6 sm:p-8 lg:p-10 min-h-[580px] lg:min-h-[660px] h-auto flex flex-col justify-between cursor-pointer">
+                    <div class="flex flex-col items-center text-center">
+                        <span class="bg-[#00D3E6] text-white text-3xl sm:text-4xl lg:text-5xl font-black px-6 sm:px-8 py-2 sm:py-3 rounded-full border-4 border-[#0E6251] shadow-[0_6px_0_#0E6251] mb-6 lg:mb-8">2</span>
+                        
+                        <!-- Классическая рыбка в водорослях -->
+                        <div class="w-32 h-32 sm:w-44 sm:h-44 lg:w-56 lg:h-56 flex items-center justify-center mb-6 lg:mb-8 float-anim">
+                            <svg class="w-full h-full" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="50" cy="50" r="48" fill="#E0F7FA"/>
+                                <!-- Морские Водоросли -->
+                                <path d="M25 80Q20 50 30 30T25 10" stroke="#4CAF50" stroke-width="5" stroke-linecap="round" fill="none"/>
+                                <path d="M78 80Q83 55 75 40T80 20" stroke="#81C784" stroke-width="4" stroke-linecap="round" fill="none"/>
+                                <!-- Классическая оранжевая рыбка-клоун -->
+                                <path d="M35 50C35 38 65 30 75 50C65 70 35 62 35 50Z" fill="#FF5722"/>
+                                <path d="M75 50L88 38V62L75 50Z" fill="#FF5722"/>
+                                <!-- Белые полоски рыбки -->
+                                <path d="M48 40C45 45 45 55 48 60H53C50 55 50 45 53 40H48Z" fill="white"/>
+                                <path d="M62 42C60 46 60 54 62 58H66C64 54 64 46 66 42H62Z" fill="white"/>
+                                <!-- Глазик -->
+                                <circle cx="43" cy="46" r="3" fill="black"/>
+                                <circle cx="42" cy="45" r="1" fill="white"/>
+                                <!-- Пузырьки воздуха -->
+                                <circle cx="38" cy="28" r="4" fill="white" fill-opacity="0.6" stroke="#00B0FF" stroke-width="1"/>
+                                <circle cx="46" cy="18" r="2.5" fill="white" fill-opacity="0.6" stroke="#00B0FF" stroke-width="1"/>
+                            </svg>
+                        </div>
+                        
+                        <h2 class="text-2xl sm:text-3xl lg:text-4xl font-black text-gray-800 mb-2 lg:mb-4">Коралловая лагуна</h2>
+                        <span class="bg-[#EBF5FB] text-[#00D3E6] font-bold text-sm sm:text-base px-6 sm:px-8 py-2 rounded-full border-2 border-[#00D3E6] uppercase tracking-wider mb-4">🖌️ Создаём</span>
+                    </div>
+                    <p class="text-base sm:text-lg lg:text-2xl text-center font-bold text-gray-600 leading-relaxed px-2 sm:px-4 mb-6 lg:mb-8">Оживим обитателей лагуны яркой анимацией, добавим рыбку и научим её плавать бесконечно!</p>
+                    <div class="bg-[#00D3E6] text-white text-center text-lg sm:text-xl lg:text-2xl font-black py-3 sm:py-4 lg:py-5 rounded-3xl border-4 border-[#0E6251] shadow-[0_4px_0_#0E6251]">
+                        ПОГРУЖАЕМСЯ! 🐠
+                    </div>
+                </div>
+            </a>
+
+            <!-- Урок 3: Потерянная страница -->
+            <a href="lesson3.html" class="block" onclick="playBubbleSound()">
+                <div class="candy-card bg-white border-[10px] card-purple rounded-[48px] p-6 sm:p-8 lg:p-10 min-h-[580px] lg:min-h-[660px] h-auto flex flex-col justify-between cursor-pointer">
+                    <div class="flex flex-col items-center text-center">
+                        <span class="bg-[#793FDF] text-white text-3xl sm:text-4xl lg:text-5xl font-black px-6 sm:px-8 py-2 sm:py-3 rounded-full border-4 border-[#4A235A] shadow-[0_6px_0_#4A235A] mb-6 lg:mb-8">3</span>
+                        
+                        <!-- Классический пергаментный свиток -->
+                        <div class="w-32 h-32 sm:w-44 sm:h-44 lg:w-56 lg:h-56 flex items-center justify-center mb-6 lg:mb-8 pulse-anim">
+                            <svg class="w-full h-full" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="50" cy="50" r="48" fill="#F3E5F5"/>
+                                <!-- Классический свиток пергамента -->
+                                <path d="M25 22H75C80 22 80 32 75 32H25C20 32 20 22 25 22Z" fill="#E0C097" stroke="#5C3D2E" stroke-width="2"/>
+                                <path d="M25 32V74C25 79 30 79 35 74V32" fill="#F5E8C7" stroke="#5C3D2E" stroke-width="2"/>
+                                <path d="M30 32V70H70V32" fill="#F5E8C7"/>
+                                <path d="M75 32V70C75 75 70 75 65 70V32" fill="#E0C097" stroke="#5C3D2E" stroke-width="2"/>
+                                <!-- Декоративная печать -->
+                                <circle cx="60" cy="65" r="5" fill="#D32F2F"/>
+                                <path d="M60 65L58 75L60 72L62 75L60 65Z" fill="#D32F2F"/>
+                                <!-- Перо для письма -->
+                                <path d="M78 25L65 52C64 54 62 55 60 55C62 53 63 50 64 48L74 21" fill="#ECEFF1" stroke="#37474F" stroke-width="1.5"/>
+                            </svg>
+                        </div>
+                        
+                        <h2 class="text-2xl sm:text-3xl lg:text-4xl font-black text-gray-800 mb-2 lg:mb-4">Потерянная страница</h2>
+                        <span class="bg-[#F5EEF8] text-[#793FDF] font-bold text-sm sm:text-base px-6 sm:px-8 py-2 rounded-full border-2 border-[#793FDF] uppercase tracking-wider mb-4">🔍 Исследуем</span>
+                    </div>
+                    <p class="text-base sm:text-lg lg:text-2xl text-center font-bold text-gray-600 leading-relaxed px-2 sm:px-4 mb-6 lg:mb-8">Разгадаем важный секрет растровой и векторной графики, чтобы легко менять наших героев!</p>
+                    <div class="bg-[#793FDF] text-white text-center text-lg sm:text-xl lg:text-2xl font-black py-3 sm:py-4 lg:py-5 rounded-3xl border-4 border-[#4A235A] shadow-[0_4px_0_#4A235A]">
+                        ОТКРЫТЬ СВИТОК! 📖
+                    </div>
+                </div>
+            </a>
+
+            <!-- Урок 4: Перекресток координат -->
+            <a href="lesson4.html" class="block" onclick="playBubbleSound()">
+                <div class="candy-card bg-white border-[10px] card-orange rounded-[48px] p-6 sm:p-8 lg:p-10 min-h-[580px] lg:min-h-[660px] h-auto flex flex-col justify-between cursor-pointer">
+                    <div class="flex flex-col items-center text-center">
+                        <span class="bg-[#FF7636] text-white text-3xl sm:text-4xl lg:text-5xl font-black px-6 sm:px-8 py-2 sm:py-3 rounded-full border-4 border-[#D35400] shadow-[0_6px_0_#D35400] mb-6 lg:mb-8">4</span>
+                        
+                        <!-- Классический деревянный указатель дорог -->
+                        <div class="w-32 h-32 sm:w-44 sm:h-44 lg:w-56 lg:h-56 flex items-center justify-center mb-6 lg:mb-8 swing-anim">
+                            <svg class="w-full h-full" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="50" cy="50" r="48" fill="#FFE0B2"/>
+                                <!-- Столб -->
+                                <rect x="46" y="25" width="8" height="60" rx="2" fill="#5D4037" stroke="#3E2723" stroke-width="2"/>
+                                <!-- Табличка Х (налево) -->
+                                <path d="M48 32H18L12 40L18 48H48V32Z" fill="#D84315" stroke="#3E2723" stroke-width="2"/>
+                                <text x="24" y="43" fill="white" font-weight="bold" font-size="11" font-family="Montserrat">ОСЬ X</text>
+                                <!-- Табличка Y (направо) -->
+                                <path d="M52 50H82L88 58L82 66H52V50Z" fill="#0288D1" stroke="#3E2723" stroke-width="2"/>
+                                <text x="58" y="61" fill="white" font-weight="bold" font-size="11" font-family="Montserrat">ОСЬ Y</text>
+                                <!-- Трава у основания -->
+                                <path d="M35 85C45 80 55 80 65 85C65 85 35 85 35 85Z" fill="#4CAF50"/>
+                            </svg>
+                        </div>
+                        
+                        <h2 class="text-2xl sm:text-3xl lg:text-4xl font-black text-gray-800 mb-2 lg:mb-4">Перекресток координат</h2>
+                        <span class="bg-[#FDF2E9] text-[#FF7636] font-bold text-sm sm:text-base px-6 sm:px-8 py-2 rounded-full border-2 border-[#FF7636] uppercase tracking-wider mb-4">🍃 Изучаем</span>
+                    </div>
+                    <p class="text-base sm:text-lg lg:text-2xl text-center font-bold text-gray-600 leading-relaxed px-2 sm:px-4 mb-6 lg:mb-8">Разберемся, как устроена невидимая координатная сетка, чтобы точно управлять каждым героем!</p>
+                    <div class="bg-[#FF7636] text-white text-center text-lg sm:text-xl lg:text-2xl font-black py-3 sm:py-4 lg:py-5 rounded-3xl border-4 border-[#D35400] shadow-[0_4px_0_#D35400]">
+                        ВЫБРАТЬ ПУТЬ! 🧭
+                    </div>
+                </div>
+            </a>
+
+            <!-- Урок 5: Станция связи -->
+            <a href="lesson5.html" class="block" onclick="playBubbleSound()">
+                <div class="candy-card bg-white border-[10px] card-yellow rounded-[48px] p-6 sm:p-8 lg:p-10 min-h-[580px] lg:min-h-[660px] h-auto flex flex-col justify-between cursor-pointer">
+                    <div class="flex flex-col items-center text-center">
+                        <span class="bg-[#FFCD38] text-white text-3xl sm:text-4xl lg:text-5xl font-black px-6 sm:px-8 py-2 sm:py-3 rounded-full border-4 border-[#D4AC0D] shadow-[0_6px_0_#D4AC0D] mb-6 lg:mb-8">5</span>
+                        
+                        <!-- Классический передатчик-радар -->
+                        <div class="w-32 h-32 sm:w-44 sm:h-44 lg:w-56 lg:h-56 flex items-center justify-center mb-6 lg:mb-8 float-anim">
+                            <svg class="w-full h-full" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="50" cy="50" r="48" fill="#FFFDE7"/>
+                                <!-- Основание передатчика -->
+                                <path d="M40 82L45 55H55L60 82" stroke="#455A64" stroke-width="4" stroke-linecap="round"/>
+                                <line x1="50" y1="55" x2="50" y2="35" stroke="#37474F" stroke-width="4"/>
+                                <!-- Тарелка радара -->
+                                <path d="M30 35C30 20 70 20 70 35H30Z" fill="#B0BEC5" stroke="#37474F" stroke-width="2"/>
+                                <circle cx="50" cy="23" r="4" fill="#FF1744"/>
+                                <!-- Radio waves -->
+                                <path d="M35 12A20 20 0 0 1 65 12" stroke="#FF5722" stroke-width="3" stroke-linecap="round" class="pulse-anim" fill="none"/>
+                                <path d="M25 5A32 32 0 0 1 75 5" stroke="#FF5722" stroke-width="2" stroke-linecap="round" class="pulse-anim" fill="none"/>
+                            </svg>
+                        </div>
+                        
+                        <h2 class="text-2xl sm:text-3xl lg:text-4xl font-black text-gray-800 mb-2 lg:mb-4">Станция связи</h2>
+                        <span class="bg-[#FEFDE8] text-[#FF9F00] font-bold text-sm sm:text-base px-6 sm:px-8 py-2 rounded-full border-2 border-[#FFCD38] uppercase tracking-wider mb-4">💬 Общаемся</span>
+                    </div>
+                    <p class="text-base sm:text-lg lg:text-2xl text-center font-bold text-gray-600 leading-relaxed px-2 sm:px-4 mb-6 lg:mb-8">Научим наших героев отправлять тайные сигналы и слаженно общаться друг с другом!</p>
+                    <div class="bg-[#FFCD38] text-[#424242] text-center text-lg sm:text-xl lg:text-2xl font-black py-3 sm:py-4 lg:py-5 rounded-3xl border-4 border-[#D4AC0D] shadow-[0_4px_0_#D4AC0D]">
+                        ПОЙМАТЬ СИГНАЛ! 📡
+                    </div>
+                </div>
+            </a>
+
+            <!-- Урок 6: Киностудия экспедиции -->
+            <a href="lesson6.html" class="block" onclick="playBubbleSound()">
+                <div class="candy-card bg-white border-[10px] card-pink rounded-[48px] p-6 sm:p-8 lg:p-10 min-h-[580px] lg:min-h-[660px] h-auto flex flex-col justify-between cursor-pointer">
+                    <div class="flex flex-col items-center text-center">
+                        <span class="bg-[#FF4B91] text-white text-3xl sm:text-4xl lg:text-5xl font-black px-6 sm:px-8 py-2 sm:py-3 rounded-full border-4 border-[#C71585] shadow-[0_6px_0_#C71585] mb-6 lg:mb-8">6</span>
+                        
+                        <!-- Классическая кинохлопушка -->
+                        <div class="w-32 h-32 sm:w-44 sm:h-44 lg:w-56 lg:h-56 flex items-center justify-center mb-6 lg:mb-8 swing-anim">
+                            <svg class="w-full h-full" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="50" cy="50" r="48" fill="#FCE4EC"/>
+                                <!-- Основное тело хлопушки -->
+                                <rect x="22" y="42" width="56" height="40" rx="4" fill="#263238" stroke="#1a252c" stroke-width="2"/>
+                                <!-- Верхняя откидная часть -->
+                                <path d="M22 42L78 30L76 22L20 34L22 42Z" fill="#37474F" stroke="#1a252c" stroke-width="2"/>
+                                <!-- Белые полоски классической хлопушки -->
+                                <path d="M30 39L38 37" stroke="white" stroke-width="4"/>
+                                <path d="M50 35L58 33" stroke="white" stroke-width="4"/>
+                                <path d="M70 31L76 29" stroke="white" stroke-width="4"/>
+                                <!-- Символ плей на хлопушке -->
+                                <polygon points="45,52 61,62 45,72" fill="#FF4B91"/>
+                            </svg>
+                        </div>
+                        
+                        <h2 class="text-2xl sm:text-3xl lg:text-4xl font-black text-gray-800 mb-2 lg:mb-4">Киностудия</h2>
+                        <span class="bg-[#FDF2F4] text-[#FF4B91] font-bold text-sm sm:text-base px-6 sm:px-8 py-2 rounded-full border-2 border-[#FF4B91] uppercase tracking-wider mb-4">🎬 Творим</span>
+                    </div>
+                    <p class="text-base sm:text-lg lg:text-2xl text-center font-bold text-gray-600 leading-relaxed px-2 sm:px-4 mb-6 lg:mb-8">Соберем все секретные технологии экспедиции вместе и снимем самый веселый мультфильм!</p>
+                    <div class="bg-[#FF4B91] text-white text-center text-lg sm:text-xl lg:text-2xl font-black py-3 sm:py-4 lg:py-5 rounded-3xl border-4 border-[#C71585] shadow-[0_4px_0_#C71585]">
+                        КАМЕРА, МОТОР! 🎥
+                    </div>
+                </div>
+            </a>
+
+        </div>
+
+        <div class="mt-24 text-center pb-12">
+            <div class="inline-block bg-white border-8 border-[#793FDF] rounded-[48px] p-10 max-w-2xl w-full shadow-[0_16px_0_#4A235A] transform hover:scale-105 transition-all duration-300">
+                <span class="text-7xl mb-4 block">🏰✨</span>
+                <h3 class="text-4xl font-black text-indigo-900 mb-2">НАША ГЛАВНАЯ ЦЕЛЬ</h3>
+                <p class="text-2xl font-bold text-gray-600">Спроектировать и построить самый технологичный Город будущего!</p>
+            </div>
+        </div>
+
     </div>
 
-    <div id="m1" class="tab-content active">
+    <script>
+        let synth;
         
-        <div class="lesson-card">
-            <div class="lesson-header">
-                <span class="lesson-number">Урок 1</span>
-                <h3>Алгоритмы. Интерфейс Scratch</h3>
-            </div>
-            <p>Знакомимся с линейным алгоритмом, программой и языком Scratch. Изучаем, как давать команды спрайтам.</p>
-            <div class="project-badge"><b>Проект:</b> Подводный мир 🐬</div>
-            <a href="https://nazarina.github.io/lesson-1/index.html" class="go-btn">Начать урок →</a>
-        </div>
-
-        <div class="lesson-card">
-            <div class="lesson-header">
-                <span class="lesson-number">Урок 2</span>
-                <h3>Циклы и графические эффекты</h3>
-            </div>
-            <p>Учимся повторять действия автоматически и менять внешний вид объектов с помощью кода.</p>
-            <div class="project-badge"><b>Проект:</b> Интерактивная открытка 🌸</div>
-            <a href="https://nazarina.github.io/lesson-2/index.html" class="go-btn">Начать урок →</a>
-        </div>
-
- <div class="lesson-card">
-            <div class="lesson-header">
-                <span class="lesson-number">Урок 3</span>
-                <h3>Графический редактор</h3>
-            </div>
-            <p>Создаем спрайтов и своего авторского персонажа</p>
-            <div class="project-badge"><b>Проект:</b> Интерактивная открытка 🌸</div>
-            <a href="https://nazarina.github.io/lesson-3/index.html" class="go-btn">Начать урок →</a>
-        </div>
-
-         <div class="lesson-card">
-            <div class="lesson-header">
-                <span class="lesson-number">Урок 4</span>
-                <h3>Координаты и направления</h3>
-            </div>
-            <p>Прокладываем маршрут: путешествие по системе координат начинается!</p>
-            <div class="project-badge"><b>Проект:</b> Интерактивная открытка 🌸</div>
-            <a href="https://nazarina.github.io/lesson-4/index.html" class="go-btn">Начать урок →</a>
-        </div>
-
-         <div class="lesson-card">
-            <div class="lesson-header">
-                <span class="lesson-number">Урок 5</span>
-                <h3>Сообщения в scratch</h3>
-            </div>
-            <p>📩 Учим спрайтов разговаривать: как передать сигнал другу?</p>
-            <div class="project-badge"><b>Проект:</b> Интерактивная открытка 🌸</div>
-            <a href="https://nazarina.github.io/lesson-5/index.html" class="go-btn">Начать урок →</a>
-        </div>
-
-         <div class="lesson-card">
-            <div class="lesson-header">
-                <span class="lesson-number">Урок 6</span>
-                <h3>Проект "ожившая сказка"</h3>
-            </div>
-            <p>🎬 Снимаем мультфильм без камеры: режиссируем историю в Scratch.</p>
-            <div class="project-badge"><b>Проект:</b> Интерактивная открытка 🌸</div>
-            <a href="https://nazarina.github.io/lesson-6/index.html" class="go-btn">Начать урок →</a>
-        </div>
-        
-     <!---   <div class="lesson-card" style="opacity: 0.6;">
-            <div class="lesson-header"><span class="lesson-number">Урок 3</span><h3>В разработке...</h3></div>
-            <p>Скоро здесь появится новый увлекательный проект.</p>
-        </div>
-        </div>-->
-
-    <div id="m2" class="tab-content"><p style="grid-column: 1/-1;">Уроки 7-12 появятся здесь совсем скоро!</p></div>
-
-</div>
-  <footer class="main-footer">
-    <div class="footer-container">
-        <div class="footer-info">
-            <h3 class="footer-logo">Начните творить сегодня</h3>
-            <p class="footer-credo">Учимся превращать сложные задачи в простые алгоритмы, где каждый скрипт укрепляет веру в свои силы и открывает новые горизонты для творчества.</p>
-        </div>
-        
-        <div class="footer-links">
-            <h4>Навигация</h4>
-            <a href="#">Все уроки</a>
-            <a href="https://scratch.mit.edu/">Платформа Scratch</a>
-            <a href="https://t.me/natali_nazarina">Поддержка</a>
-        </div>
-
-        <div class="footer-social">
-            <h4>Присоединяйтесь</h4>
-            <div class="social-icons">
-                <a href="https://t.me/code_to_kids" class="social-btn">TG</a>
-            </div>
-        </div>
-    </div>
-    <div class="footer-bottom">
-        &copy; 2026 • Заботливое образование 
-    </div>
-</footer>
-
-<script>
-    function openTab(evt, tabId) {
-        var i, tabContent, tabBtns;
-        tabContent = document.getElementsByClassName("tab-content");
-        for (i = 0; i < tabContent.length; i++) {
-            tabContent[i].style.display = "none";
-            tabContent[i].classList.remove("active");
+        function initAudio() {
+            if (!synth) {
+                synth = new Tone.MonoSynth({
+                    oscillator: { type: "sine" },
+                    filter: { Q: 2, type: "lowpass", frequency: 1200 },
+                    envelope: { attack: 0.01, decay: 0.08, sustain: 0.1, release: 0.1 }
+                }).toDestination();
+            }
         }
-        tabBtns = document.getElementsByClassName("tab-btn");
-        for (i = 0; i < tabBtns.length; i++) {
-            tabBtns[i].className = tabBtns[i].className.replace(" active", "");
-        }
-        document.getElementById(tabId).style.display = "grid";
-        document.getElementById(tabId).classList.add("active");
-        evt.currentTarget.className += " active";
-    }
-</script>
 
+        // Звук пузырей для детских кликов
+        function playBubbleSound() {
+            if (Tone.context.state !== 'running') {
+                Tone.start();
+            }
+            initAudio();
+            
+            const now = Tone.now();
+            synth.triggerAttackRelease("C4", "16n", now);
+            synth.triggerAttackRelease("G4", "16n", now + 0.05);
+            synth.triggerAttackRelease("E5", "16n", now + 0.1);
+        }
+
+        // Мягкий игровой звук при наведении на карточки
+        document.querySelectorAll('.candy-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                if (Tone.context.state === 'running') {
+                    initAudio();
+                    synth.triggerAttackRelease("E4", "32n");
+                }
+            });
+        });
+    </script>
 </body>
 </html>

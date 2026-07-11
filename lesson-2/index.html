@@ -429,7 +429,7 @@
     </div>
 
     <!-- Добавили overflow: hidden для плавности анимации -->
-    <div id="diary-content" class="diary-page" style="display: block; max-height: 0; overflow: hidden; transition: max-height 0.6s ease-out, opacity 0.5s ease;">
+    <div id="diary-content1" class="diary-page" style="display: block; max-height: 0; overflow: hidden; transition: max-height 0.6s ease-out, opacity 0.5s ease;">
         <p class="diary-text">
         Не забывайте делиться своими открытиями. Иногда одно доброе письмо вдохновляет сильнее, чем длинный рассказ.
       
@@ -437,7 +437,7 @@
 </div>
       <script>
     function toggleDiary() {
-        const diary = document.getElementById('diary-content');
+        const diary = document.getElementById('diary-content1');
         if (diary.style.maxHeight === '0px' || diary.style.maxHeight === '') {
             // Раскрываем
             diary.style.maxHeight = diary.scrollHeight + "px";

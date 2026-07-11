@@ -6,206 +6,76 @@
     <title>Карта приключений — Мастерская «Кот и Код»</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;700&family=Montserrat:wght@900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Montserrat:wght@800;900&display=swap" rel="stylesheet">
     
     <style>
         :root {
+            --font-headers: 'Montserrat', sans-serif;
             --font-main: 'Fredoka', sans-serif;
-            --deep-navy: #1a365d;    /* Глубокий синий для текста */
-            --accent-teal: #00acc1;  /* Лазурный акцент */
-            --wood-light: #faf6eb;   /* Очень светлое дерево */
-            --wood-bevel: #e8dfcb;   /* Тень дерева */
-            --wood-highlight: #ffffff; /* Блик дерева */
             
-            /* Спокойные, пастельные радужные цвета */
-            --pastel-green: #eafaf1;
-            --pastel-green-border: #82e0aa;
-            --pastel-green-shadow: #27ae60;
-
-            --pastel-teal: #ebfcfc;
-            --pastel-teal-border: #81e6f3;
-            --pastel-teal-shadow: #00a0b0;
-
-            --pastel-purple: #f5eef8;
-            --pastel-purple-border: #c39bd3;
-            --pastel-purple-shadow: #8e44ad;
-
-            --pastel-orange: #fdf2e9;
-            --pastel-orange-border: #f5b041;
-            --pastel-orange-shadow: #d35400;
-
-            --pastel-yellow: #fefde8;
-            --pastel-yellow-border: #f7dc6f;
-            --pastel-yellow-shadow: #b7791f;
-
-            --pastel-pink: #fdf2f4;
-            --pastel-pink-border: #f78da7;
-            --pastel-pink-shadow: #c71585;
+            /* Единый благородный морской цвет, идеально сочетающийся с океаном на карте */
+            --theme-color: #1a5f7a; 
+            --theme-color-dark: #0f3d4f;
+            --theme-color-light: #e0f2f1;
+            --text-navy: #1a365d;
         }
 
         body {
             font-family: var(--font-main);
-            /* Невероятно светлый и чистый лазурный градиент */
-            background: radial-gradient(circle at 50% 10%, #f4fdfd 0%, #e8f9fa 50%, #d5f3f5 100%);
+            /* Светлый лазурный градиент тропической лагуны */
+            background: radial-gradient(circle at 50% -20%, #ffffff 0%, #e0f7fa 45%, #80deea 100%);
             min-height: 100vh;
             overflow-x: hidden;
             position: relative;
         }
 
-        /* Реалистичная текстура светлого дерева с мягкими волокнами */
-        .wood-texture-light {
-            background-color: var(--wood-light);
-            background-image: 
-                repeating-linear-gradient(90deg, rgba(210, 190, 150, 0.08) 0px, rgba(210, 190, 150, 0.08) 2px, transparent 2px, transparent 30px),
-                repeating-linear-gradient(0deg, rgba(210, 190, 150, 0.04) 0px, rgba(210, 190, 150, 0.04) 4px, transparent 4px, transparent 40px),
-                linear-gradient(180deg, rgba(255, 255, 255, 0.8) 0%, rgba(250, 246, 235, 0) 100%);
-            border: 10px solid var(--wood-bevel);
-            border-top-color: var(--wood-highlight);
-            border-bottom-color: #d8cbaf;
+        /* Премиальная золотая рама для карты */
+        .royal-gold-frame {
+            border: 12px solid;
+            border-image: linear-gradient(to right, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c) 1;
             box-shadow: 
-                0 30px 60px rgba(26, 54, 93, 0.15),
-                inset 0 4px 8px rgba(255, 255, 255, 0.9),
-                inset 0 -6px 15px rgba(210, 190, 150, 0.2);
+                0 30px 60px rgba(0, 129, 145, 0.25),
+                inset 0 0 20px rgba(0, 0, 0, 0.15);
+            border-radius: 8px;
         }
 
-        /* Объемные 3D-карточки приключений с супер-глянцем */
-        .adventure-card {
-            background: linear-gradient(135deg, #ffffff 0%, #fafdff 100%);
-            border-width: 8px;
-            border-style: solid;
-            border-radius: 36px;
+        /* Единый стиль 3D-карточек в формате 4:3 */
+        .adventure-card-4-3 {
             position: relative;
+            border: 8px solid var(--theme-color);
+            border-radius: 32px;
+            /* Объемная 3D-тень в тон теме */
+            box-shadow: 0 12px 0px var(--theme-color-dark), 0 20px 30px rgba(0,0,0,0.15);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             overflow: hidden;
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1.15);
-            /* Мягкие, глубокие реалистичные тени парения */
-            box-shadow: 
-                0 20px 45px rgba(26, 54, 93, 0.08),
-                0 5px 15px rgba(26, 54, 93, 0.03),
-                inset 0 6px 0 rgba(255, 255, 255, 1);
         }
 
-        /* Постоянный стеклянный блик сверху */
-        .gloss-overlay {
+        .adventure-card-4-3:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 0px var(--theme-color-dark), 0 30px 40px rgba(0,0,0,0.2);
+        }
+
+        /* Полупрозрачная матовая подложка для текста */
+        .glass-podlozhka {
+            background: rgba(255, 255, 255, 0.88);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-top: 2px solid rgba(255, 255, 255, 0.6);
+        }
+
+        /* Глянцевый блик */
+        .card-gloss {
             position: absolute;
             inset: 0;
-            background: linear-gradient(135deg, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0) 50%);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.25) 0%, rgba(255, 255, 255, 0) 50%);
             pointer-events: none;
             z-index: 5;
-        }
-
-        /* Эффект бегущего глянцевого блика при наведении */
-        .adventure-card::after {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -60%;
-            width: 30%;
-            height: 200%;
-            background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.45) 50%, rgba(255,255,255,0) 100%);
-            transform: rotate(30deg);
-            transition: all 0.6s ease;
-            pointer-events: none;
-            z-index: 6;
-        }
-
-        .adventure-card:hover::after {
-            left: 130%;
-        }
-
-        .adventure-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 
-                0 35px 70px rgba(26, 54, 93, 0.15),
-                0 10px 25px rgba(26, 54, 93, 0.05),
-                inset 0 6px 0 rgba(255, 255, 255, 1);
-        }
-
-        /* Индивидуальные пастельные стили карточек */
-        .card-green {
-            border-color: var(--pastel-green-border);
-            border-bottom-color: var(--pastel-green-shadow);
-        }
-        .card-teal {
-            border-color: var(--pastel-teal-border);
-            border-bottom-color: var(--pastel-teal-shadow);
-        }
-        .card-purple {
-            border-color: var(--pastel-purple-border);
-            border-bottom-color: var(--pastel-purple-shadow);
-        }
-        .card-orange {
-            border-color: var(--pastel-orange-border);
-            border-bottom-color: var(--pastel-orange-shadow);
-        }
-        .card-yellow {
-            border-color: var(--pastel-yellow-border);
-            border-bottom-color: var(--pastel-yellow-shadow);
-        }
-        .card-pink {
-            border-color: var(--pastel-pink-border);
-            border-bottom-color: var(--pastel-pink-shadow);
-        }
-
-        /* Стеклянные серебряные заклепки */
-        .silver-rivet {
-            position: absolute;
-            width: 14px;
-            height: 14px;
-            background: radial-gradient(circle at 35% 35%, #ffffff 0%, #d0d7de 50%, #9ca9b9 100%);
-            border-radius: 50%;
-            box-shadow: 
-                0 3px 5px rgba(26, 54, 93, 0.15), 
-                inset 0 1px 2px rgba(255, 255, 255, 0.8);
-            z-index: 10;
-        }
-
-        /* Объемные 3D Кнопки с реалистичным бликом */
-        .btn-3d {
-            position: relative;
-            border-top: 2px solid rgba(255, 255, 255, 0.5);
-            transition: all 0.15s ease;
-        }
-        
-        .btn-3d:active {
-            transform: translateY(4px);
-            box-shadow: 0 4px 0 var(--shadow-color) !important;
-        }
-
-        .btn-3d-green {
-            --shadow-color: #1e8449;
-            background: linear-gradient(to bottom, #2ecc71 0%, #27ae60 100%);
-            box-shadow: 0 8px 0 var(--shadow-color), 0 12px 25px rgba(30, 132, 73, 0.25);
-        }
-        .btn-3d-teal {
-            --shadow-color: #007c8a;
-            background: linear-gradient(to bottom, #11c0d4 0%, #0097a7 100%);
-            box-shadow: 0 8px 0 var(--shadow-color), 0 12px 25px rgba(0, 124, 138, 0.25);
-        }
-        .btn-3d-purple {
-            --shadow-color: #6c3483;
-            background: linear-gradient(to bottom, #9b59b6 0%, #8e44ad 100%);
-            box-shadow: 0 8px 0 var(--shadow-color), 0 12px 25px rgba(108, 52, 131, 0.25);
-        }
-        .btn-3d-orange {
-            --shadow-color: #b33600;
-            background: linear-gradient(to bottom, #ff7e3d 0%, #e65100 100%);
-            box-shadow: 0 8px 0 var(--shadow-color), 0 12px 25px rgba(179, 54, 0, 0.25);
-        }
-        .btn-3d-yellow {
-            --shadow-color: #b7791f;
-            background: linear-gradient(to bottom, #f1c40f 0%, #f39c12 100%);
-            box-shadow: 0 8px 0 var(--shadow-color), 0 12px 25px rgba(183, 121, 31, 0.25);
-        }
-        .btn-3d-pink {
-            --shadow-color: #8a1313;
-            background: linear-gradient(to bottom, #ff5c97 0%, #d63031 100%);
-            box-shadow: 0 8px 0 var(--shadow-color), 0 12px 25px rgba(138, 19, 19, 0.25);
         }
 
         /* Реалистичные анимированные пузыри на фоне */
         .bubble {
             position: absolute;
-            background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.7) 0%, rgba(255, 255, 255, 0.1) 40%, rgba(0, 172, 193, 0.2) 80%, rgba(255, 255, 255, 0.5) 100%);
+            background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0.1) 40%, rgba(0, 172, 193, 0.2) 80%, rgba(255, 255, 255, 0.5) 100%);
             border-radius: 50%;
             pointer-events: auto;
             cursor: pointer;
@@ -225,328 +95,204 @@
             0% { margin-left: 0px; }
             100% { margin-left: 40px; }
         }
-
-        /* Анимации плавания/покачивания предметов */
-        .swing-anim {
-            animation: swing 4s ease-in-out infinite alternate;
-            transform-origin: bottom center;
-        }
-        @keyframes swing {
-            0% { transform: rotate(-5deg); }
-            100% { transform: rotate(5deg); }
-        }
-
-        .float-anim {
-            animation: float 4.5s ease-in-out infinite alternate;
-        }
-        @keyframes float {
-            0% { transform: translateY(0px) rotate(-1deg); }
-            100% { transform: translateY(-10px) rotate(1deg); }
-        }
     </style>
 </head>
 <body class="py-12 px-4 md:px-8 relative">
 
-    <!-- Контейнер для динамических пузырей -->
+    <!-- Задний план с пузырями -->
     <div id="bubble-container" class="absolute inset-0 overflow-hidden pointer-events-none z-0"></div>
 
-    <!-- Увеличенный и просторный контейнер max-w-[1400px] -->
     <div class="max-w-[1400px] mx-auto relative z-10">
 
-        <!-- Шапка: Текст располагается свободно прямо на общем фоне страницы -->
+        <!-- Стилизованный заголовок на общем фоне -->
         <div class="max-w-4xl mx-auto text-center mb-16 px-4">
-            <span class="inline-block bg-[#00acc1] text-white text-base md:text-lg font-bold px-8 py-2.5 rounded-full shadow-[0_4px_0_#007c8a] transform -rotate-1 mb-6 animate-pulse">
-                ⚓️ НАШЕ БОЛЬШОЕ ПУТЕШЕСТВИЕ! ⛵️
+            <span class="inline-block bg-gradient-to-r from-[#008191] to-[#11c0d4] text-white text-base md:text-lg font-black px-8 py-2.5 rounded-full shadow-[0_4px_12px_rgba(0,129,145,0.2)] transform -rotate-1 mb-6 animate-pulse" style="font-family: var(--font-headers);">
+                ⚓️ НАШЕ ВЕЛИКОЕ ПУТЕШЕСТВИЕ! ⛵️
             </span>
-            <h1 class="text-5xl md:text-6xl lg:text-7xl font-black text-[#1a365d] tracking-wide uppercase drop-shadow-[0_2px_4px_rgba(26,54,93,0.1)]" style="font-family: 'Montserrat', sans-serif;">
+            <h1 class="text-4xl md:text-6xl font-black text-[#1a365d] tracking-wide uppercase drop-shadow-[0_2px_4px_rgba(255,255,255,0.9)]" style="font-family: var(--font-headers);">
                 Карта приключений
             </h1>
-            <p class="text-2xl md:text-3xl font-bold text-[#007c8a] mt-4 leading-normal">
-                Выбирай яркие острова на карте и управляй своим кодом!
+            <p class="text-xl md:text-2xl font-bold text-[#008191] mt-4 leading-normal drop-shadow-[0_1px_2px_rgba(255,255,255,0.9)]">
+                Кликай на яркие острова и управляй кодом! 💻🎈
             </p>
         </div>
 
-        <!-- Рисованная карта первого модуля во всю ширину деревянного подрамника -->
+        <!-- Изображение карты на всю ширину контейнера -->
         <div class="flex justify-center mb-24 px-4">
-            <div class="wood-texture-light w-full p-2 overflow-hidden rounded-[36px]">
-                <div class="rounded-2xl overflow-hidden bg-white shadow-inner">
-                    <img src="map.png" 
-                         alt="Карта первого модуля" 
-                         class="w-full h-auto object-cover rounded-xl block"
-                         onerror="this.src='https://placehold.co/1400x900/e0f7fa/004d40?text=Карта+Первого+Модуля'">
-                </div>
+            <div class="royal-gold-frame w-full p-2 bg-[#fffcf0]">
+                <img src="map (1).jpg" 
+                     alt="Карта первого модуля" 
+                     class="w-full h-auto object-cover block"
+                     onerror="this.src='map.png'; this.onerror=function(){this.src='https://placehold.co/1400x900/e0f7fa/1a365d?text=Карта+Первого+Модуля'}">
             </div>
         </div>
 
-        <!-- Сетка карточек по 2 в ряд — стала шире и удобнее для больших мониторов -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-16 px-4 items-stretch">
+        <!-- Сетка из двух колонок для горизонтально-ориентированных карточек 4:3 -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-10 lg:gap-14 max-w-6xl mx-auto px-4 items-stretch">
             
             <!-- Урок 1: Остров Пальмы -->
-            <a href="lesson1.html" class="block h-full" onclick="playBubbleSound()">
-                <div class="adventure-card card-green p-6 sm:p-8 lg:p-10 h-full flex flex-col justify-between cursor-pointer">
-                    <div class="gloss-overlay"></div>
-                    <!-- Серебряные заклепки -->
-                    <div class="silver-rivet top-4 left-4"></div>
-                    <div class="silver-rivet top-4 right-4"></div>
-                    <div class="silver-rivet bottom-4 left-4"></div>
-                    <div class="silver-rivet bottom-4 right-4"></div>
-
-                    <div class="flex flex-col items-center text-center">
-                        <span class="bg-[#2ecc71] text-white text-3xl sm:text-4xl lg:text-5xl font-black px-6 sm:px-8 py-2 sm:py-3 rounded-full border-4 border-[#1e8449] shadow-[0_6px_0_#1e8449] mb-6 lg:mb-8">1</span>
-                        
-                        <!-- Классический Остров -->
-                        <div class="w-32 h-32 sm:w-44 sm:h-44 lg:w-52 lg:h-52 flex items-center justify-center mb-6 lg:mb-8 swing-anim">
-                            <svg class="w-full h-full drop-shadow-[0_12px_10px_rgba(26,54,93,0.12)]" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <circle cx="50" cy="50" r="48" fill="#daf2f7"/>
-                                <path d="M15 75C30 75 40 70 50 72C60 74 70 78 85 75C85 85 15 85 15 75Z" fill="#F0F4C3"/>
-                                <path d="M30 75C38 75 42 72 50 73C58 74 65 77 75 75C75 80 30 80 30 75Z" fill="#FFF59D"/>
-                                <!-- Ствол пальмы -->
-                                <path d="M47 73C48 60 44 48 35 38" stroke="#8D6E63" stroke-width="6" stroke-linecap="round"/>
-                                <path d="M52 73C53 62 49 51 40 40" stroke="#704F44" stroke-width="5" stroke-linecap="round"/>
-                                <!-- Листья пальмы -->
-                                <path d="M35 38C22 35 15 45 10 50C25 45 32 40 35 38Z" fill="#4CAF50" stroke="#2E7D32" stroke-width="1.5"/>
-                                <path d="M35 38C42 22 30 15 25 10C32 20 35 30 35 38Z" fill="#4CAF50" stroke="#2E7D32" stroke-width="1.5"/>
-                                <path d="M35 38C50 32 55 20 60 15C55 28 45 35 35 38Z" fill="#81C784" stroke="#2E7D32" stroke-width="1.5"/>
-                                <path d="M35 38C45 48 55 50 62 52C50 48 40 42 35 38Z" fill="#388E3C" stroke="#1B5E20" stroke-width="1.5"/>
-                                <!-- Кокосы -->
-                                <circle cx="33" cy="42" r="5" fill="#5D4037"/>
-                                <circle cx="41" cy="40" r="4.5" fill="#4E342E"/>
-                            </svg>
+            <a href="lesson1.html" class="group block h-full" onclick="playBubbleSound()">
+                <div class="adventure-card-4-3 aspect-[4/3] h-full flex flex-col justify-end">
+                    <div class="card-gloss"></div>
+                    <!-- Фоновое изображение (твое изображение lesson1.png) -->
+                    <div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105" 
+                         style="background-image: url('lesson1.png'), url('https://placehold.co/800x600/e2f0d9/1a365d?text=Остров+Пальмы');">
+                    </div>
+                    
+                    <!-- Полупрозрачная подложка снизу -->
+                    <div class="glass-podlozhka w-full p-5 sm:p-6 lg:p-7 relative z-10 flex flex-col gap-3">
+                        <div class="flex items-center gap-3 sm:gap-4">
+                            <!-- Круглая печать с номером -->
+                            <span class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-[#1a5f7a] text-white font-black flex items-center justify-center text-lg sm:text-xl shadow-[0_4px_6px_rgba(0,0,0,0.15)] shrink-0">1</span>
+                            <!-- Название полностью видимое, без усечения -->
+                            <h2 class="text-xl sm:text-2xl lg:text-3xl font-black text-[#1a365d] leading-tight" style="font-family: var(--font-headers);">Остров Пальмы</h2>
                         </div>
                         
-                        <h2 class="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-800 mb-2 lg:mb-4">Остров Пальмы</h2>
-                        <span class="bg-[#E8F8F5] text-[#1e8449] font-bold text-sm sm:text-base px-6 sm:px-8 py-1.5 rounded-full border-2 border-[#2ecc71] uppercase tracking-wider mb-4">🍃 Изучаем</span>
-                    </div>
-                    <p class="text-base sm:text-lg lg:text-2xl text-center font-bold text-slate-600 leading-relaxed px-2 sm:px-4 mb-6 lg:mb-8">Научим наш исследовательский корабль послушно плавать по экрану вслед за курсором!</p>
-                    <div class="btn-3d btn-3d-green text-white text-center text-lg sm:text-xl lg:text-2xl font-black py-4 sm:py-5 rounded-3xl mt-auto">
-                        ПОПЛЫЛИ! 👉
+                        <!-- Ссылка "Перейти к уроку" в левом нижнем углу -->
+                        <div class="flex items-center gap-2 text-[#1a5f7a] font-extrabold text-sm sm:text-base mt-1">
+                            <span>Перейти к уроку</span>
+                            <svg class="w-5 h-5 transition-transform duration-300 group-hover:translate-x-2" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/>
+                            </svg>
+                        </div>
                     </div>
                 </div>
             </a>
 
             <!-- Урок 2: Коралловая лагуна -->
-            <a href="lesson2.html" class="block h-full" onclick="playBubbleSound()">
-                <div class="adventure-card card-teal p-6 sm:p-8 lg:p-10 h-full flex flex-col justify-between cursor-pointer">
-                    <div class="gloss-overlay"></div>
-                    <!-- Серебряные заклепки -->
-                    <div class="silver-rivet top-4 left-4"></div>
-                    <div class="silver-rivet top-4 right-4"></div>
-                    <div class="silver-rivet bottom-4 left-4"></div>
-                    <div class="silver-rivet bottom-4 right-4"></div>
-
-                    <div class="flex flex-col items-center text-center">
-                        <span class="bg-[#11c0d4] text-white text-3xl sm:text-4xl lg:text-5xl font-black px-6 sm:px-8 py-2 sm:py-3 rounded-full border-4 border-[#007c8a] shadow-[0_6px_0_#007c8a] mb-6 lg:mb-8">2</span>
-                        
-                        <!--  Классическая рыбка в водорослях -->
-                        <div class="w-32 h-32 sm:w-44 sm:h-44 lg:w-52 lg:h-52 flex items-center justify-center mb-6 lg:mb-8 float-anim">
-                            <svg class="w-full h-full drop-shadow-[0_12px_10px_rgba(26,54,93,0.12)]" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <circle cx="50" cy="50" r="48" fill="#daf2f7"/>
-                                <!-- Морские Водоросли -->
-                                <path d="M25 80Q20 50 30 30T25 10" stroke="#4CAF50" stroke-width="5" stroke-linecap="round" fill="none"/>
-                                <path d="M78 80Q83 55 75 40T80 20" stroke="#81C784" stroke-width="4" stroke-linecap="round" fill="none"/>
-                                <!-- Классическая оранжевая рыбка-клоун -->
-                                <path d="M35 50C35 38 65 30 75 50C65 70 35 62 35 50Z" fill="#FF5722"/>
-                                <path d="M75 50L88 38V62L75 50Z" fill="#FF5722"/>
-                                <!-- Белые полоски рыбки -->
-                                <path d="M48 40C45 45 45 55 48 60H53C50 55 50 45 53 40H48Z" fill="white"/>
-                                <path d="M62 42C60 46 60 54 62 58H66C64 54 64 46 66 42H62Z" fill="white"/>
-                                <!-- Глазик -->
-                                <circle cx="43" cy="46" r="3" fill="black"/>
-                                <circle cx="42" cy="45" r="1" fill="white"/>
-                                <!-- Пузырьки воздуха -->
-                                <circle cx="38" cy="28" r="4" fill="white" fill-opacity="0.6" stroke="#00B0FF" stroke-width="1"/>
-                                <circle cx="46" cy="18" r="2.5" fill="white" fill-opacity="0.6" stroke="#00B0FF" stroke-width="1"/>
-                            </svg>
+            <a href="lesson2.html" class="group block h-full" onclick="playBubbleSound()">
+                <div class="adventure-card-4-3 aspect-[4/3] h-full flex flex-col justify-end">
+                    <div class="card-gloss"></div>
+                    <div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105" 
+                         style="background-image: url('lesson2.png'), url('https://placehold.co/800x600/daf2f7/1a365d?text=Коралловая+Лагуна');">
+                    </div>
+                    
+                    <div class="glass-podlozhka w-full p-5 sm:p-6 lg:p-7 relative z-10 flex flex-col gap-3">
+                        <div class="flex items-center gap-3 sm:gap-4">
+                            <span class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-[#1a5f7a] text-white font-black flex items-center justify-center text-lg sm:text-xl shadow-[0_4px_6px_rgba(0,0,0,0.15)] shrink-0">2</span>
+                            <h2 class="text-xl sm:text-2xl lg:text-3xl font-black text-[#1a365d] leading-tight" style="font-family: var(--font-headers);">Коралловая лагуна</h2>
                         </div>
                         
-                        <h2 class="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-800 mb-2 lg:mb-4">Коралловая лагуна</h2>
-                        <span class="bg-[#EBF5FB] text-[#0097a7] font-bold text-sm sm:text-base px-6 sm:px-8 py-1.5 rounded-full border-2 border-[#11c0d4] uppercase tracking-wider mb-4">🎨 Создаём</span>
-                    </div>
-                    <p class="text-base sm:text-lg lg:text-2xl text-center font-bold text-slate-600 leading-relaxed px-2 sm:px-4 mb-6 lg:mb-8">Оживим обитателей лагуны яркой анимацией, добавим рыбку и научим её плавать бесконечно!</p>
-                    <div class="btn-3d btn-3d-teal text-white text-center text-lg sm:text-xl lg:text-2xl font-black py-4 sm:py-5 rounded-3xl mt-auto">
-                        ПОГРУЖАЕМСЯ! 🐠
+                        <div class="flex items-center gap-2 text-[#1a5f7a] font-extrabold text-sm sm:text-base mt-1">
+                            <span>Перейти к уроку</span>
+                            <svg class="w-5 h-5 transition-transform duration-300 group-hover:translate-x-2" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/>
+                            </svg>
+                        </div>
                     </div>
                 </div>
             </a>
 
             <!-- Урок 3: Потерянная страница -->
-            <a href="lesson3.html" class="block h-full" onclick="playBubbleSound()">
-                <div class="adventure-card card-purple p-6 sm:p-8 lg:p-10 h-full flex flex-col justify-between cursor-pointer">
-                    <div class="gloss-overlay"></div>
-                    <!-- Серебряные заклепки -->
-                    <div class="silver-rivet top-4 left-4"></div>
-                    <div class="silver-rivet top-4 right-4"></div>
-                    <div class="silver-rivet bottom-4 left-4"></div>
-                    <div class="silver-rivet bottom-4 right-4"></div>
-
-                    <div class="flex flex-col items-center text-center">
-                        <span class="bg-[#9b59b6] text-white text-3xl sm:text-4xl lg:text-5xl font-black px-6 sm:px-8 py-2 sm:py-3 rounded-full border-4 border-[#6c3483] shadow-[0_6px_0_#6c3483] mb-6 lg:mb-8">3</span>
-                        
-                        <!-- Классический пергаментный свиток -->
-                        <div class="w-32 h-32 sm:w-44 sm:h-44 lg:w-52 lg:h-52 flex items-center justify-center mb-6 lg:mb-8 float-anim">
-                            <svg class="w-full h-full drop-shadow-[0_12px_10px_rgba(26,54,93,0.12)]" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <circle cx="50" cy="50" r="48" fill="#f8edf9"/>
-                                <!-- Классический свиток пергамента -->
-                                <path d="M25 22H75C80 22 80 32 75 32H25C20 32 20 22 25 22Z" fill="#E0C097" stroke="#5C3D2E" stroke-width="2"/>
-                                <path d="M25 32V74C25 79 30 79 35 74V32" fill="#F5E8C7" stroke="#5C3D2E" stroke-width="2"/>
-                                <path d="M30 32V70H70V32" fill="#F5E8C7"/>
-                                <path d="M75 32V70C75 75 70 75 65 70V32" fill="#E0C097" stroke="#5C3D2E" stroke-width="2"/>
-                                <!-- Декоративная печать -->
-                                <circle cx="60" cy="65" r="5" fill="#D32F2F"/>
-                                <path d="M60 65L58 75L60 72L62 75L60 65Z" fill="#D32F2F"/>
-                                <!-- Перо для письма -->
-                                <path d="M78 25L65 52C64 54 62 55 60 55C62 53 63 50 64 48L74 21" fill="#ECEFF1" stroke="#37474F" stroke-width="1.5"/>
-                            </svg>
+            <a href="lesson3.html" class="group block h-full" onclick="playBubbleSound()">
+                <div class="adventure-card-4-3 aspect-[4/3] h-full flex flex-col justify-end">
+                    <div class="card-gloss"></div>
+                    <div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105" 
+                         style="background-image: url('lesson3.png'), url('https://placehold.co/800x600/f8edf9/1a365d?text=Потерянная+Страница');">
+                    </div>
+                    
+                    <div class="glass-podlozhka w-full p-5 sm:p-6 lg:p-7 relative z-10 flex flex-col gap-3">
+                        <div class="flex items-center gap-3 sm:gap-4">
+                            <span class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-[#1a5f7a] text-white font-black flex items-center justify-center text-lg sm:text-xl shadow-[0_4px_6px_rgba(0,0,0,0.15)] shrink-0">3</span>
+                            <h2 class="text-xl sm:text-2xl lg:text-3xl font-black text-[#1a365d] leading-tight" style="font-family: var(--font-headers);">Потерянная страница</h2>
                         </div>
                         
-                        <h2 class="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-800 mb-2 lg:mb-4">Потерянная страница</h2>
-                        <span class="bg-[#F5EEF8] text-[#8e44ad] font-bold text-sm sm:text-base px-6 sm:px-8 py-1.5 rounded-full border-2 border-[#9b59b6] uppercase tracking-wider mb-4">🔍 Исследуем</span>
-                    </div>
-                    <p class="text-base sm:text-lg lg:text-2xl text-center font-bold text-slate-600 leading-relaxed px-2 sm:px-4 mb-6 lg:mb-8">Разгадаем важный секрет растровой и векторной графики, чтобы легко менять наших героев!</p>
-                    <div class="btn-3d btn-3d-purple text-white text-center text-lg sm:text-xl lg:text-2xl font-black py-4 sm:py-5 rounded-3xl mt-auto">
-                        ОТКРЫТЬ СВИТОК! 📖
+                        <div class="flex items-center gap-2 text-[#1a5f7a] font-extrabold text-sm sm:text-base mt-1">
+                            <span>Перейти к уроку</span>
+                            <svg class="w-5 h-5 transition-transform duration-300 group-hover:translate-x-2" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/>
+                            </svg>
+                        </div>
                     </div>
                 </div>
             </a>
 
             <!-- Урок 4: Перекресток координат -->
-            <a href="lesson4.html" class="block h-full" onclick="playBubbleSound()">
-                <div class="adventure-card card-orange p-6 sm:p-8 lg:p-10 h-full flex flex-col justify-between cursor-pointer">
-                    <div class="gloss-overlay"></div>
-                    <!-- Серебряные заклепки -->
-                    <div class="silver-rivet top-4 left-4"></div>
-                    <div class="silver-rivet top-4 right-4"></div>
-                    <div class="silver-rivet bottom-4 left-4"></div>
-                    <div class="silver-rivet bottom-4 right-4"></div>
-
-                    <div class="flex flex-col items-center text-center">
-                        <span class="bg-[#ff7e3d] text-white text-3xl sm:text-4xl lg:text-5xl font-black px-6 sm:px-8 py-2 sm:py-3 rounded-full border-4 border-[#b33600] shadow-[0_6px_0_#b33600] mb-6 lg:mb-8">4</span>
-                        
-                        <!-- Деревянный указатель дорог -->
-                        <div class="w-32 h-32 sm:w-44 sm:h-44 lg:w-52 lg:h-52 flex items-center justify-center mb-6 lg:mb-8 swing-anim">
-                            <svg class="w-full h-full drop-shadow-[0_12px_10px_rgba(26,54,93,0.12)]" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <circle cx="50" cy="50" r="48" fill="#fff3e0"/>
-                                <!-- Столб -->
-                                <rect x="46" y="25" width="8" height="60" rx="2" fill="#5D4037" stroke="#3E2723" stroke-width="2"/>
-                                <!-- Табличка Х (налево) -->
-                                <path d="M48 32H18L12 40L18 48H48V32Z" fill="#D84315" stroke="#3E2723" stroke-width="2"/>
-                                <text x="21" y="43" fill="white" font-weight="bold" font-size="9" font-family="Montserrat">ОСЬ X</text>
-                                <!-- Табличка Y (направо) -->
-                                <path d="M52 50H82L88 58L82 66H52V50Z" fill="#0288D1" stroke="#3E2723" stroke-width="2"/>
-                                <text x="56" y="61" fill="white" font-weight="bold" font-size="9" font-family="Montserrat">ОСЬ Y</text>
-                                <!-- Трава у основания -->
-                                <path d="M35 85C45 80 55 80 65 85C65 85 35 85 35 85Z" fill="#4CAF50"/>
-                            </svg>
+            <a href="lesson4.html" class="group block h-full" onclick="playBubbleSound()">
+                <div class="adventure-card-4-3 aspect-[4/3] h-full flex flex-col justify-end">
+                    <div class="card-gloss"></div>
+                    <div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105" 
+                         style="background-image: url('lesson4.png'), url('https://placehold.co/800x600/fff3e0/1a365d?text=Перекресток+Координат');">
+                    </div>
+                    
+                    <div class="glass-podlozhka w-full p-5 sm:p-6 lg:p-7 relative z-10 flex flex-col gap-3">
+                        <div class="flex items-center gap-3 sm:gap-4">
+                            <span class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-[#1a5f7a] text-white font-black flex items-center justify-center text-lg sm:text-xl shadow-[0_4px_6px_rgba(0,0,0,0.15)] shrink-0">4</span>
+                            <h2 class="text-xl sm:text-2xl lg:text-3xl font-black text-[#1a365d] leading-tight" style="font-family: var(--font-headers);">Перекресток координат</h2>
                         </div>
                         
-                        <h2 class="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-800 mb-2 lg:mb-4">Перекресток координат</h2>
-                        <span class="bg-[#FDF2E9] text-[#e65100] font-bold text-sm sm:text-base px-6 sm:px-8 py-1.5 rounded-full border-2 border-[#ff7e3d] uppercase tracking-wider mb-4">🍃 Изучаем</span>
-                    </div>
-                    <p class="text-base sm:text-lg lg:text-2xl text-center font-bold text-slate-600 leading-relaxed px-2 sm:px-4 mb-6 lg:mb-8">Разберемся, как устроена невидимая координатная сетка, чтобы точно управлять каждым героем!</p>
-                    <div class="btn-3d btn-3d-orange text-white text-center text-lg sm:text-xl lg:text-2xl font-black py-4 sm:py-5 rounded-3xl mt-auto">
-                        ВЫБРАТЬ ПУТЬ! 🧭
+                        <div class="flex items-center gap-2 text-[#1a5f7a] font-extrabold text-sm sm:text-base mt-1">
+                            <span>Перейти к уроку</span>
+                            <svg class="w-5 h-5 transition-transform duration-300 group-hover:translate-x-2" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/>
+                            </svg>
+                        </div>
                     </div>
                 </div>
             </a>
 
             <!-- Урок 5: Станция связи -->
-            <a href="lesson5.html" class="block h-full" onclick="playBubbleSound()">
-                <div class="adventure-card card-yellow p-6 sm:p-8 lg:p-10 h-full flex flex-col justify-between cursor-pointer">
-                    <div class="gloss-overlay"></div>
-                    <!-- Серебряные заклепки -->
-                    <div class="silver-rivet top-4 left-4"></div>
-                    <div class="silver-rivet top-4 right-4"></div>
-                    <div class="silver-rivet bottom-4 left-4"></div>
-                    <div class="silver-rivet bottom-4 right-4"></div>
-
-                    <div class="flex flex-col items-center text-center">
-                        <span class="bg-[#f1c40f] text-white text-3xl sm:text-4xl lg:text-5xl font-black px-6 sm:px-8 py-2 sm:py-3 rounded-full border-4 border-[#b7791f] shadow-[0_6px_0_#b7791f] mb-6 lg:mb-8">5</span>
-                        
-                        <!--  Классический передатчик-радар -->
-                        <div class="w-32 h-32 sm:w-44 sm:h-44 lg:w-52 lg:h-52 flex items-center justify-center mb-6 lg:mb-8 float-anim">
-                            <svg class="w-full h-full drop-shadow-[0_12px_10px_rgba(26,54,93,0.12)]" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <circle cx="50" cy="50" r="48" fill="#fefde6"/>
-                                <!-- Основание передатчика -->
-                                <path d="M40 82L45 55H55L60 82" stroke="#455A64" stroke-width="4" stroke-linecap="round"/>
-                                <line x1="50" y1="55" x2="50" y2="35" stroke="#37474F" stroke-width="4"/>
-                                <!-- Тарелка радара -->
-                                <path d="M30 35C30 20 70 20 70 35H30Z" fill="#B0BEC5" stroke="#37474F" stroke-width="2"/>
-                                <circle cx="50" cy="23" r="4" fill="#FF1744"/>
-                                <!-- Radio waves -->
-                                <path d="M35 12A20 20 0 0 1 65 12" stroke="#FF5722" stroke-width="3" stroke-linecap="round" fill="none"/>
-                                <path d="M25 5A32 32 0 0 1 75 5" stroke="#FF5722" stroke-width="2" stroke-linecap="round" fill="none"/>
-                            </svg>
+            <a href="lesson5.html" class="group block h-full" onclick="playBubbleSound()">
+                <div class="adventure-card-4-3 aspect-[4/3] h-full flex flex-col justify-end">
+                    <div class="card-gloss"></div>
+                    <div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105" 
+                         style="background-image: url('lesson5.png'), url('https://placehold.co/800x600/fefde6/1a365d?text=Станция+Связи');">
+                    </div>
+                    
+                    <div class="glass-podlozhka w-full p-5 sm:p-6 lg:p-7 relative z-10 flex flex-col gap-3">
+                        <div class="flex items-center gap-3 sm:gap-4">
+                            <span class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-[#1a5f7a] text-white font-black flex items-center justify-center text-lg sm:text-xl shadow-[0_4px_6px_rgba(0,0,0,0.15)] shrink-0">5</span>
+                            <h2 class="text-xl sm:text-2xl lg:text-3xl font-black text-[#1a365d] leading-tight" style="font-family: var(--font-headers);">Станция связи</h2>
                         </div>
                         
-                        <h2 class="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-800 mb-2 lg:mb-4">Станция связи</h2>
-                        <span class="bg-[#FEFDE8] text-[#b7791f] font-bold text-sm sm:text-base px-6 sm:px-8 py-1.5 rounded-full border-2 border-[#f1c40f] uppercase tracking-wider mb-4">💬 Общаемся</span>
-                    </div>
-                    <p class="text-base sm:text-lg lg:text-2xl text-center font-bold text-slate-600 leading-relaxed px-2 sm:px-4 mb-6 lg:mb-8">Научим наших героев отправлять тайные сигналы и слаженно общаться друг с другом!</p>
-                    <div class="btn-3d btn-3d-yellow text-white text-center text-lg sm:text-xl lg:text-2xl font-black py-4 sm:py-5 rounded-3xl mt-auto">
-                        ПОЙМАТЬ СИГНАЛ! 📡
+                        <div class="flex items-center gap-2 text-[#1a5f7a] font-extrabold text-sm sm:text-base mt-1">
+                            <span>Перейти к уроку</span>
+                            <svg class="w-5 h-5 transition-transform duration-300 group-hover:translate-x-2" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/>
+                            </svg>
+                        </div>
                     </div>
                 </div>
             </a>
 
             <!-- Урок 6: Киностудия экспедиции -->
-            <a href="lesson6.html" class="block h-full" onclick="playBubbleSound()">
-                <div class="adventure-card card-pink p-6 sm:p-8 lg:p-10 h-full flex flex-col justify-between cursor-pointer">
-                    <div class="gloss-overlay"></div>
-                    <!-- Серебряные заклепки -->
-                    <div class="silver-rivet top-4 left-4"></div>
-                    <div class="silver-rivet top-4 right-4"></div>
-                    <div class="silver-rivet bottom-4 left-4"></div>
-                    <div class="silver-rivet bottom-4 right-4"></div>
-
-                    <div class="flex flex-col items-center text-center">
-                        <span class="bg-[#ff5c97] text-white text-3xl sm:text-4xl lg:text-5xl font-black px-6 sm:px-8 py-2 sm:py-3 rounded-full border-4 border-[#8a1313] shadow-[0_6px_0_#8a1313] mb-6 lg:mb-8">6</span>
-                        
-                        <!-- Классическая кинохлопушка -->
-                        <div class="w-32 h-32 sm:w-44 sm:h-44 lg:w-52 lg:h-52 flex items-center justify-center mb-6 lg:mb-8 swing-anim">
-                            <svg class="w-full h-full drop-shadow-[0_12px_10px_rgba(26,54,93,0.12)]" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <circle cx="50" cy="50" r="48" fill="#fdeff4"/>
-                                <!-- Основное тело хлопушки -->
-                                <rect x="22" y="42" width="56" height="40" rx="4" fill="#263238" stroke="#1a252c" stroke-width="2"/>
-                                <!-- Верхняя откидная часть -->
-                                <path d="M22 42L78 30L76 22L20 34L22 42Z" fill="#37474F" stroke="#1a252c" stroke-width="2"/>
-                                <!-- Белые полоски хлопушки -->
-                                <path d="M30 39L38 37" stroke="white" stroke-width="4"/>
-                                <path d="M50 35L58 33" stroke="white" stroke-width="4"/>
-                                <path d="M70 31L76 29" stroke="white" stroke-width="4"/>
-                                <!-- Символ плей на хлопушке -->
-                                <polygon points="45,52 61,62 45,72" fill="#ff5c97"/>
-                            </svg>
+            <a href="lesson6.html" class="group block h-full" onclick="playBubbleSound()">
+                <div class="adventure-card-4-3 aspect-[4/3] h-full flex flex-col justify-end">
+                    <div class="card-gloss"></div>
+                    <div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105" 
+                         style="background-image: url('lesson6.png'), url('https://placehold.co/800x600/fdeff4/1a365d?text=Киностудия');">
+                    </div>
+                    
+                    <div class="glass-podlozhka w-full p-5 sm:p-6 lg:p-7 relative z-10 flex flex-col gap-3">
+                        <div class="flex items-center gap-3 sm:gap-4">
+                            <span class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-[#1a5f7a] text-white font-black flex items-center justify-center text-lg sm:text-xl shadow-[0_4px_6px_rgba(0,0,0,0.15)] shrink-0">6</span>
+                            <h2 class="text-xl sm:text-2xl lg:text-3xl font-black text-[#1a365d] leading-tight" style="font-family: var(--font-headers);">Киностудия</h2>
                         </div>
                         
-                        <h2 class="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-800 mb-2 lg:mb-4">Киностудия</h2>
-                        <span class="bg-[#FDF2F4] text-[#d63031] font-bold text-sm sm:text-base px-6 sm:px-8 py-1.5 rounded-full border-2 border-[#ff5c97] uppercase tracking-wider mb-4">🎬 Творим</span>
-                    </div>
-                    <p class="text-base sm:text-lg lg:text-2xl text-center font-bold text-slate-600 leading-relaxed px-2 sm:px-4 mb-6 lg:mb-8">Соберем все секретные технологии экспедиции вместе и снимем самый веселый мультфильм!</p>
-                    <div class="btn-3d btn-3d-pink text-white text-center text-lg sm:text-xl lg:text-2xl font-black py-4 sm:py-5 rounded-3xl mt-auto">
-                        КАМЕРА, МОТОР! 🎥
+                        <div class="flex items-center gap-2 text-[#1a5f7a] font-extrabold text-sm sm:text-base mt-1">
+                            <span>Перейти к уроку</span>
+                            <svg class="w-5 h-5 transition-transform duration-300 group-hover:translate-x-2" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/>
+                            </svg>
+                        </div>
                     </div>
                 </div>
             </a>
 
         </div>
 
-        <!-- Подвал: Наша главная цель -->
+        <!-- Нижняя глобальная цель -->
         <div class="mt-24 text-center pb-12">
-            <div class="inline-block bg-[#fffbf2] border-[8px] border-[#eadaa6] rounded-[48px] p-8 md:p-12 max-w-2xl w-full shadow-[0_20px_45px_rgba(26,54,93,0.1),inset 0 4px 0px #fff] transform hover:scale-105 transition-all duration-300 relative">
-                <!-- Декоративные серебряные заклепки по углам подвала -->
-                <div class="silver-rivet top-4 left-4"></div>
-                <div class="silver-rivet top-4 right-4"></div>
-                <div class="silver-rivet bottom-4 left-4"></div>
-                <div class="silver-rivet bottom-4 right-4"></div>
-
+            <div class="inline-block bg-white/80 backdrop-blur-md border-[6px] border-[#e0f7fa] rounded-[48px] p-8 md:p-12 max-w-2xl w-full shadow-[0_16px_0px_#80deea,0_25px_30px_rgba(0,129,145,0.15)] transform hover:scale-105 transition-all duration-300 relative">
                 <span class="text-6xl mb-4 block animate-bounce">🏰✨</span>
-                <h3 class="text-3xl md:text-4xl font-black text-[#1a365d] mb-2">НАША ГЛАВНАЯ ЦЕЛЬ</h3>
-                <p class="text-xl md:text-2xl font-bold text-[#007c8a]">Спроектировать и построить самый технологичный Город будущего!</p>
+                <h3 class="text-2xl md:text-3xl font-black text-[#1a365d] mb-2" style="font-family: var(--font-headers);">НАША ГЛАВНАЯ ЦЕЛЬ</h3>
+                <p class="text-xl md:text-2xl font-bold text-[#008191]">Спроектировать и построить самый технологичный Город будущего!</p>
             </div>
         </div>
 
     </div>
 
+    <!-- Интерактивные скрипты: мыльные пузыри и звуковое оформление Tone.js -->
     <script>
         let synth;
         
@@ -560,7 +306,7 @@
             }
         }
 
-        // Приятный булькающий звук
+        // Мультипликационный звук пузырей
         function playBubbleSound() {
             if (Tone.context.state !== 'running') {
                 Tone.start();
@@ -573,8 +319,8 @@
             synth.triggerAttackRelease("E5", "16n", now + 0.1);
         }
 
-        // Легкий звук шелеста бумаги при наведении
-        document.querySelectorAll('.adventure-card').forEach(card => {
+        // Шелест бумаги при наведении мыши
+        document.querySelectorAll('a').forEach(card => {
             card.addEventListener('mouseenter', () => {
                 if (Tone.context.state === 'running') {
                     initAudio();
@@ -583,16 +329,16 @@
             });
         });
 
-        // Генерация интерактивных всплывающих пузырей
+        // Создание плавающих интерактивных пузырей
         const bubbleContainer = document.getElementById('bubble-container');
         
         function createBubble() {
             const bubble = document.createElement('div');
             bubble.classList.add('bubble');
             
-            const size = Math.random() * 60 + 30; // размер от 30px до 90px
+            const size = Math.random() * 60 + 30;
             const startX = Math.random() * window.innerWidth;
-            const duration = Math.random() * 8 + 6; // скорость отлета 6s до 14s
+            const duration = Math.random() * 8 + 6;
             
             bubble.style.width = `${size}px`;
             bubble.style.height = `${size}px`;
@@ -600,7 +346,6 @@
             bubble.style.bottom = `-100px`;
             bubble.style.animationDuration = `${duration}s, ${Math.random() * 2 + 2}s`;
             
-            // Клик по пузырю заставляет его реалистично лопаться со звуком!
             bubble.addEventListener('click', (e) => {
                 e.preventDefault();
                 e.stopPropagation();
@@ -612,16 +357,14 @@
 
             bubbleContainer.appendChild(bubble);
 
-            // Удаляем пузырь после завершения анимации
             setTimeout(() => {
                 bubble.remove();
             }, duration * 1000);
         }
 
-        // Создаем новые пузыри каждые 1.5 секунды
+        // Таймер пузырьков
         setInterval(createBubble, 1500);
         
-        // Создаем первые 5 пузырей сразу при запуске
         window.onload = function() {
             for (let i = 0; i < 5; i++) {
                 setTimeout(createBubble, i * 400);

@@ -36,7 +36,10 @@
             text-align: center;
             border-bottom: 3px solid var(--deep-accent); /* Тонкий бордовый акцент */
         }
-
+.w-full.h-40.bg-gray-200.rounded-xl.overflow-hidden {
+    display: flex;
+    justify-content: center;
+}
         .lesson-number {
             background: var(--deep-accent); /* Номер урока теперь бордовый */
             color: white;
@@ -289,7 +292,7 @@
         <section class="section">
 
             <!-- Блок с картинкой и текстом -->
-<div class="tile flex-col !items-start gap-4">
+<div class="rule-card tile flex-col !items-start gap-4">
     <div class="w-full h-40 bg-gray-200 rounded-xl overflow-hidden">
         <img src="../img/1.png" alt="Описание" class="w-full h-full object-cover">
     </div>

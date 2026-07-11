@@ -3,198 +3,75 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Пояснительная записка — Мастерская «Кот и Код»</title>
+    <title>Панель преподавателя — Кот и Код</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Montserrat:wght@800;900&display=swap" rel="stylesheet">
     <style>
-        :root { 
-            --font-headers: 'Montserrat', sans-serif; 
-            --font-main: 'Fredoka', sans-serif; 
-            --primary: #1a5f7a;
-            --accent: #008080;
-            --bg-light: #f3fdfd;
+        :root {
+            --soft-blue: #eefbff;
+            --accent-color: #008080;
+            --deep-accent: #800000;
+            --white: #ffffff;
         }
-        body { font-family: var(--font-main); background: #f3fdfd; color: #334155; }
-        .glass-paper { background: white; border-radius: 24px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
-        h1, h2, h3 { font-family: var(--font-headers); }
-        .accent-border { border-left: 4px solid #11c0d4; }
-        .section-box { background: #f8ffff; border-radius: 16px; }
+        body { background-color: var(--soft-blue); font-family: sans-serif; color: #4a4a4a; }
+        .tile {
+            background: var(--white);
+            border-radius: 24px;
+            padding: 20px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease;
+            text-decoration: none;
+            color: #4a4a4a;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .tile:hover { transform: translateY(-5px); border: 2px solid var(--accent-color); }
+        .section-title { font-weight: 800; color: var(--deep-accent); margin: 30px 0 15px; text-transform: uppercase; }
+        .divider { border-top: 2px dashed #a0aec0; margin: 20px 0; }
     </style>
 </head>
-<body class="py-12 px-4">
+<body class="p-8">
     <div class="max-w-4xl mx-auto">
-       
-        
-        <article class="glass-paper p-10 md:p-16">
-            <h1 class="text-3xl md:text-4xl font-black text-[#1a365d] uppercase mb-2">Курс по визуальному программированию. 1–4 класс.</h1>
-            <p class="text-xl text-[#008080] font-bold mb-10 border-b-2 border-[#b2ebf2] pb-4">Пояснительная записка</p>
+        <h1 class="text-4xl font-black text-teal-900 mb-10">Панель преподавателя</h1>
 
-            <section class="mb-10">
-                <h2 class="text-2xl font-black text-[#1a5f7a] mb-4">Актуальность курса</h2>
-                <p class="mb-4">Современные цифровые технологии становятся неотъемлемой частью жизни человека. Умение понимать принципы работы цифровых инструментов, создавать собственные проекты и находить решения с помощью технологий становится важным навыком для детей уже в младшем школьном возрасте.</p>
-                <p>Изучение программирования развивает не только технические навыки, но и универсальные компетенции: логическое и алгоритмическое мышление, умение анализировать задачи, планировать последовательность действий, экспериментировать и находить нестандартные решения. Данный курс направлен на знакомство детей с основами программирования через создание цифровых проектов в среде Scratch. Особенность программы заключается в использовании сюжетно-ролевого подхода: каждое занятие становится частью единого путешествия, что помогает поддерживать интерес детей и формировать устойчивую мотивацию к изучению технологий.</p>
-            </section>
+        <h2 class="section-title">📚 Модули</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <a href="#" class="tile"><span class="text-2xl">🧭</span> Модуль 1</a>
+            <a href="#" class="tile"><span class="text-2xl">🛰</span> Модуль 2</a>
+            <a href="#" class="tile"><span class="text-2xl">🌿</span> Модуль 3</a>
+            <a href="#" class="tile"><span class="text-2xl">🏙</span> Модуль 4</a>
+            <a href="#" class="tile"><span class="text-2xl">🤖</span> Модуль 5</a>
+            <a href="#" class="tile"><span class="text-2xl">🚀</span> Модуль 6</a>
+        </div>
 
-            <section class="mb-10">
-                <h2 class="text-2xl font-black text-[#1a5f7a] mb-4">Направленность программы</h2>
-                <p class="mb-4">Программа имеет техническую направленность и ориентирована на развитие первоначальных навыков программирования, цифровой грамотности и проектного мышления. В процессе обучения дети знакомятся с основными понятиями информатики и программирования через практическую деятельность: создание анимаций, интерактивных историй, игр и других цифровых проектов.</p>
-            </section>
+        <div class="divider"></div>
 
-            <section class="mb-10">
-                <h2 class="text-2xl font-black text-[#1a5f7a] mb-4">Адресат программы</h2>
-                <p class="mb-4">Курс предназначен для детей младшего школьного возраста 8–11 лет. Программа подходит для:</p>
-                <ul class="list-disc pl-6 space-y-2">
-                    <li>детей, которые впервые знакомятся с программированием;</li>
-                    <li>детей, имеющих начальный опыт работы с компьютером;</li>
-                    <li>групп с разным уровнем подготовки, так как задания могут адаптироваться по сложности.</li>
-                </ul>
-                <p class="mt-4 font-semibold italic">Специальная предварительная подготовка в области программирования не требуется.</p>
-            </section>
+        <h2 class="section-title">📥 Материалы</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <a href="#" class="tile"><span class="text-2xl">📄</span> Методички</a>
+            <a href="#" class="tile"><span class="text-2xl">📦</span> Заготовки</a>
+            <a href="#" class="tile"><span class="text-2xl">🎨</span> Спрайты</a>
+            <a href="#" class="tile"><span class="text-2xl">🖼</span> Фоны</a>
+            <a href="#" class="tile"><span class="text-2xl">📽</span> Презентации</a>
+        </div>
 
-            <section class="mb-10 p-6 bg-[#e0f7fa] rounded-2xl accent-border">
-                <h2 class="text-2xl font-black text-[#1a5f7a] mb-4">Форма и особенности организации занятий</h2>
-                <p class="mb-4">Форма обучения — практические занятия с элементами проектной деятельности. Каждое занятие включает:</p>
-                <ul class="list-inside list-disc space-y-1 mb-4">
-                    <li>погружение в сюжет курса;</li>
-                    <li>знакомство с новым понятием или инструментом программирования;</li>
-                    <li>выполнение практического задания;</li>
-                    <li>создание части собственного цифрового проекта;</li>
-                    <li>обсуждение результата и рефлексию.</li>
-                </ul>
-                <p class="font-bold text-[#1a365d]">Основной принцип курса — обучение через создание: ребенок не просто изучает команды, а использует их для решения конкретных задач и создания работающих проектов.</p>
-            </section>
+        <div class="divider"></div>
 
-            <section class="mb-10">
-                <h2 class="text-2xl font-black text-[#1a5f7a] mb-4">Продолжительность занятий и рекомендации по организации</h2>
-                <p class="mb-4">Продолжительность освоения одной темы может варьироваться в зависимости от возраста детей, уровня подготовки и формата занятий.</p>
-                <div class="grid md:grid-cols-2 gap-4 mb-4">
-                    <div class="p-4 bg-white rounded-xl shadow-sm border border-[#b2ebf2]">
-                        <h4 class="font-bold text-[#1a365d]">1–2 класс</h4>
-                        <p class="text-sm">Рекомендуется 2 академических часа на тему для спокойного прохождения всех этапов.</p>
-                    </div>
-                    <div class="p-4 bg-white rounded-xl shadow-sm border border-[#b2ebf2]">
-                        <h4 class="font-bold text-[#1a365d]">3–5 классы</h4>
-                        <p class="text-sm">Одна тема может быть освоена за 1 академический час при хорошей подготовке.</p>
-                    </div>
-                </div>
-                <p class="font-semibold text-[#1a5f7a] mb-2">Педагог может адаптировать темп:</p>
-                <ul class="list-disc pl-6 text-sm space-y-1">
-                    <li>увеличивать время на проектирование и самостоятельную работу;</li>
-                    <li>добавлять дополнительные творческие задания;</li>
-                    <li>усложнять проекты для более подготовленных учеников;</li>
-                    <li>использовать дополнительные занятия для закрепления материала.</li>
-                </ul>
-            </section>
+        <h2 class="section-title">🧠 Для преподавателя</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <a href="#" class="tile"><span class="text-2xl">💡</span> Методическая копилка</a>
+            <a href="#" class="tile"><span class="text-2xl">📅</span> Чек-листы</a>
+            <a href="#" class="tile"><span class="text-2xl">❓</span> FAQ</a>
+            <a href="#" class="tile"><span class="text-2xl">🎁</span> Бонусы</a>
+        </div>
 
-            <section class="mb-10">
-                <h2 class="text-2xl font-black text-[#1a5f7a] mb-4">Объем программы</h2>
-                <p>Рекомендуемый объем программы — <strong>36 учебных занятий</strong>. Количество часов может быть адаптировано педагогом в зависимости от выбранного формата (индивидуальные занятия, мини-группы, дополнительное образование, кружковая деятельность).</p>
-            </section>
+        <div class="divider"></div>
 
-            <section class="mb-10">
-                <h2 class="text-2xl font-black text-[#1a5f7a] mb-4">Цель программы</h2>
-                <p class="text-lg font-bold text-[#1a365d] bg-[#f0f9ff] p-4 rounded-xl border-l-4 border-[#008080]">Создание условий для развития алгоритмического мышления и формирования базовых навыков программирования через разработку собственных цифровых проектов в среде Scratch.</p>
-            </section>
-
-            <section class="mb-10">
-                <h2 class="text-2xl font-black text-[#1a5f7a] mb-6">Задачи программы</h2>
-                <div class="grid md:grid-cols-3 gap-6">
-                    <div>
-                        <h3 class="font-black text-[#1a365d] mb-2">Обучающие:</h3>
-                        <ul class="list-inside list-disc text-sm space-y-1">
-                            <li>Основы алгоритмизации</li>
-                            <li>Понимание конструкций</li>
-                            <li>Создание проектов</li>
-                            <li>Принципы проектирования</li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h3 class="font-black text-[#1a365d] mb-2">Развивающие:</h3>
-                        <ul class="list-inside list-disc text-sm space-y-1">
-                            <li>Логическое мышление</li>
-                            <li>Анализ и решение задач</li>
-                            <li>Самостоятельность</li>
-                            <li>Работа с информацией</li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h3 class="font-black text-[#1a365d] mb-2">Воспитательные:</h3>
-                        <ul class="list-inside list-disc text-sm space-y-1">
-                            <li>Интерес к технологиям</li>
-                            <li>Ответственность</li>
-                            <li>Уверенность в себе</li>
-                        </ul>
-                    </div>
-                </div>
-            </section>
-
-            <section class="mb-10">
-                <h2 class="text-2xl font-black text-[#1a5f7a] mb-6">Планируемые результаты освоения программы</h2>
-                <div class="grid md:grid-cols-3 gap-6">
-                    <div class="section-box p-5 border-t-4 border-[#1a5f7a]">
-                        <h3 class="font-bold text-[#1a365d] mb-3">Ребенок знает:</h3>
-                        <ul class="list-inside list-disc text-sm space-y-1">
-                            <li>Понятия программирования</li>
-                            <li>Принципы алгоритмов</li>
-                            <li>Блоки Scratch</li>
-                        </ul>
-                    </div>
-                    <div class="section-box p-5 border-t-4 border-[#008080]">
-                        <h3 class="font-bold text-[#1a365d] mb-3">Ребенок умеет:</h3>
-                        <ul class="list-inside list-disc text-sm space-y-1">
-                            <li>Создавать проекты</li>
-                            <li>Циклы и переменные</li>
-                            <li>Интерактивные приложения</li>
-                            <li>Поиск решений</li>
-                        </ul>
-                    </div>
-                    <div class="section-box p-5 border-t-4 border-[#11c0d4]">
-                        <h3 class="font-bold text-[#1a365d] mb-3">Развивает:</h3>
-                        <ul class="list-inside list-disc text-sm space-y-1">
-                            <li>Алгоритмическое мышление</li>
-                            <li>Проектные навыки</li>
-                            <li>Анализ ошибок</li>
-                        </ul>
-                    </div>
-                </div>
-            </section>
-        </article>
-
-
-        <div style="display: flex; flex-wrap: wrap; gap: 1.5rem; justify-content: center; padding: 20px; font-family: 'Fredoka', sans-serif;">
-    
-    <!-- Кнопка Панель преподавателя -->
-    <a href="https://nazarina.github.io/scratch/panel/index.html" 
-       style="display: inline-flex; align-items: center; justify-content: center; font-weight: 700; border-radius: 16px; padding: 16px 32px; transition: all 0.3s ease; color: #ffffff; text-decoration: none; background: linear-gradient(to top, #800000 0%, #d63031 100%); box-shadow: 0 6px 0 #5a0000;"
-       onmouseover="this.style.transform='translateY(-3px)'; this.style.filter='brightness(1.1)';"
-       onmouseout="this.style.transform='translateY(0)'; this.style.filter='brightness(1)';"
-       onmousedown="this.style.transform='translateY(2px)'; this.style.boxShadow='0 2px 0 #5a0000';"
-       onmouseup="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 6px 0 #5a0000';">
-       🎓 Панель преподавателя
-    </a>
-
-    <!-- Кнопка Страница ученика -->
-    <a href="https://nazarina.github.io/scratch/" 
-       style="display: inline-flex; align-items: center; justify-content: center; font-weight: 700; border-radius: 16px; padding: 16px 32px; transition: all 0.3s ease; color: #ffffff; text-decoration: none; background: #008080; box-shadow: 0 6px 0 #005a5a;"
-       onmouseover="this.style.transform='translateY(-3px)'; this.style.filter='brightness(1.1)';"
-       onmouseout="this.style.transform='translateY(0)'; this.style.filter='brightness(1)';"
-       onmousedown="this.style.transform='translateY(2px)'; this.style.boxShadow='0 2px 0 #005a5a';"
-       onmouseup="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 6px 0 #005a5a';">
-       🖥️ Страница ученика
-    </a>
-
-</div>
-
-        
-       <footer style="margin-top: 3rem; text-align: center; color: #1a5f7a; padding: 2rem; border-top: 2px dashed #1a5f7a; background: rgba(255, 255, 255, 0.5);">
-    <p style="margin-bottom: 0.5rem; font-weight: 700;">
-        <a href="https://t.me/code_to_kids" style="color: #008080; text-decoration: none;">© Наталия Назарина</a> 
-        | Мастерская цифрового развития «Кот и Код»
-    </p>
-    <p style="font-size: 0.9rem; opacity: 0.8; font-style: italic;">
-        Методические материалы предназначены для личного использования педагогом
-    </p>
-</footer>
+        <div class="flex flex-col gap-4">
+            <a href="#" class="tile w-full"><span class="text-2xl">🗺</span> Карта экспедиции</a>
+            <a href="#" class="tile w-full"><span class="text-2xl">📖</span> Дневник исследователя</a>
+            <a href="#" class="tile w-full border-2 border-red-900"><span class="text-2xl">🏆</span> Галерея проектов учеников</a>
+        </div>
     </div>
 </body>
 </html>

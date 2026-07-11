@@ -339,9 +339,9 @@
 
       <div class="diary-container">
     <div class="text-center">
-        <button onclick="toggleDiary()" class="diary-button">
-            Открыть дневник
-        </button>
+        <button onclick="toggleDiary('diary-content')" class="diary-button">
+    Открыть дневник
+</button>
     </div>
     <!-- Добавили overflow: hidden для плавности анимации -->
     <div id="diary-content" class="diary-page" style="display: block; max-height: 0; overflow: hidden; transition: max-height 0.6s ease-out, opacity 0.5s ease;">
@@ -353,20 +353,7 @@
         </div>
     </div>
       </div>
- <script>
-    function toggleDiaryy() {
-        const diary1 = document.getElementById('diary-content');
-        if (diary1.style.maxHeight === '0px' || diary1.style.maxHeight === '') {
-            // Раскрываем
-            diary1.style.maxHeight = diary1.scrollHeight + "px";
-            diary1.classList.add('open');
-        } else {
-            // Схлопываем
-            diary1.style.maxHeight = '0px';
-            diary1.classList.remove('open');
-        }
-    }
-</script>
+
 
     <!--    <section class="section" style="text-align: center; background: var(--soft-purple);">
             <h2>Разминка: алгоритм для робота</h2>
@@ -442,9 +429,9 @@
         <section class="section" style="text-align: center;">
              <div class="diary-container">
     <div class="text-center">
-        <button onclick="toggleDiary()" class="diary-button">
-            Открыть дневник
-        </button>
+       <button onclick="toggleDiary('diary-content1')" class="diary-button">
+    Открыть дневник
+</button>
     </div>
 
     <!-- Добавили overflow: hidden для плавности анимации -->
@@ -454,20 +441,7 @@
       
     </div>
 </div>
-      <script>
-    function toggleDiary() {
-        const diary = document.getElementById('diary-content1');
-        if (diary.style.maxHeight === '0px' || diary.style.maxHeight === '') {
-            // Раскрываем
-            diary.style.maxHeight = diary.scrollHeight + "px";
-            diary.classList.add('open');
-        } else {
-            // Схлопываем
-            diary.style.maxHeight = '0px';
-            diary.classList.remove('open');
-        }
-    }
-</script>
+     
             <h2>Творческий проект "Интерактивная открытка"</h2>
             <p>Создайте живую открытку из нашей экспедиции для самого дорогого человека.
 </p>
@@ -489,5 +463,21 @@
     </p>
     
 </footer>
+    <script>
+    function toggleDiary(diaryId) {
+        // Ищем дневник по переданному ID
+        const diary = document.getElementById(diaryId);
+        
+        if (diary.style.maxHeight === '0px' || diary.style.maxHeight === '') {
+            // Раскрываем
+            diary.style.maxHeight = diary.scrollHeight + "px";
+            diary.classList.add('open');
+        } else {
+            // Схлопываем
+            diary.style.maxHeight = '0px';
+            diary.classList.remove('open');
+        }
+    }
+</script>
 </body>
 </html>

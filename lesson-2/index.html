@@ -40,6 +40,9 @@
     display: flex;
     justify-content: center;
 }
+        h1 {
+    font-size: 55px;
+}
         p {
     font-size: 20px;
 }
@@ -352,15 +355,15 @@
       </div>
  <script>
     function toggleDiary() {
-        const diary = document.getElementById('diary-content');
-        if (diary.style.maxHeight === '0px' || diary.style.maxHeight === '') {
+        const diary1 = document.getElementById('diary-content');
+        if (diary1.style.maxHeight === '0px' || diary1.style.maxHeight === '') {
             // Раскрываем
-            diary.style.maxHeight = diary.scrollHeight + "px";
-            diary.classList.add('open');
+            diary1.style.maxHeight = diary1.scrollHeight + "px";
+            diary1.classList.add('open');
         } else {
             // Схлопываем
-            diary.style.maxHeight = '0px';
-            diary.classList.remove('open');
+            diary1.style.maxHeight = '0px';
+            diary1.classList.remove('open');
         }
     }
 </script>

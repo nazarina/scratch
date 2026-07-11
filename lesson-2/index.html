@@ -289,7 +289,40 @@
         
         
         <section class="section">
+   <div class="diary-container">
+    <div class="text-center">
+        <button onclick="toggleDiary()" class="diary-button">
+            Открыть дневник
+        </button>
+    </div>
 
+    <!-- Добавили overflow: hidden для плавности анимации -->
+    <div id="diary-content" class="diary-page" style="display: block; max-height: 0; overflow: hidden; transition: max-height 0.6s ease-out, opacity 0.5s ease;">
+        <p class="diary-text">
+            «Каждая великая идея начинается с наблюдения.<br>
+            Если вы хотите однажды создать Город будущего, сначала научитесь замечать удивительные вещи вокруг себя.<br>
+            Ваше первое исследование — жизнь под водой.»
+        </p>
+        <div class="diary-mission">
+            <strong>Миссия №1</strong><br>
+            Изучите жителей лагуны. Попробуйте понять, как они двигаются и защищаются. Возможно, однажды именно природа подскажет вам идеи для технологий будущего.
+        </div>
+    </div>
+</div>
+      <script>
+    function toggleDiary() {
+        const diary = document.getElementById('diary-content');
+        if (diary.style.maxHeight === '0px' || diary.style.maxHeight === '') {
+            // Раскрываем
+            diary.style.maxHeight = diary.scrollHeight + "px";
+            diary.classList.add('open');
+        } else {
+            // Схлопываем
+            diary.style.maxHeight = '0px';
+            diary.classList.remove('open');
+        }
+    }
+</script>
             <!-- Блок с картинкой и текстом -->
 <div class="rule-card tile flex-col !items-start gap-4">
     <div class="w-full h-40 bg-gray-200 rounded-xl overflow-hidden">

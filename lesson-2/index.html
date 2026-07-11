@@ -49,6 +49,26 @@
             box-shadow: 0 4px 10px rgba(128, 0, 0, 0.2);
         }
 
+.rule-card {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    background-color: var(--white);
+    border-left: 5px solid var(--accent-color);
+    border-radius: 8px;
+    padding: 10px;
+    margin: 20px auto;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    max-width: 800px;}
+        
+.rule-card__badge {
+    display: inline-block;
+    font-size: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--deep-accent);
+    font-weight: 700;
+    margin-bottom: 8px;
         .container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
 
         .section {
@@ -62,7 +82,7 @@
 
         h2 { 
             color: var(--accent-color); 
-            font-size: 1.8rem; 
+            font-size: 3rem; 
         
             padding-left: 15px; 
             margin-bottom: 25px; 
@@ -81,6 +101,7 @@
             padding: 20px;
             border-radius: 20px;
             text-align: center;
+                font-size: 26px;
             border: 1px solid rgba(128, 0, 0, 0.05);
         }
 
@@ -212,8 +233,20 @@
         
         
         <section class="section">
+
+            <!-- Блок с картинкой и текстом -->
+<div class="tile flex-col !items-start gap-4">
+    <div class="w-full h-40 bg-gray-200 rounded-xl overflow-hidden">
+        <img src="../img/1.png" alt="Описание" class="w-full h-full object-cover">
+    </div>
+    <div>
+        <h3 class="rule-card__badge">Новое открытие ждёт нас впереди. Но сначала проверим, готовы ли мы к нему.</h3>
+      
+    </div>
+</div>
+            
             <h2>Повторение: линейные алгоритмы</h2>
-            <p>Нажми на блок под вопросом, чтобы увидеть правильную команду!</p>
+        
             <div class="quiz-grid">
                 <div class="quiz-card">
                     <span>Как идти вперед?</span>
@@ -242,11 +275,95 @@
             </div>
         </section>
 
+        <style>
+    .diary-container {
+        max-width: 600px;
+        margin: 40px auto;
+        font-family: 'Fredoka', sans-serif;
+    }
+        .text-center {
+    display: flex;
+    justify-content: center;
+}
+    .diary-button {
+        padding: 12px 30px;
+     
+        border: none;
+        border-radius: 12px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: transform 0.2s, background 0.3s;
+        box-shadow: 0 4px 10px rgba(0, 128, 128, 0.2);
+    }
+
+    .diary-button:hover {
+        transform: scale(1.05);
+        background: #006666;
+    }
+
+    .diary-page {
+        margin-top: 25px;
+        padding: 0 40px; /* Убираем вертикальные отступы, чтобы при схлопывании не было лишнего места */
+        background: #fdf5e6;
+        border: 0 dashed #d2b48c; /* Граница станет видимой только при раскрытии */
+        border-radius: 5px;
+        font-family: 'Georgia', serif;
+        font-style: italic;
+        color: #5a4a42;
+        line-height: 1.8;
+        opacity: 0;
+    }
+
+    /* Состояние, когда дневник раскрыт */
+    .diary-page.open {
+        padding: 40px;
+        border: 2px dashed #d2b48c;
+        box-shadow: 5px 5px 15px rgba(0,0,0,0.1);
+        opacity: 1;
+    }
+
+    .diary-text { margin-bottom: 25px; }
+
+    .diary-mission {
+        border-top: 1px solid #d2b48c;
+        padding-top: 20px;
+        font-style: normal;
+        font-size: 0.95rem;
+        color: #3e332d;
+    }
+</style>
+    <!-- Добавили overflow: hidden для плавности анимации -->
+    <div id="diary-content" class="diary-page" style="display: block; max-height: 0; overflow: hidden; transition: max-height 0.6s ease-out, opacity 0.5s ease;">
+     
+        <div class="diary-mission">
+            <strong>Миссия №1</strong><br>
+            «Изучите жителей лагуны. Понаблюдайте, как они двигаются, маскируются и защищаются. Возможно, именно природа однажды подскажет вам идеи для технологий будущего.»
+
+        </div>
+    </div>
+</div>
+      <script>
+    function toggleDiary() {
+        const diary = document.getElementById('diary-content');
+        if (diary.style.maxHeight === '0px' || diary.style.maxHeight === '') {
+            // Раскрываем
+            diary.style.maxHeight = diary.scrollHeight + "px";
+            diary.classList.add('open');
+        } else {
+            // Схлопываем
+            diary.style.maxHeight = '0px';
+            diary.classList.remove('open');
+        }
+    }
+</script>
+
     <!--    <section class="section" style="text-align: center; background: var(--soft-purple);">
             <h2>Разминка: алгоритм для робота</h2>
             <p>Вспомни, как строить цепочки команд без ошибок.</p>
             <a href="https://kpolyakov.spb.ru/school/blockly/robot_linear.html?level=5" target="_blank" class="glow-button">Запустить тренажер</a>
         </section>-->
+
+  
 
         <section class="section">
             <h2>Проект: подводный мир</h2>
@@ -257,6 +374,19 @@
             </div>
 
             <div class="character-card">
+
+  <div class="rule-card">
+  <div class="rule-card__image-container">
+    <!-- Сюда вставляется картинка (например, свиток с правилом, компас или сундук) -->
+    <img src="../img/2.png" alt="Алгоритм" class="rule-card__image">
+  </div>
+  <div class="rule-card__content">
+    <span class="rule-card__badge">Цикл — это команда, которая позволяет повторять одно или несколько действий.
+</span>
+  </div>
+      <div><img src="" width="100%"></div>
+</div>
+                
                 <img src="https://github.com/nazarina/lesson-2/blob/main/pngtree-baby-seahorse-clipart-png-image_16059733.png?raw=true" class="char-preview" alt="Конек">
                 <div style="flex: 1;">
                     <h3>Морской конек</h3>

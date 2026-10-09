@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Урок 18. Тайны Парящих Островов</title>
+    <link href="https://cdn.jsdelivr.net/fontsource/fonts/nunito@latest/latin-400-normal.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/fontsource/fonts/nunito@latest/latin-700-normal.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/fontsource/fonts/nunito@latest/latin-800-normal.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: linear-gradient(180deg, #e8f4f8 0%, #f0f9ff 100%);
+            min-height: 100vh;
+            color: #2d3748;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%);
+            border-bottom: 4px solid #c62828;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: #00838f;
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #546e7a;
+            font-size: 1rem;
+            font-style: italic;
+        }
+
+        /* Cards */
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        .card h2 {
+            color: #00838f;
+            font-size: 1.6rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        /* Story Images */
+        .story-images {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .story-images img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        /* Quiz Section */
+        .quiz-container {
+            background: #f8fffe;
+            border: 2px solid #e0f2f1;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+
+        .quiz-question {
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 1px dashed #b2dfdb;
+        }
+
+        .quiz-question:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .quiz-question h3 {
+            color: #00695c;
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+        }
+
+        .quiz-options {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .quiz-btn {
+            padding: 12px 30px;
+            border: 2px solid #4db6ac;
+            background: white;
+            color: #00695c;
+            border-radius: 25px;
+            cursor: pointer;
+            font-family: 'Nunito', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            transition: all 0.3s ease;
+        }
+
+        .quiz-btn:hover {
+            background: #e0f2f1;
+            transform: translateY(-2px);
+        }
+
+        .quiz-btn.correct {
+            background: #4caf50;
+            color: white;
+            border-color: #4caf50;
+        }
+
+        .quiz-btn.wrong {
+            background: #f44336;
+            color: white;
+            border-color: #f44336;
+        }
+
+        .quiz-feedback {
+            margin-top: 10px;
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-weight: 700;
+            display: none;
+        }
+
+        .quiz-feedback.show {
+            display: block;
+        }
+
+        .quiz-feedback.correct {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .quiz-feedback.wrong {
+            background: #ffebee;
+            color: #c62828;
+        }
+
+        /* Info Box */
+        .info-box {
+            background: linear-gradient(135deg, #fff8e1 0%, #ffecb3 100%);
+            border-left: 5px solid #ff8f00;
+            padding: 20px;
+            border-radius: 0 12px 12px 0;
+            margin: 20px 0;
+        }
+
+        .info-box h3 {
+            color: #e65100;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Theory Section */
+        .theory-content {
+            background: #f5f5f5;
+            padding: 20px;
+            border-radius: 12px;
+            margin: 15px 0;
+        }
+
+        .theory-content p {
+            margin-bottom: 12px;
+        }
+
+        .highlight {
+            background: #fff3e0;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: 700;
+            color: #e65100;
+        }
+
+        /* Game Preview */
+        .game-preview {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .game-frame {
+            width: 100%;
+            max-width: 480px;
+            height: 360px;
+            margin: 0 auto 20px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            border: 3px solid #e0e0e0;
+            position: relative;
+            background: linear-gradient(180deg, #87CEEB 0%, #B0E0E6 100%);
+        }
+
+        .game-frame canvas {
+            width: 100%;
+            height: 100%;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #c62828 0%, #b71c1c 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            border-radius: 30px;
+            cursor: pointer;
+            font-family: 'Nunito', sans-serif;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(198, 40, 40, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(198, 40, 40, 0.4);
+        }
+
+        /* Plan Section */
+        .plan-grid {
+            display: grid;
+            gap: 20px;
+        }
+
+        .plan-item {
+            background: #fafafa;
+            border-radius: 15px;
+            padding: 20px;
+            border-left: 4px solid #00838f;
+            transition: transform 0.3s ease;
+        }
+
+        .plan-item:hover {
+            transform: translateX(5px);
+        }
+
+        .plan-item h3 {
+            color: #00838f;
+            font-size: 1.2rem;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .plan-item ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .plan-item li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+            color: #455a64;
+        }
+
+        .plan-item li::before {
+            content: "▸";
+            position: absolute;
+            left: 0;
+            color: #00838f;
+            font-weight: bold;
+        }
+
+        .star-task {
+            background: linear-gradient(135deg, #fff8e1 0%, #ffecb3 100%);
+            border-left-color: #ff8f00;
+        }
+
+        .star-task h3 {
+            color: #e65100;
+        }
+
+        .star-task li::before {
+            color: #ff8f00;
+        }
+
+        .enemy-card {
+            background: #fce4ec;
+            border-left-color: #c62828;
+        }
+
+        .enemy-card h3 {
+            color: #c62828;
+        }
+
+        .enemy-card li::before {
+            color: #c62828;
+        }
+
+        .creative-task {
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+            border-left-color: #2e7d32;
+        }
+
+        .creative-task h3 {
+            color: #2e7d32;
+        }
+
+        /* Gravity Explanation */
+        .gravity-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .gravity-image {
+            width: 100%;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .gravity-text h3 {
+            color: #00838f;
+            margin-bottom: 15px;
+        }
+
+        .code-block {
+            background: #263238;
+            color: #aed581;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 0.9rem;
+            margin: 10px 0;
+            overflow-x: auto;
+        }
+
+        .block-yellow { color: #ffca28; }
+        .block-orange { color: #ff9800; }
+        .block-blue { color: #42a5f5; }
+        .block-green { color: #66bb6a; }
+        .block-purple { color: #ab47bc; }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 30px;
+            color: #78909c;
+            font-size: 0.9rem;
+            border-top: 2px dashed #b0bec5;
+            margin-top: 40px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .story-images {
+                grid-template-columns: 1fr;
+            }
+            
+            .gravity-section {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 1.6rem;
+            }
+        }
+
+        /* Animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .floating {
+            animation: float 3s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Урок 18. Тайны Парящих Островов</h1>
+        <p>Как победить силу притяжения с помощью кода</p>
+    </div>
+
+    <div class="container">
+        <!-- Story Section -->
+        <div class="card">
+            <div class="story-images">
+                <img src="https://image.qwenlm.ai/public_source/3e2235d3-c025-44ec-a1d3-0bcc960435f4/2b0c3e492-04f9-4e0f-a9aa-2a1f5458a3f17030.png" alt="Парящие острова">
+                <img src="https://image.qwenlm.ai/public_source/3e2235d3-c025-44ec-a1d3-0bcc960435f4/5b0c3e492-04f9-4e0f-a9aa-2a1f5458a3f14837.png" alt="Команда исследователей">
+            </div>
+            
+            <h2>Что такое платформер?</h2>
+            <div class="theory-content">
+                <p><strong>Платформер</strong> — это жанр игр, где персонаж прыгает по платформам, избегая опасностей и собирая бонусы. Вспомни Марио или Соника!</p>
+                <p>Главный секрет платформера — <span class="highlight">гравитация</span>. Это сила, которая тянет всё вниз. Без неё персонаж улетел бы в космос!</p>
+            </div>
+
+            <div class="info-box">
+                <h3>💡 Как работает гравитация в Scratch?</h3>
+                <p>В Scratch нет встроенной гравитации — её нужно создать самому! Мы будем постоянно уменьшать координату <strong>Y</strong>, чтобы персонаж падал вниз. А когда он касается платформы — останавливаем падение.</p>
+            </div>
+        </div>
+
+        <!-- Quiz Section -->
+        <div class="card">
+            <h2>🧠 Разминка для мозга</h2>
+            <div class="quiz-container">
+                <div class="quiz-question">
+                    <h3>1. Какая координата меняется, когда персонаж движется вправо?</h3>
+                    <div class="quiz-options">
+                        <button class="quiz-btn" onclick="checkAnswer(this, true, 'feedback1')">X</button>
+                        <button class="quiz-btn" onclick="checkAnswer(this, false, 'feedback1')">Y</button>
+                    </div>
+                    <div id="feedback1" class="quiz-feedback"></div>
+                </div>
+
+                <div class="quiz-question">
+                    <h3>2. Какая координата меняется, когда персонаж прыгает?</h3>
+                    <div class="quiz-options">
+                        <button class="quiz-btn" onclick="checkAnswer(this, false, 'feedback2')">X</button>
+                        <button class="quiz-btn" onclick="checkAnswer(this, true, 'feedback2')">Y</button>
+                    </div>
+                    <div id="feedback2" class="quiz-feedback"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Game Preview -->
+        <div class="card">
+            <h2 style="text-align: center;">Проект "Прыжки по облакам"</h2>
+            <div class="game-preview">
+                <div class="game-frame">
+                    <canvas id="gameCanvas" width="480" height="360"></canvas>
+                </div>
+                <button class="btn-primary" onclick="window.open('https://scratch.mit.edu/', '_blank')">
+                    Открыть заготовку
+                </button>
+            </div>
+        </div>
+
+        <!-- Plan Section -->
+        <div class="card">
+            <h2>📋 План работы над проектом</h2>
+            <div class="plan-grid">
+                <div class="plan-item">
+                    <h3>🦸 Персонаж</h3>
+                    <ul>
+                        <li>На каждом уровне появляется в определённом месте</li>
+                        <li>Двигается вперёд при нажатии на стрелку вправо</li>
+                        <li>Прыгает при нажатии на стрелку вверх</li>
+                        <li>Гравитацией его притягивает к платформе</li>
+                        <li>Если провалился мимо платформы — проиграл</li>
+                        <li>Если коснулся врага — проиграл</li>
+                        <li>Если касается порталов — переходит на новый уровень</li>
+                    </ul>
+                </div>
+
+                <div class="plan-item enemy-card">
+                    <h3>👾 Враги</h3>
+                    <ul>
+                        <li><strong>Враг №1:</strong> Движется по платформе вправо-влево</li>
+                        <li><strong>Враг №2:</strong> Движется между платформами вверх-вниз</li>
+                        <li><strong>Враг №3:</strong> Летает по кругу вокруг платформы</li>
+                        <li><strong>Враг №4:</strong> Придумай сам! Какой будет твой уникальный враг?</li>
+                    </ul>
+                </div>
+
+                <div class="plan-item star-task">
+                    <h3>⭐ Задача со звёздочкой</h3>
+                    <ul>
+                        <li>Если коснулся цветка — приобрёл супер-силы</li>
+                        <li>Супер-сила: двойной прыжок или временная неуязвимость</li>
+                        <li>Цветок исчезает после сбора</li>
+                    </ul>
+                </div>
+
+                <div class="plan-item creative-task">
+                    <h3>🎨 Творческое задание</h3>
+                    <ul>
+                        <li>Придумай своего врага №4 и опиши его поведение</li>
+                        <li>Какую супер-силу даст цветок в твоей игре?</li>
+                        <li>Добавь звуковые эффекты для прыжка и сбора бонусов</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Gravity Explanation -->
+        <div class="card">
+            <h2>⚙️ Как создаётся гравитация блоками Scratch</h2>
+            <div class="gravity-section">
+                <img src="https://image.qwenlm.ai/public_source/3e2235d3-c025-44ec-a1d3-0bcc960435f4/1b0c3e492-04f9-4e0f-a9aa-2a1f5458a3f19825.png" alt="Блоки Scratch для гравитации" class="gravity-image">
+                <div class="gravity-text">
+                    <h3>Алгоритм гравитации:</h3>
+                    <div class="code-block">
+                        <span class="block-yellow">когда флаг нажат</span><br>
+                        <span class="block-orange">всегда</span><br>
+                        &nbsp;&nbsp;<span class="block-blue">изменить y на -3</span> ← гравитация<br>
+                        &nbsp;&nbsp;<span class="block-green">если касается Платформа</span><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="block-blue">изменить y на 3</span> ← отскок<br>
+                        &nbsp;&nbsp;<span class="block-purple">если клавиша ↑ нажата</span><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="block-blue">изменить y на 12</span> ← прыжок
+                    </div>
+                    <p style="margin-top: 15px; color: #546e7a;">
+                        <strong>Секрет:</strong> Гравитация — это постоянное уменьшение Y. 
+                        Прыжок — резкое увеличение Y. 
+                        Платформа останавливает падение!
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Important Note -->
+        <div class="card" style="background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%); border: 2px solid #9c27b0;">
+            <h2 style="color: #6a1b9a;">✨ Важно</h2>
+            <p style="color: #4a148c;">
+                Чтобы твоя работа не пропала, не забудь нажать кнопку <strong>«Сохранить сейчас»</strong> в верхнем правом углу экрана. 
+                Компьютер запомнит твой код, и ты сможешь вернуться к нему в любое время.
+            </p>
+        </div>
+    </div>
+
+    <div class="footer">
+        © 2026 · Мастерская цифрового развития «Кот и Код»
+    </div>
+
+    <script>
+        // Quiz functionality
+        function checkAnswer(button, isCorrect, feedbackId) {
+            const feedback = document.getElementById(feedbackId);
+            const parent = button.parentElement;
+            const buttons = parent.querySelectorAll('.quiz-btn');
+            
+            buttons.forEach(btn => btn.disabled = true);
+            
+            if (isCorrect) {
+                button.classList.add('correct');
+                feedback.textContent = '✅ Правильно! Отличная работа!';
+                feedback.className = 'quiz-feedback show correct';
+            } else {
+                button.classList.add('wrong');
+                feedback.textContent = '❌ Попробуй ещё раз! Подумай, какая координата отвечает за это движение.';
+                feedback.className = 'quiz-feedback show wrong';
+                
+                setTimeout(() => {
+                    buttons.forEach(btn => {
+                        btn.disabled = false;
+                        btn.classList.remove('wrong');
+                    });
+                    feedback.classList.remove('show');
+                }, 2000);
+            }
+        }
+
+        // Simple game animation
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        
+        let player = { x: 50, y: 200, vy: 0, jumping: false };
+        let platforms = [
+            { x: 0, y: 300, w: 480, h: 60 },
+            { x: 150, y: 220, w: 100, h: 20 },
+            { x: 300, y: 150, w: 100, h: 20 }
+        ];
+        
+        function draw() {
+            // Sky gradient
+            const gradient = ctx.createLinearGradient(0, 0, 0, 360);
+            gradient.addColorStop(0, '#87CEEB');
+            gradient.addColorStop(1, '#B0E0E6');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, 480, 360);
+            
+            // Clouds
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
+            ctx.beginPath();
+            ctx.arc(100, 80, 30, 0, Math.PI * 2);
+            ctx.arc(130, 80, 40, 0, Math.PI * 2);
+            ctx.arc(160, 80, 30, 0, Math.PI * 2);
+            ctx.fill();
+            
+            ctx.beginPath();
+            ctx.arc(350, 120, 25, 0, Math.PI * 2);
+            ctx.arc(375, 120, 35, 0, Math.PI * 2);
+            ctx.arc(400, 120, 25, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // Platforms
+            platforms.forEach(p => {
+                // Grass top
+                ctx.fillStyle = '#4CAF50';
+                ctx.fillRect(p.x, p.y, p.w, 8);
+                // Dirt bottom
+                ctx.fillStyle = '#8D6E63';
+                ctx.fillRect(p.x, p.y + 8, p.w, p.h - 8);
+            });
+            
+            // Player
+            ctx.fillStyle = '#FF5722';
+            ctx.fillRect(player.x, player.y, 30, 30);
+            ctx.fillStyle = '#FFF';
+            ctx.fillRect(player.x + 8, player.y + 8, 6, 6);
+            ctx.fillRect(player.x + 18, player.y + 8, 6, 6);
+            
+            // Physics
+            player.vy += 0.5; // gravity
+            player.y += player.vy;
+            
+            // Platform collision
+            platforms.forEach(p => {
+                if (player.x < p.x + p.w && player.x + 30 > p.x &&
+                    player.y + 30 > p.y && player.y + 30 < p.y + p.h &&
+                    player.vy > 0) {
+                    player.y = p.y - 30;
+                    player.vy = 0;
+                    player.jumping = false;
+                }
+            });
+            
+            // Reset if fallen
+            if (player.y > 400) {
+                player.y = 200;
+                player.x = 50;
+                player.vy = 0;
+            }
+            
+            requestAnimationFrame(draw);
+        }
+        
+        // Controls
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') player.x += 5;
+            if (e.key === 'ArrowLeft') player.x -= 5;
+            if (e.key === 'ArrowUp' && !player.jumping) {
+                player.vy = -12;
+                player.jumping = true;
+            }
+        });
+        
+        draw();
+    </script>
+</body>
+</html>

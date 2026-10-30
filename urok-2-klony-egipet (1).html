@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Урок 2. Клоны · Египет</title>
+<style>
+:root{--teal:#0b8a8a;--red:#8b1a1a;--ink:#1d2b3a;--card:#fff;--line:#bfe3e6;--sand:#c9962f}
+*{box-sizing:border-box}
+body{margin:0;font:16px/1.5 "Segoe UI",Arial,sans-serif;color:var(--ink);background:linear-gradient(#e6f9fd,#f7fdff 40%)}
+header{text-align:center;padding:48px 16px 32px;border-bottom:2px solid var(--red)}
+h1{margin:0;color:var(--teal);font-size:clamp(26px,5vw,38px)}
+header p{margin:6px 0 0;font-style:italic;color:#6a7c88;font-size:14px}
+main{max-width:820px;margin:0 auto;padding:24px 14px 60px}
+section{background:var(--card);border-radius:22px;padding:28px;margin-bottom:26px;box-shadow:0 6px 24px rgba(11,138,138,.12)}
+h2{margin:0 0 16px;color:var(--teal);font-size:clamp(22px,4vw,30px)}
+h3{margin:18px 0 8px;font-size:17px;color:var(--red)}
+svg.art{width:100%;height:auto;border-radius:14px;display:block}
+.say{display:flex;gap:14px;align-items:center;border-left:4px solid var(--teal);background:#fff;box-shadow:0 2px 10px rgba(0,0,0,.08);border-radius:12px;padding:12px 16px;margin:16px 0;color:var(--red);font-weight:700}
+.say span{font-size:38px}
+.path{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0 0;font-size:14px}
+.path b{padding:4px 12px;border-radius:20px;background:#e3f1f2;color:#557}
+.path b.on{background:var(--teal);color:#fff}
+.btn{display:inline-block;margin:14px 0 4px;padding:10px 26px;border-radius:10px;background:linear-gradient(#b32222,#7a1010);color:#fff;font-weight:700;text-decoration:none;font-size:14px}
+.center{text-align:center}
+.lvl{float:right;font-size:13px;background:#fff3cd;color:#7a5a00;padding:3px 12px;border-radius:14px;font-weight:600}
+.lvl.hard{background:#fde0e0;color:#8b1a1a}
+.step{display:grid;grid-template-columns:34px 1fr;gap:6px 12px;margin:18px 0;padding:14px;background:#f6fbfb;border:1px solid var(--line);border-radius:12px}
+.step>i{grid-row:span 2;width:30px;height:30px;border-radius:50%;background:var(--teal);color:#fff;font-style:normal;font-weight:700;display:grid;place-items:center}
+.step p{margin:0}
+.blocks{grid-column:2;overflow-x:auto;padding:6px 0}
+.clone-row{display:flex;gap:14px;flex-wrap:wrap;align-items:center;justify-content:center}
+.clone-row .arrow{font-size:30px;color:var(--teal)}
+.warn{background:#f3f0ff;border:2px solid #c9c0f5;border-radius:18px;padding:18px 24px;margin-bottom:26px}
+.warn h2{margin:0 0 6px;font-size:24px}
+.warn p{margin:0;font-size:14px}
+footer{text-align:center;font-size:12px;color:var(--teal);font-weight:600;padding:18px;border-top:2px dotted var(--teal)}
+/* Scratch blocks */
+.s{display:flex;flex-direction:column;align-items:flex-start;font:600 12.5px/1 "Segoe UI",Arial,sans-serif}
+.b{display:inline-flex;align-items:center;gap:6px;padding:8px 11px;border-radius:5px;color:#fff;background:var(--k);margin-top:1px;white-space:nowrap}
+.hat{border-radius:18px 18px 5px 5px;padding-top:12px}
+.b i{font-style:normal;background:#fff;color:#333;border-radius:11px;padding:3px 8px;min-width:22px;text-align:center}
+.b i.r{background:#59c059;color:#fff}
+.b i.v{background:#ff8c1a;color:#fff}
+.b i.m{background:#5cb1d6;color:#fff}
+.c{border-left:14px solid var(--k);border-bottom:10px solid var(--k);border-radius:6px 0 0 6px;margin-top:1px;display:flex;flex-direction:column;align-items:flex-start}
+.c>.b:first-child{margin-left:-14px;margin-top:0;border-radius:5px 5px 5px 0}
+.ev{--k:#ffbf00;color:#3d2f00}
+.ct{--k:#ffab19}.mo{--k:#4c97ff}.lk{--k:#9966ff}.vr{--k:#ff8c1a}.se{--k:#5cb1d6}
+@media(max-width:560px){section{padding:20px 14px}}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+ <defs>
+  <symbol id="star" viewBox="0 0 20 20"><path d="M10 0l2.4 7.2H20l-6 4.4 2.3 7.4L10 14.6 3.7 19l2.3-7.4-6-4.4h7.6Z" fill="#ffe9a0"/></symbol>
+  <symbol id="ankh" viewBox="0 0 30 44"><g fill="none" stroke="#f2b705" stroke-width="5" stroke-linecap="round"><ellipse cx="15" cy="11" rx="7" ry="8"/><path d="M15 19v23M5 27h20"/></g></symbol>
+  <symbol id="stone" viewBox="0 0 40 36"><path d="M4 10 14 2l22 4 3 20-12 8-24-4Z" fill="#9a8f80" stroke="#5f564b" stroke-width="2"/><path d="M18 5l4 10-5 8" stroke="#5f564b" fill="none" stroke-width="2"/></symbol>
+  <symbol id="hero" viewBox="0 0 40 60"><path d="M5 15h30l-5-9H10Z" fill="#8a5a2b"/><circle cx="20" cy="21" r="8" fill="#f1c49b"/><rect x="10" y="29" width="20" height="20" rx="4" fill="#3a7ca5"/><rect x="12" y="48" width="6" height="11" fill="#5a3a1a"/><rect x="22" y="48" width="6" height="11" fill="#5a3a1a"/></symbol>
+  <symbol id="ship" viewBox="0 0 120 90"><path d="M6 60q54 10 108 0l-16 22H26Z" fill="#8a4b22"/><path d="M6 60q-4-12 4-16M114 60q4-12-4-16" stroke="#8a4b22" stroke-width="4" fill="none"/><rect x="58" y="8" width="4" height="52" fill="#5a3216"/><path d="M36 16h48l-6 34H42Z" fill="#fff"/><path d="M36 28h48" stroke="#c22" stroke-width="4"/></symbol>
+ </defs>
+</svg>
+
+<header>
+  <h1>Урок 2. Клоны</h1>
+  <p>Один спрайт — целая армия</p>
+</header>
+
+<main>
+
+<!-- МИССИЯ -->
+<section>
+  <svg class="art" viewBox="0 0 800 340" role="img" aria-label="Корабль на Ниле у пирамид">
+    <defs>
+      <linearGradient id="sk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff9e5e"/><stop offset=".7" stop-color="#ffe3b0"/></linearGradient>
+      <linearGradient id="nile" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3fb4c9"/><stop offset="1" stop-color="#0d6f8a"/></linearGradient>
+    </defs>
+    <rect width="800" height="340" fill="url(#sk)"/>
+    <circle cx="610" cy="96" r="46" fill="#fff3c4" opacity=".95"/>
+    <path d="M130 215 300 70l170 145Z" fill="#e8b960"/><path d="M300 70l170 145H300Z" fill="#c9962f"/>
+    <path d="M400 215 520 112l120 103Z" fill="#e8b960"/><path d="M520 112l120 103H520Z" fill="#c9962f"/>
+    <path d="M590 215l60-52 60 52Z" fill="#e8b960"/><path d="M650 163l60 52h-60Z" fill="#c9962f"/>
+    <path d="M0 215q200-26 400-4t400-6v60H0Z" fill="#f0c978"/>
+    <rect y="248" width="800" height="92" fill="url(#nile)"/>
+    <g stroke="#fff" stroke-width="3" fill="none" opacity=".55" stroke-linecap="round"><path d="M40 280q15-8 30 0t30 0"/><path d="M420 300q15-8 30 0t30 0"/><path d="M650 270q15-8 30 0t30 0"/></g>
+    <use href="#ship" x="250" y="170" width="230" height="172"/>
+    <path d="M60 250q10-60 30-100" stroke="#6b4423" stroke-width="8" fill="none" stroke-linecap="round"/>
+    <g fill="#2f9a4b"><ellipse cx="62" cy="150" rx="40" ry="9" transform="rotate(-25 62 150)"/><ellipse cx="108" cy="146" rx="40" ry="9" transform="rotate(20 108 146)"/><ellipse cx="86" cy="130" rx="34" ry="8" transform="rotate(-80 86 130)"/></g>
+    <g fill="#ffe9a0"><use href="#star" x="40" y="30" width="14" height="14"/><use href="#star" x="260" y="24" width="10" height="10"/></g>
+  </svg>
+  <h2 style="margin-top:20px">Миссия 2: Долина Нила</h2>
+  <div class="say"><span>🐱</span>Фишка: «Пирамидам 4500 лет! Узнаем секрет — построим город на века!»</div>
+  <div class="say"><span>🧭</span>Вектор: «Египтяне строили по звёздам. А звёзд — тысячи. Нужны клоны!»</div>
+  <div class="path"><b>Миссия 1 ✓</b><b class="on">Миссия 2 · Египет</b><b>Миссия 3 · ?</b></div>
+</section>
+
+<!-- ТЕОРИЯ -->
+<section>
+  <h2>Что такое клон?</h2>
+  <div class="clone-row">
+    <svg width="60" height="60"><use href="#star" width="60" height="60"/></svg>
+    <span class="arrow">➜</span>
+    <svg width="280" height="70" style="background:#12204a;border-radius:10px"><use href="#star" x="10" y="12" width="26" height="26"/><use href="#star" x="70" y="34" width="16" height="16"/><use href="#star" x="120" y="8" width="20" height="20"/><use href="#star" x="170" y="38" width="28" height="28"/><use href="#star" x="230" y="14" width="14" height="14"/></svg>
+  </div>
+  <div class="say"><span>👨‍✈️</span>Клон — копия спрайта. Один код — много героев.</div>
+
+  <h3>Три блока клонов</h3>
+  <div class="s" style="gap:10px;margin-top:8px">
+    <div class="b ct hat">создать клон <i>себя ▾</i></div>
+    <div class="b ct hat">когда я начинаю как клон</div>
+    <div class="b ct">удалить этот клон</div>
+  </div>
+  <p style="font-size:14px;margin:14px 0 0">создаёт копию &nbsp;·&nbsp; запускает код копии &nbsp;·&nbsp; убирает копию</p>
+</section>
+
+<!-- ПРОЕКТ 1 -->
+<section>
+  <span class="lvl">★ лёгкий</span>
+  <h2>Проект «Небо над пирамидами»</h2>
+  <svg class="art" viewBox="0 0 800 260" role="img" aria-label="Звёздное небо над пирамидами">
+    <defs><linearGradient id="nt" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0a1238"/><stop offset="1" stop-color="#2b3a7a"/></linearGradient></defs>
+    <rect width="800" height="260" fill="url(#nt)"/>
+    <g>
+      <use href="#star" x="60" y="30" width="22" height="22"/><use href="#star" x="150" y="90" width="12" height="12" opacity=".6"/><use href="#star" x="230" y="20" width="16" height="16"/>
+      <use href="#star" x="330" y="70" width="26" height="26"/><use href="#star" x="440" y="26" width="12" height="12" opacity=".5"/><use href="#star" x="520" y="96" width="18" height="18"/>
+      <use href="#star" x="610" y="36" width="24" height="24"/><use href="#star" x="700" y="84" width="14" height="14" opacity=".6"/><use href="#star" x="750" y="20" width="12" height="12"/>
+      <use href="#star" x="400" y="130" width="14" height="14" opacity=".7"/><use href="#star" x="110" y="150" width="14" height="14" opacity=".5"/>
+    </g>
+    <path d="M0 260V215l170-120 150 120 120-90 140 90 100-60 120 60v35Z" fill="#17204a"/>
+    <path d="M0 260v-18q200-16 400-4t400-6v28Z" fill="#0d1432"/>
+  </svg>
+  <div class="center"><a class="btn" href="#">открыть заготовку</a></div>
+
+  <div class="step"><i>1</i><p><b>Ремикс</b> заготовки. Спрайт — звезда.</p></div>
+
+  <div class="step"><i>2</i><p><b>Фабрика звёзд:</b> оригинал прячется и делает 40 клонов.</p>
+    <div class="blocks"><div class="s">
+      <div class="b ev hat">когда <i class="r">⚑</i> нажат</div>
+      <div class="b lk">спрятаться</div>
+      <div class="c ct"><div class="b ct">повторить <i>40</i> раз</div>
+        <div class="b ct">создать клон <i>себя ▾</i></div>
+      </div>
+    </div></div>
+  </div>
+
+  <div class="step"><i>3</i><p><b>Жизнь клона:</b> своё место, свой размер, своё мерцание.</p>
+    <div class="blocks"><div class="s">
+      <div class="b ct hat">когда я начинаю как клон</div>
+      <div class="b mo">перейти в x: <i class="r">случайное от -230 до 230</i> y: <i class="r">случайное от 0 до 170</i></div>
+      <div class="b lk">установить размер <i class="r">случайное от 30 до 100</i> %</div>
+      <div class="b lk">показаться</div>
+      <div class="c ct"><div class="b ct">повторять всегда</div>
+        <div class="b lk">установить эффект <i>призрак ▾</i> на <i class="r">случайное от 0 до 80</i></div>
+        <div class="b ct">ждать <i class="r">случайное от 0.2 до 1</i> секунд</div>
+      </div>
+    </div></div>
+  </div>
+
+  <div class="step"><i>4</i><p><b>Эксперимент:</b> 100 клонов. Другой цвет звёзд. ✨</p></div>
+</section>
+
+<!-- ВАЖНО -->
+<div class="warn">
+  <h2>✨ Важно</h2>
+  <p>Нажми «Сохранить сейчас» — работа не пропадёт.</p>
+</div>
+
+<!-- ПРОЕКТ 2 -->
+<section>
+  <span class="lvl hard">★★★ сложный</span>
+  <h2>Проект «Страж стройки»</h2>
+  <div class="say"><span>🪲</span>Скарабеи-воры ползут к стройке! Стреляй песчаными шарами. Сбей 10, не пропустив трёх!</div>
+  <svg class="art" viewBox="0 0 800 300" role="img" aria-label="Страж стреляет по скарабеям">
+    <defs><linearGradient id="sg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1b2a63"/><stop offset=".6" stop-color="#ff9e5e"/><stop offset="1" stop-color="#ffe3b0"/></linearGradient></defs>
+    <rect width="800" height="300" fill="url(#sg)"/>
+    <path d="M250 262 400 140l150 122Z" fill="#c9962f" opacity=".75"/>
+    <rect y="262" width="800" height="38" fill="#f0c978"/>
+    <g stroke="#ffffff66" stroke-dasharray="4 8" stroke-width="2"><path d="M396 262V120M215 150V80"/></g>
+    <circle cx="396" cy="190" r="8" fill="#ffd34d" stroke="#e08a00" stroke-width="2"/><circle cx="396" cy="230" r="8" fill="#ffd34d" stroke="#e08a00" stroke-width="2"/><circle cx="215" cy="130" r="8" fill="#ffd34d" stroke="#e08a00" stroke-width="2"/><circle cx="590" cy="100" r="8" fill="#ffd34d" stroke="#e08a00" stroke-width="2"/><g transform="translate(150 50) scale(1)"><g stroke="#0a3d3d" stroke-width="2.5" stroke-linecap="round"><path d="M-12-8l-10-6M-14 0h-12M-12 8l-10 6M12-8l10-6M14 0h12M12 8l10 6"/></g><ellipse rx="14" ry="18" fill="#1fb5a8" stroke="#0a3d3d" stroke-width="2"/><path d="M0-18v36" stroke="#0a3d3d" stroke-width="2"/><circle cy="-20" r="6" fill="#0a3d3d"/></g><g transform="translate(330 95) scale(1)"><g stroke="#0a3d3d" stroke-width="2.5" stroke-linecap="round"><path d="M-12-8l-10-6M-14 0h-12M-12 8l-10 6M12-8l10-6M14 0h12M12 8l10 6"/></g><ellipse rx="14" ry="18" fill="#1fb5a8" stroke="#0a3d3d" stroke-width="2"/><path d="M0-18v36" stroke="#0a3d3d" stroke-width="2"/><circle cy="-20" r="6" fill="#0a3d3d"/></g><g transform="translate(215 20) scale(1)"><g stroke="#0a3d3d" stroke-width="2.5" stroke-linecap="round"><path d="M-12-8l-10-6M-14 0h-12M-12 8l-10 6M12-8l10-6M14 0h12M12 8l10 6"/></g><ellipse rx="14" ry="18" fill="#1fb5a8" stroke="#0a3d3d" stroke-width="2"/><path d="M0-18v36" stroke="#0a3d3d" stroke-width="2"/><circle cy="-20" r="6" fill="#0a3d3d"/></g><g transform="translate(480 40) scale(1)"><g stroke="#0a3d3d" stroke-width="2.5" stroke-linecap="round"><path d="M-12-8l-10-6M-14 0h-12M-12 8l-10 6M12-8l10-6M14 0h12M12 8l10 6"/></g><ellipse rx="14" ry="18" fill="#1fb5a8" stroke="#0a3d3d" stroke-width="2"/><path d="M0-18v36" stroke="#0a3d3d" stroke-width="2"/><circle cy="-20" r="6" fill="#0a3d3d"/></g><g transform="translate(590 60) scale(1)"><g stroke="#0a3d3d" stroke-width="2.5" stroke-linecap="round"><path d="M-12-8l-10-6M-14 0h-12M-12 8l-10 6M12-8l10-6M14 0h12M12 8l10 6"/></g><ellipse rx="14" ry="18" fill="#1fb5a8" stroke="#0a3d3d" stroke-width="2"/><path d="M0-18v36" stroke="#0a3d3d" stroke-width="2"/><circle cy="-20" r="6" fill="#0a3d3d"/></g><g transform="translate(690 110) scale(1)"><g stroke="#0a3d3d" stroke-width="2.5" stroke-linecap="round"><path d="M-12-8l-10-6M-14 0h-12M-12 8l-10 6M12-8l10-6M14 0h12M12 8l10 6"/></g><ellipse rx="14" ry="18" fill="#1fb5a8" stroke="#0a3d3d" stroke-width="2"/><path d="M0-18v36" stroke="#0a3d3d" stroke-width="2"/><circle cy="-20" r="6" fill="#0a3d3d"/></g>
+    <use href="#hero" x="368" y="206" width="56" height="84"/>
+    <text x="22" y="284" font-size="20" font-weight="700" fill="#7a4a10" font-family="Segoe UI,Arial">Счёт: 7</text>
+    <text x="680" y="284" font-size="20" font-weight="700" fill="#b32222" font-family="Segoe UI,Arial">♥ ♥ ♡</text>
+  </svg>
+  <div class="center"><a class="btn" href="#">открыть заготовку</a></div>
+
+  <div class="step"><i>1</i><p><b>Ремикс</b> заготовки. Спрайты: Страж, Шар, Скарабей. Создай переменные <b>Счёт</b> и <b>Жизни</b> «для всех спрайтов».</p>
+    <div class="blocks"><div class="s" style="flex-direction:row;gap:8px"><div class="b vr">Счёт</div><div class="b vr">Жизни</div></div></div>
+  </div>
+
+  <div class="step"><i>2</i><p><b>Страж:</b> следует за мышкой и стреляет пробелом. Клонируем не себя, а Шар!</p>
+    <div class="blocks"><div class="s">
+      <div class="b ev hat">когда <i class="r">⚑</i> нажат</div>
+      <div class="b vr">задать <i class="v">Счёт ▾</i> значение <i>0</i></div>
+      <div class="b vr">задать <i class="v">Жизни ▾</i> значение <i>3</i></div>
+      <div class="c ct"><div class="b ct">повторять всегда</div>
+        <div class="b mo">установить x в <i class="m">мышь x</i></div>
+        <div class="c ct"><div class="b ct">если <i class="se">клавиша пробел ▾ нажата?</i> то</div>
+          <div class="b ct">создать клон <i>Шар ▾</i></div>
+          <div class="b ct">ждать <i>0.3</i> секунд</div>
+        </div>
+      </div>
+    </div></div>
+  </div>
+
+  <div class="step"><i>3</i><p><b>Шар:</b> вылетает из Стража и летит вверх до края.</p>
+    <div class="blocks"><div class="s">
+      <div class="b ev hat">когда <i class="r">⚑</i> нажат</div>
+      <div class="b lk">спрятаться</div>
+      <div class="b ct hat" style="margin-top:14px">когда я начинаю как клон</div>
+      <div class="b mo">перейти в <i>Страж ▾</i></div>
+      <div class="b lk">показаться</div>
+      <div class="c ct"><div class="b ct">повторять пока не <i class="se">касается края ▾?</i></div>
+        <div class="b mo">изменить y на <i>10</i></div>
+      </div>
+      <div class="b ct">удалить этот клон</div>
+    </div></div>
+  </div>
+
+  <div class="step"><i>4</i><p><b>Скарабей-фабрика:</b> новый клон каждые 1–2 секунды.</p>
+    <div class="blocks"><div class="s">
+      <div class="b ev hat">когда <i class="r">⚑</i> нажат</div>
+      <div class="b lk">спрятаться</div>
+      <div class="c ct"><div class="b ct">повторять всегда</div>
+        <div class="b ct">создать клон <i>себя ▾</i></div>
+        <div class="b ct">ждать <i class="r">случайное от 1 до 2</i> секунд</div>
+      </div>
+    </div></div>
+  </div>
+
+  <div class="step"><i>5</i><p><b>Ползёт скарабей:</b> сбит — очко. Дополз до низа — минус жизнь.</p>
+    <div class="blocks"><div class="s">
+      <div class="b ct hat">когда я начинаю как клон</div>
+      <div class="b mo">перейти в x: <i class="r">случайное от -200 до 200</i> y: <i>170</i></div>
+      <div class="b lk">показаться</div>
+      <div class="c ct"><div class="b ct">повторять пока не <i class="r">y &lt; -130</i></div>
+        <div class="b mo">изменить y на <i>-2</i></div>
+        <div class="c ct"><div class="b ct">если <i class="se">касается Шар ▾?</i> то</div>
+          <div class="b vr">изменить <i class="v">Счёт ▾</i> на <i>1</i></div>
+          <div class="b ct">удалить этот клон</div>
+        </div>
+      </div>
+      <div class="b vr">изменить <i class="v">Жизни ▾</i> на <i>-1</i></div>
+      <div class="b ct">удалить этот клон</div>
+    </div></div>
+  </div>
+
+  <div class="step"><i>6</i><p><b>Победа и поражение:</b> два скрипта у Стража.</p>
+    <div class="blocks"><div class="s">
+      <div class="b ev hat">когда <i class="r">⚑</i> нажат</div>
+      <div class="b ct">ждать до <i class="r">Счёт = 10</i></div>
+      <div class="b lk">говорить <i>Стройка спасена!</i></div>
+      <div class="b ct">остановить <i>все ▾</i></div>
+      <div class="b ev hat" style="margin-top:14px">когда <i class="r">⚑</i> нажат</div>
+      <div class="b ct">ждать до <i class="r">Жизни = 0</i></div>
+      <div class="b lk">говорить <i>Воры победили!</i></div>
+      <div class="b ct">остановить <i>все ▾</i></div>
+    </div></div>
+  </div>
+
+  <div class="step"><i>7</i><p><b>Усложни:</b> с каждым очком скарабеи появляются чаще и ползут быстрее. 🚀</p></div>
+</section>
+
+<section>
+  <div class="say" style="margin:0"><span>🏙️</span>Миссия выполнена! Секрет пирамид у нас. Дальше — Миссия 3.</div>
+</section>
+
+</main>
+<footer>© 2026 · Мастерская цифрового развития «Кот и Код»</footer>
+</body>
+</html>

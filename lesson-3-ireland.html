@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Урок 3. Клоны и переменные · Ирландия</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--teal:#0e8a8f;--red:#8b1a1a;--ink:#12344d;--ct:#ffab19;--ev:#ffbf00;--lk:#9966ff;--mo:#4c97ff;--vr:#ff8c1a;--op:#59c059;--se:#5cb1d6}
+*{box-sizing:border-box}
+body{margin:0;background:linear-gradient(#e6f8fc,#f4fcfd);font-family:Nunito,'Trebuchet MS',sans-serif;color:var(--ink);line-height:1.5}
+header{text-align:center;padding:26px 16px 14px;border-bottom:2px solid #b03030}
+header h1{margin:0;color:var(--teal);font-size:30px}
+header p{margin:2px 0 0;font-size:13px;font-style:italic;color:#6a8a9a}
+main{max-width:640px;margin:22px auto;padding:0 12px;display:grid;gap:18px}
+.card{background:#fff;border-radius:20px;padding:12px;box-shadow:0 6px 22px rgba(14,100,120,.12)}
+.card>*{margin-left:6px;margin-right:6px}
+h2{color:var(--teal);font-size:23px;margin:14px 6px 10px}
+.hero{display:block;width:calc(100% - 12px);border-radius:14px;margin-top:6px}
+.say{display:flex;gap:10px;align-items:center;border-left:4px solid var(--teal);border-radius:10px;padding:9px 12px;margin:10px 6px;box-shadow:0 2px 10px rgba(0,0,0,.08);background:#fff}
+.say p{margin:0;color:var(--red);font-weight:800;font-size:14px}
+.av{font-size:26px}
+.pills{display:flex;gap:6px;flex-wrap:wrap;margin:8px 6px 6px}
+.pills span{background:#e3f3f7;border-radius:99px;padding:2px 12px;font-size:12px;font-weight:700;color:#456}
+.pills .on{background:var(--teal);color:#fff}
+.badge{float:right;font-size:11px;font-weight:800;border-radius:99px;padding:2px 10px;margin-top:-34px}
+.easy{background:#fff4cf;color:#9a6a00}.hard{background:#ffe0e0;color:#b02a2a}
+.stage{width:100%;max-width:380px;aspect-ratio:4/3;border-radius:6px;display:flex;align-items:center;justify-content:center;text-align:center;padding:14px;color:#fff;font-weight:700;font-size:14px;background:linear-gradient(135deg,#7c4dd8,#9b6be8)}
+.stage.aur{background:linear-gradient(#08142e,#0f4a47)}
+.stage.cave{background:linear-gradient(#1c1a22,#4a4350)}
+.btn{display:block;width:max-content;margin:12px auto;background:linear-gradient(#a82222,#7a1212);color:#fff;text-decoration:none;font-weight:800;font-size:13px;padding:8px 26px;border-radius:99px;box-shadow:0 3px 8px rgba(120,20,20,.35)}
+.st{display:flex;gap:12px;background:#f4faf9;border:1px solid #d9ece9;border-radius:14px;padding:12px;margin:10px 6px}
+.st>div{min-width:0;flex:1}
+.st p{margin:0 0 8px;font-size:14px}
+.num{flex:none;width:26px;height:26px;border-radius:50%;background:var(--teal);color:#fff;font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center}
+.imp{background:#f1edff;border:1px solid #cfc3f5;border-radius:16px;padding:12px 16px}
+.imp h3{margin:0;color:var(--teal);font-size:18px}.imp p{margin:2px 0 0;font-size:13px}
+.chip{display:inline-block;color:#fff;font-size:11px;font-weight:700;border-radius:8px;padding:1px 9px;margin:0 4px 4px 0}
+.chip.vr{background:var(--vr)}.chip.lk{background:var(--lk)}
+.s{display:flex;flex-direction:column;align-items:flex-start;margin:6px 0 10px;overflow-x:auto;max-width:100%}
+.ct{--c:var(--ct)}.ev{--c:var(--ev)}.lk{--c:var(--lk)}.mo{--c:var(--mo)}.vr{--c:var(--vr)}.op{--c:var(--op)}.se{--c:var(--se)}
+.b{background:var(--c);color:#fff;font-weight:700;font-size:11px;line-height:1.35;padding:4px 10px;border-radius:5px;margin-bottom:2px;white-space:nowrap;width:max-content}
+.b.ev{border-radius:14px 14px 5px 5px;padding-top:6px}
+.w{border-left:10px solid var(--c);border-bottom:8px solid var(--c);border-radius:6px 0 6px 6px;margin-bottom:2px;width:max-content;padding-right:14px;background:#fdfdfd}
+.w>.b{margin-left:-10px;border-radius:5px 5px 5px 0}
+em{font-style:normal;background:#fff;color:#444;border-radius:10px;padding:0 7px;margin:0 1px}
+.p{display:inline-block;color:#fff;border-radius:10px;padding:0 7px;margin:0 1px;background:var(--c)}
+.fl{background:#fff;color:#3a9b3a;border-radius:50%;padding:0 4px;font-size:10px}
+.mini{display:flex;gap:14px;justify-content:center;font-size:12px;font-weight:700;text-align:center;margin:8px 0}
+.mini b{display:block;font-size:26px}
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:8px 6px}
+.cmp div{background:#f4faf9;border:1px solid #d9ece9;border-radius:12px;padding:10px;font-size:13px}
+.cmp strong{display:block;color:var(--teal)}
+footer{text-align:center;font-size:11px;color:var(--teal);padding:14px;border-top:2px solid #bfe4ea;margin-top:10px}
+@media(max-width:480px){.cmp{grid-template-columns:1fr}.badge{float:none;display:inline-block;margin:0 6px}}
+</style>
+</head>
+<body>
+<header>
+  <h1>Урок 3. Клоны и переменные</h1>
+  <p>У каждого клона свой характер</p>
+</header>
+<main>
+
+<!-- ===== МИССИЯ ===== -->
+<section class="card">
+  <svg class="hero" viewBox="0 0 600 230" role="img" aria-label="Ирландия: северное сияние над скалами и маяком">
+    <defs>
+      <linearGradient id="sk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#050d24"/><stop offset="1" stop-color="#12445a"/></linearGradient>
+      <linearGradient id="au" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#3dff9a" stop-opacity=".75"/><stop offset=".6" stop-color="#37c8c0" stop-opacity=".35"/><stop offset="1" stop-color="#9a6bff" stop-opacity=".05"/></linearGradient>
+    </defs>
+    <rect width="600" height="230" fill="url(#sk)"/>
+    <g fill="#fff" opacity=".85"><circle cx="50" cy="28" r="1.6"/><circle cx="210" cy="20" r="1.4"/><circle cx="330" cy="40" r="1.6"/><circle cx="560" cy="24" r="1.8"/><circle cx="480" cy="70" r="1.3"/></g>
+    <path d="M40 170C90 80 110 40 150 20L190 24C170 70 175 120 160 170Z" fill="url(#au)"/>
+    <path d="M200 170C250 90 300 50 340 14L400 22C370 70 360 120 330 170Z" fill="url(#au)" opacity=".85"/>
+    <path d="M400 170C440 100 480 60 520 30L570 40C540 80 520 130 500 170Z" fill="url(#au)" opacity=".7"/>
+    <path d="M0 230V160Q80 140 160 160T330 158Q400 128 470 156T600 150V230Z" fill="#1b6b3a"/>
+    <path d="M0 230V190Q100 172 200 190T400 186T600 188V230Z" fill="#14522d"/>
+    <path d="M420 156V132h22v24z" fill="#f4f4f4"/><rect x="420" y="140" width="22" height="6" fill="#c0182a"/><path d="M418 132h26l-13-10z" fill="#333"/><circle cx="431" cy="128" r="3" fill="#ffe066"/>
+    <path d="M431 128L520 112L520 124Z" fill="#ffe066" opacity=".25"/>
+  </svg>
+  <h2>Миссия 3: Ирландия</h2>
+  <div class="say"><span class="av">🐱</span><p>Фишка: «Ирландия — зелёный остров! А ночью над северным побережьем бывает сияние. Ловим его!»</p></div>
+  <div class="say"><span class="av">🧭</span><p>Вектор: «А ещё в Ирландии есть Мраморные пещеры. Пройдём их по свету кристаллов — и узнаем, как строили Ньюгрейндж, который 5000 лет не протекает!»</p></div>
+  <div class="pills"><span>Миссия 1 ✓</span><span>Миссия 2 ✓</span><span class="on">Миссия 3 · Ирландия</span><span>Миссия 4 · ?</span></div>
+</section>
+
+<!-- ===== ТЕОРИЯ ===== -->
+<section class="card">
+  <h2>Переменная + клон = характер</h2>
+  <p style="font-size:14px">Переменная — коробочка, в которой лежит число. Бывает два вида:</p>
+  <div class="cmp">
+    <div><strong>Для всех спрайтов</strong>Общая доска объявлений. Видят все: <span class="chip vr">Кристаллы</span><span class="chip vr">Жизни</span></div>
+    <div><strong>Только для этого спрайта</strong>Личный блокнот. Клон получает копию в момент создания: <span class="chip vr">цвет</span><span class="chip vr">тип</span></div>
+  </div>
+  <div class="say"><span class="av">🧭</span><p>Вектор: «Клон родился — забрал копию блокнота. Дальше у каждого клона своё число!»</p></div>
+  <div class="mini"><div><b>🟢</b>цвет = 270</div><div><b>🩵</b>цвет = 0</div><div><b>🔵</b>цвет = 90</div></div>
+  <p style="font-size:13px"><b>Два главных блока:</b></p>
+  <div class="s">
+    <div class="b vr">задать <em>цвет ▾</em> значение <em>0</em></div>
+    <div class="b vr">изменить <em>Кристаллы ▾</em> на <em>1</em></div>
+  </div>
+  <p style="font-size:12px;color:#678">задать — записать число · изменить — прибавить к тому, что уже есть</p>
+</section>
+
+<!-- ===== ПРОЕКТ 1 ===== -->
+<section class="card">
+  <h2>Проект «Сияющий хвост»</h2><span class="badge easy">★ лёгкий</span>
+  <div class="stage aur">Здесь проект-образец Scratch<br>(вставь iframe)</div>
+  <!-- <iframe src="ССЫЛКА_НА_ПРОЕКТ/embed" width="380" height="285" frameborder="0" allowfullscreen></iframe> -->
+  <a class="btn" href="#">открыть заготовку</a>
+
+  <div class="say"><span class="av">🐱</span><p>Фишка: «Двигай мышкой — за ней потянется светящийся хвост, как огоньки северного сияния. Он будет менять цвет и таять!»</p></div>
+
+  <div class="st"><span class="num">1</span><div><p><b>Ремикс</b> заготовки. Спрайт «Свет» — один мягкий светящийся шарик: круг без обводки, заливка — радиальный градиент от ярко-зелёного в центре к тёмному (цвету неба) по краям. Фон — ночное небо над Ирландией. Переменная <span class="chip vr">цвет</span> — <i>только для этого спрайта</i>.</p></div></div>
+
+  <div class="st"><span class="num">2</span><div><p><b>Источник света:</b> оригинал прячется и следует за мышкой. С каждым шагом он чуть меняет «цвет» и оставляет клон. Клон забирает копию «цвета» себе.</p>
+  <div class="s">
+    <div class="b ev">когда <span class="fl">⚑</span> нажат</div>
+    <div class="b lk">спрятаться</div>
+    <div class="b vr">задать <em>цвет ▾</em> значение <em>0</em></div>
+    <div class="w ct"><div class="b ct">повторять всегда</div><div class="in">
+      <div class="b mo">перейти в <em>указатель мыши ▾</em></div>
+      <div class="b vr">изменить <em>цвет ▾</em> на <em>4</em></div>
+      <div class="b ct">создать клон <em>себя ▾</em></div>
+    </div></div>
+  </div></div></div>
+
+  <div class="st"><span class="num">3</span><div><p><b>Жизнь огонька:</b> клон окрашивается в свой «цвет», остаётся на месте, понемногу расплывается, всплывает вверх и тает. Синус качает цвет туда-сюда от 0 до 40, поэтому хвост переливается между зелёным, бирюзовым и синим, как настоящее сияние.</p>
+  <div class="s">
+    <div class="b ev">когда я начинаю как клон</div>
+    <div class="b lk">установить эффект <em>цвет ▾</em> в <b class="p op"><b class="p op"><b class="p op">sin от <b class="p vr">цвет</b></b> * <em>20</em></b> + <em>20</em></b></div>
+    <div class="b lk">установить эффект <em>прозрачность ▾</em> в <em>20</em></div>
+    <div class="b lk">установить размер <em>40</em> %</div>
+    <div class="b lk">показаться</div>
+    <div class="w ct"><div class="b ct">повторить <em>30</em> раз</div><div class="in">
+      <div class="b lk">изменить эффект <em>прозрачность ▾</em> на <em>3</em></div>
+      <div class="b lk">изменить размер на <em>1</em></div>
+      <div class="b mo">изменить y на <em>1</em></div>
+    </div></div>
+    <div class="b ct">удалить этот клон</div>
+  </div>
+  <p style="margin:0;font-size:13px">Проверь: быстро води мышкой — хвост длинный и плавный, медленно — густой и яркий.</p></div></div>
+
+  <div class="st"><span class="num">4</span><div><p><b>Эксперименты:</b> поменяй «4» на «10» — цвета будут меняться быстрее. Измени «30» на «60» — хвост станет длиннее. Поменяй «20» на «40» — оттенки станут шире, добавится больше синего. Поставь «изменить y на 0» или «-1» — огоньки не всплывают, а оседают. Добавь второй спрайт с другим цветом. 🌌</p></div></div>
+</section>
+
+<div class="imp"><h3>✨ Важно</h3><p>Нажми «Сохранить сейчас» — работа не пропадёт!</p></div>
+
+<!-- ===== ПРОЕКТ 2 ===== -->
+<section class="card">
+  <h2>Проект «Мраморные пещеры»</h2><span class="badge hard">★★★ сложный</span>
+  <div class="say"><span class="av">🪲</span><p>Светлячок летит по тёмной пещере. Сверху свисают сталактиты, снизу растут сталагмиты. Собери 5 кристаллов — они откроют выход. Три удара о камни — и ты проиграл!</p></div>
+  <div class="stage cave">Здесь проект-образец Scratch<br>(вставь iframe)</div>
+  <a class="btn" href="#">открыть заготовку</a>
+
+  <div class="st"><span class="num">1</span><div><p><b>Ремикс</b> заготовки. Спрайты: Светлячок, Камень (2 костюма: сталактит и сталагмит), Кристалл, Стена (фон пещеры, двойной по ширине). Создай переменные:</p>
+    <span class="chip vr">Кристаллы</span><span class="chip vr">Жизни</span><span class="chip vr">Скорость</span> для всех<br>
+    <span class="chip lk">тип</span> только для Камня · <span class="chip lk">vy</span> только для Светлячка</div></div>
+
+  <div class="st"><span class="num">2</span><div><p><b>Бегущая стена:</b> костюм вдвое шире сцены, вторая половина повторяет первую. Двигаем и перекидываем назад — получается бесконечная пещера.</p>
+  <div class="s">
+    <div class="b ev">когда <span class="fl">⚑</span> нажат</div>
+    <div class="b vr">задать <em>Скорость ▾</em> значение <em>4</em></div>
+    <div class="b mo">перейти в x: <em>240</em> y: <em>0</em></div>
+    <div class="w ct"><div class="b ct">повторять всегда</div><div class="in">
+      <div class="b mo">изменить x на <b class="p op"><em>0</em> - <b class="p vr">Скорость</b></b></div>
+      <div class="w ct"><div class="b ct">если <b class="p op"><b class="p mo">x</b> &lt; <em>-240</em></b> то</div><div class="in"><div class="b mo">установить x в <em>240</em></div></div></div>
+    </div></div>
+  </div></div></div>
+
+  <div class="st"><span class="num">3</span><div><p><b>Светлячок:</b> как во Flappy Bird. Гравитация тянет вниз, пробел — взмах вверх. В начале обнуляем счёт и даём 3 жизни.</p>
+  <div class="s">
+    <div class="b ev">когда <span class="fl">⚑</span> нажат</div>
+    <div class="b vr">задать <em>Кристаллы ▾</em> значение <em>0</em></div>
+    <div class="b vr">задать <em>Жизни ▾</em> значение <em>3</em></div>
+    <div class="b vr">задать <em>vy ▾</em> значение <em>0</em></div>
+    <div class="b mo">перейти в x: <em>-120</em> y: <em>0</em></div>
+    <div class="w ct"><div class="b ct">повторять всегда</div><div class="in">
+      <div class="b vr">изменить <em>vy ▾</em> на <em>-1</em></div>
+      <div class="b mo">изменить y на <b class="p vr">vy</b></div>
+      <div class="w ct"><div class="b ct">если <b class="p se">клавиша <em>пробел ▾</em> нажата?</b> то</div><div class="in"><div class="b vr">задать <em>vy ▾</em> значение <em>9</em></div></div></div>
+    </div></div>
+  </div></div></div>
+
+  <div class="st"><span class="num">4</span><div><p><b>Фабрика камней:</b> оригинал прячется. Перед созданием клона он выбирает тип камня: 1 — сталактит, 2 — сталагмит. Клон унаследует эту копию переменной.</p>
+  <div class="s">
+    <div class="b ev">когда <span class="fl">⚑</span> нажат</div>
+    <div class="b lk">спрятаться</div>
+    <div class="w ct"><div class="b ct">повторять всегда</div><div class="in">
+      <div class="b vr">задать <em>тип ▾</em> значение <b class="p op">случайное от <em>1</em> до <em>2</em></b></div>
+      <div class="b ct">создать клон <em>себя ▾</em></div>
+      <div class="b ct">ждать <b class="p op">случайное от <em>1</em> до <em>2</em></b> секунд</div>
+    </div></div>
+  </div></div></div>
+
+  <div class="st"><span class="num">5</span><div><p><b>Клон-камень:</b> сталактит висит на потолке, сталагмит растёт с пола, длина у каждого своя. Коснулся Светлячка — минус жизнь.</p>
+  <div class="s">
+    <div class="b ev">когда я начинаю как клон</div>
+    <div class="b lk">переключить костюм на <b class="p vr">тип</b></div>
+    <div class="b lk">установить размер <b class="p op">случайное от <em>70</em> до <em>130</em></b> %</div>
+    <div class="w ct"><div class="b ct">если <b class="p op"><b class="p vr">тип</b> = <em>1</em></b> то</div><div class="in"><div class="b mo">перейти в x: <em>240</em> y: <em>180</em></div></div></div>
+    <div class="w ct"><div class="b ct">если <b class="p op"><b class="p vr">тип</b> = <em>2</em></b> то</div><div class="in"><div class="b mo">перейти в x: <em>240</em> y: <em>-180</em></div></div></div>
+    <div class="b lk">показаться</div>
+    <div class="w ct"><div class="b ct">повторять пока не <b class="p op"><b class="p mo">x</b> &lt; <em>-250</em></b></div><div class="in">
+      <div class="b mo">изменить x на <b class="p op"><em>0</em> - <b class="p vr">Скорость</b></b></div>
+      <div class="w ct"><div class="b ct">если <b class="p se">касается Светлячок?</b> то</div><div class="in">
+        <div class="b vr">изменить <em>Жизни ▾</em> на <em>-1</em></div><div class="b ct">удалить этот клон</div></div></div>
+    </div></div>
+    <div class="b ct">удалить этот клон</div>
+  </div></div></div>
+
+  <div class="st"><span class="num">6</span><div><p><b>Кристаллы:</b> один кристалл каждые 3–5 секунд, на случайной высоте. Поймал — плюс один.</p>
+  <div class="s">
+    <div class="b ev">когда <span class="fl">⚑</span> нажат</div>
+    <div class="b lk">спрятаться</div>
+    <div class="w ct"><div class="b ct">повторять всегда</div><div class="in">
+      <div class="b ct">ждать <b class="p op">случайное от <em>3</em> до <em>5</em></b> секунд</div>
+      <div class="b ct">создать клон <em>себя ▾</em></div>
+    </div></div>
+  </div>
+  <div class="s">
+    <div class="b ev">когда я начинаю как клон</div>
+    <div class="b mo">перейти в x: <em>240</em> y: <b class="p op">случайное от <em>-100</em> до <em>100</em></b></div>
+    <div class="b lk">показаться</div>
+    <div class="w ct"><div class="b ct">повторять пока не <b class="p op"><b class="p mo">x</b> &lt; <em>-250</em></b></div><div class="in">
+      <div class="b mo">изменить x на <b class="p op"><em>0</em> - <b class="p vr">Скорость</b></b></div>
+      <div class="w ct"><div class="b ct">если <b class="p se">касается Светлячок?</b> то</div><div class="in">
+        <div class="b vr">изменить <em>Кристаллы ▾</em> на <em>1</em></div><div class="b ct">удалить этот клон</div></div></div>
+    </div></div>
+    <div class="b ct">удалить этот клон</div>
+  </div></div></div>
+
+  <div class="st"><span class="num">7</span><div><p><b>Победа и поражение:</b> два скрипта у Светлячка. Пока кристаллов меньше 5, выход закрыт. Когда набрали пять — пещера расступается.</p>
+  <div class="s">
+    <div class="b ev">когда <span class="fl">⚑</span> нажат</div>
+    <div class="b ct">ждать до <b class="p op"><b class="p vr">Кристаллы</b> = <em>5</em></b></div>
+    <div class="b lk">сказать <em>Выход найден!</em> на <em>2</em> секунд</div>
+    <div class="b ct">передать <em>победа ▾</em></div>
+  </div>
+  <div class="s">
+    <div class="b ev">когда <span class="fl">⚑</span> нажат</div>
+    <div class="b ct">ждать до <b class="p op"><b class="p vr">Жизни</b> = <em>0</em></b></div>
+    <div class="b lk">сказать <em>Пещера обвалилась!</em></div>
+    <div class="b ct">остановить <em>все ▾</em></div>
+  </div></div></div>
+
+  <div class="st"><span class="num">8</span><div><p><b>Награда:</b> пещера выводит нас к подземному озеру, где светится купол из кристаллов, а над выходом мерцает северное сияние. Три маленьких скрипта.</p>
+  <div class="s">
+    <div class="b ev">когда я получу <em>победа ▾</em></div>
+    <div class="b lk">переключить фон на <em>Подземное озеро ▾</em></div>
+  </div>
+  <p style="margin:0 0 4px;font-size:12px;color:#678">Скрипт выше — на Сцене. Ниже — на спрайтах Стена и Камень:</p>
+  <div class="s">
+    <div class="b ev">когда я получу <em>победа ▾</em></div>
+    <div class="b lk">спрятаться</div>
+  </div>
+  <div class="s">
+    <div class="b ev">когда я получу <em>победа ▾</em></div>
+    <div class="b ct">удалить этот клон</div>
+  </div></div></div>
+
+  <div class="st"><span class="num">9</span><div><p><b>Усложни:</b> пусть «Скорость» растёт на 0.5 с каждым кристаллом. Добавь золотой кристалл, который даёт +2. Сделай узкие сталактиты и широкие сталагмиты. Придумай летучих мышей — клоны-помехи! 🦇</p></div></div>
+</section>
+
+<div class="say" style="margin:0"><span class="av">☘️</span><p>Миссия выполнена! Секрет Ньюгрейнджа: каменная крыша с глиной 5000 лет не пропускает воду, а солнце заходит внутрь по расписанию. Берём в наш город будущего. Дальше — Миссия 4!</p></div>
+</main>
+<footer>© 2026 · Мастерская цифрового развития «Кот и Код»</footer>
+</body>
+</html>
